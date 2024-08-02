@@ -1,12 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import AdminScreen from './screens/(admin)/AdminScreen';
+import TimeTableScreen from './screens/TimeTableScreen';
+import AdminClinicsScreen from './screens/(admin)/AdminClinicsScreen';
+import AddClinicScreen from './screens/(admin)/AddClinicScreen';
+
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Admin" component={AdminScreen}/>
+        <Stack.Screen name="Time" component={TimeTableScreen}/>
+        <Stack.Screen name="Clinics" component={AdminClinicsScreen}/>
+        <Stack.Screen name="AddClinic" component={AddClinicScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+    
   );
 }
 
