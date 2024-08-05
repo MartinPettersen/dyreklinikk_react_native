@@ -10,6 +10,7 @@ import {
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
 import SmallButton from "../(util)/SmallButton";
+import DropDownMenu from "../(util)/DropDownMenu";
 
 type Props = {
   navigation: any;
@@ -18,12 +19,15 @@ type Props = {
 const AddClinicPage = ({ navigation }: Props) => {
   const [name, SetName] = useState<string>();
   const [adress, SetAdress] = useState<string>();
-  const [openingHour, setOpeningHour] = useState<number>();
-  const [closingHour, setClosingHour] = useState<number>();
-  // const [treatment, setTreatment] = useState<string>();
+  const [openingHour, setOpeningHour] = useState<string | null>("00:00");
+  const [closingHour, setClosingHour] = useState<string | null>("00:00");
   const [treatments, setTreatments] = useState<string[]>([]);
   const [employees, setEmployees] = useState<string[]>([]);
   const [patients, setPatients] = useState<string[]>([]);
+
+  const [settingOpeningHours, setSettingOpeningHours] = useState(false);
+  const [settingClosingHours, setSettingClosingHours] = useState(false);
+
 
   const addClinic = async () => {
     const doc = addDoc(collection(FIRESTORE_DB, "clinics"), {
@@ -32,8 +36,6 @@ const AddClinicPage = ({ navigation }: Props) => {
     });
     navigation.navigate("Clinics");
   };
-
-
 
   return (
     <View style={styles.container}>
@@ -50,33 +52,25 @@ const AddClinicPage = ({ navigation }: Props) => {
         value={adress}
         style={styles.inputField}
       />
-      
-      {/* 
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <TextInput
-          placeholder="Behandlinger"
-          onChangeText={(text: string) => setTreatment(text)}
-          value={treatment}
-          style={[styles.inputField, { width: "46%" }]}
+      <View style={styles.dropdownContainer}>
+        <Text style={styles.timerText}>Åpner</Text>
+        <DropDownMenu
+          open={settingOpeningHours}
+          setOpen={setSettingOpeningHours}
+          selectedTime={openingHour}
+          setSelectedTime={setOpeningHour}
         />
-        <View
-          style={{ height: 40, alignItems: "center", justifyContent: "center" }}
-        >
-          <SmallButton
-            label={"Add"}
-            action={() => addClinic()}
-            disabled={name === ""}
-          />
-        </View>
       </View>
-      */}
-      <View style={{ width: "60%" }}>
+      <View style={styles.dropdownContainer}>
+        <Text style={styles.timerText}>Stenger</Text>
+        <DropDownMenu
+          open={settingClosingHours}
+          setOpen={setSettingClosingHours}
+          selectedTime={closingHour}
+          setSelectedTime={setClosingHour}
+        />
+      </View>
+      <View style={{ width: "60%", paddingTop: 10 }}>
         <BasicButton
           label={"Legg Til"}
           action={() => addClinic()}
@@ -110,6 +104,19 @@ const styles = StyleSheet.create({
     color: "#52525b",
     fontWeight: "bold",
   },
+  timerText: {
+    fontSize: 20,
+    margin: 20,
+    color: "#52525b",
+    fontWeight: "bold",
+  },
+  dropdownContainer:{ 
+    width: "30%",
+    paddingTop: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  }
 });
 
 export default AddClinicPage;
