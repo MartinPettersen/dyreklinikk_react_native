@@ -15,6 +15,7 @@ import BasicButton from "../(util)/BasicButton";
 import DeleteButton from "../(util)/DeleteButton";
 import DropDownMenu from "../(util)/DropDownMenu";
 import HorizontalLine from "../(util)/HorizontalLine";
+import IconButton from "../(util)/IconButton";
 
 type Props = {
   clinic: Clinic;
@@ -58,8 +59,8 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.headline}>Oppdater Dyreklinikk</Text>
-        <HorizontalLine />
+      <Text style={styles.headline}>Oppdater Dyreklinikk</Text>
+      <HorizontalLine />
       <View style={styles.sideButton}>
         {editingName ? (
           <TextInput
@@ -72,12 +73,11 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
           <Text>Navn: {name}</Text>
         )}
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setEditingName(!editingName)}
-        >
-          <Feather name="edit" size={25} color={"#52525b"} />
-        </TouchableOpacity>
+        <IconButton
+          label={"edit"}
+          action={() => setEditingName(!editingName)}
+          disabled={false}
+        />
       </View>
       <View style={styles.sideButton}>
         {editingAdress ? (
@@ -90,12 +90,12 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
         ) : (
           <Text>Adresse: {adress}</Text>
         )}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setEditingAdress(!editingAdress)}
-        >
-          <Feather name="edit" size={25} color={"#52525b"} />
-        </TouchableOpacity>
+
+        <IconButton
+          label={"edit"}
+          action={() => setEditingAdress(!editingAdress)}
+          disabled={false}
+        />
       </View>
 
       <View style={[styles.sideButton, { width: "30%", zIndex: 3 }]}>
@@ -109,12 +109,11 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
         ) : (
           <Text>Åpner: {openingHour}</Text>
         )}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setEditingOpeningHour(!editingOpeningHour)}
-        >
-          <Feather name="edit" size={25} color={"#52525b"} />
-        </TouchableOpacity>
+        <IconButton
+          label={"edit"}
+          action={() => setEditingOpeningHour(!editingOpeningHour)}
+          disabled={false}
+        />
       </View>
 
       <View style={[styles.sideButton, { width: "30%", zIndex: 2 }]}>
@@ -128,21 +127,20 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
         ) : (
           <Text>Stenger: {closingHour}</Text>
         )}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setEditingClosingHour(!editingClosingHour)}
-        >
-          <Feather name="edit" size={25} color={"#52525b"} />
-        </TouchableOpacity>
+        <IconButton
+          label={"edit"}
+          action={() => setEditingClosingHour(!editingClosingHour)}
+          disabled={false}
+        />
       </View>
-
       <View style={styles.sideButton}>
         <Text>Ansatte</Text>
-        <TouchableOpacity style={styles.button}>
-          <Feather name="user-plus" size={25} color={"#52525b"} />
-        </TouchableOpacity>
+        <IconButton
+          label={"user-plus"}
+          action={() => console.log("test")}
+          disabled={false}
+        />
       </View>
-
       <View style={{ margin: 20 }}>
         <BasicButton
           label={"Oppdater"}
