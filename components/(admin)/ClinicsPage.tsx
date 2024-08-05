@@ -17,7 +17,9 @@ type Props = {
   navigation: any;
 };
 
-type RenderClinicProp = {}
+type RenderClinicProp = {
+  item: Clinic
+}
 
 const ClinicsPage = ({ navigation }: Props) => {
   const [clinics, setClinics] = useState<any[] | null>(null);
@@ -41,8 +43,8 @@ const ClinicsPage = ({ navigation }: Props) => {
     return () => subscriber();
   }, []);
 
-  const renderClinic = ({item }: any) => {
-    return <ClinicTag label={item.name} action={() => console.log("test")} />;
+  const renderClinic = ({item }: RenderClinicProp) => {
+    return <ClinicTag label={item.name} action={() => navigation.navigate("AdminClinic", {clinic: item})} />;
   };
 
   return (
@@ -76,6 +78,9 @@ const styles = StyleSheet.create({
   },
   clinicsContainer: {
     margin: 20,
+    borderTopWidth: 1,
+    borderColor: "#52525b",
+
   },
   headline: {
     fontSize: 40,

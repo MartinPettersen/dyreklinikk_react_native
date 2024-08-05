@@ -14,12 +14,12 @@ const ClinicTag = ({ label, action}: Props) => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: "#bae6fd",
+        backgroundColor: "#7dd3fc",
         padding: 12,
         borderRadius: 10,
         borderWidth: 1,
         borderColor: "#52525b", 
-        margin: 10,
+        marginTop: 20,
     },
     label: {
         fontSize: 22,
