@@ -12,6 +12,7 @@ import BasicButton from "../(util)/BasicButton";
 import ClinicTag from "./ClinicTag";
 import { Clinic } from "../../utils/types";
 import { SafeAreaView } from "react-native-safe-area-context";
+import HorizontalLine from "../(util)/HorizontalLine";
 
 type Props = {
   navigation: any;
@@ -55,6 +56,7 @@ const ClinicsPage = ({ navigation }: Props) => {
         action={() => navigation.navigate("AddClinic")}
         disabled={false}
       />
+        <HorizontalLine />
       {clinics ? (
         <View style={styles.clinicsContainer}>
           {
@@ -77,9 +79,8 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   clinicsContainer: {
-    margin: 20,
-    borderTopWidth: 1,
-    borderColor: "#52525b",
+    margin: 0,
+
 
   },
   headline: {
