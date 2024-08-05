@@ -33,6 +33,8 @@ const AddClinicPage = ({ navigation }: Props) => {
     const doc = addDoc(collection(FIRESTORE_DB, "clinics"), {
       name: name,
       adress: adress,
+      openingHour: openingHour,
+      closingHour: closingHour,
     });
     navigation.navigate("Clinics");
   };
@@ -52,8 +54,8 @@ const AddClinicPage = ({ navigation }: Props) => {
         value={adress}
         style={styles.inputField}
       />
-      <View style={styles.dropdownContainer}>
-        <Text style={styles.timerText}>Åpner</Text>
+      <View style={[styles.dropdownContainer, , {zIndex: 3}]}>
+        <Text style={styles.timerText}>Åpner    </Text>
         <DropDownMenu
           open={settingOpeningHours}
           setOpen={setSettingOpeningHours}
@@ -61,7 +63,7 @@ const AddClinicPage = ({ navigation }: Props) => {
           setSelectedTime={setOpeningHour}
         />
       </View>
-      <View style={styles.dropdownContainer}>
+      <View style={[styles.dropdownContainer, {zIndex: 2}]}>
         <Text style={styles.timerText}>Stenger</Text>
         <DropDownMenu
           open={settingClosingHours}
@@ -70,7 +72,7 @@ const AddClinicPage = ({ navigation }: Props) => {
           setSelectedTime={setClosingHour}
         />
       </View>
-      <View style={{ width: "60%", paddingTop: 10 }}>
+      <View style={{ width: "60%", paddingTop: 10, zIndex: 1 }}>
         <BasicButton
           label={"Legg Til"}
           action={() => addClinic()}
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   }
 });
 
