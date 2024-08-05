@@ -14,6 +14,7 @@ import { FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
 import DeleteButton from "../(util)/DeleteButton";
 import DropDownMenu from "../(util)/DropDownMenu";
+import HorizontalLine from "../(util)/HorizontalLine";
 
 type Props = {
   clinic: Clinic;
@@ -57,6 +58,8 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
+        <Text style={styles.headline}>Oppdater Dyreklinikk</Text>
+        <HorizontalLine />
       <View style={styles.sideButton}>
         {editingName ? (
           <TextInput
@@ -123,7 +126,7 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
             setSelectedTime={setClosingHour}
           />
         ) : (
-          <Text>Stenger{closingHour}</Text>
+          <Text>Stenger: {closingHour}</Text>
         )}
         <TouchableOpacity
           style={styles.button}
@@ -147,6 +150,7 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
           disabled={false}
         />
       </View>
+      <HorizontalLine />
       <View style={{ margin: 60 }}>
         <DeleteButton
           label={"Delete"}
@@ -183,6 +187,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "60%",
     fontSize: 16,
+  },
+  headline: {
+    fontSize: 40,
+    margin: 0,
+    color: "#52525b",
+    fontWeight: "bold",
   },
 });
 
