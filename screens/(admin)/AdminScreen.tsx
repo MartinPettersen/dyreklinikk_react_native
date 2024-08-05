@@ -6,7 +6,8 @@ const AdminScreen = ({navigation}: any) => {
   return (
     <View style={styles.container}>
       <Text>AdminScreen</Text>
-      <BasicButton label={"Klinikker"} action={() => navigation.navigate('Clinics')}/>
+      <BasicButton label={"Klinikker"} action={() => navigation.navigate('Clinics')} disabled={false}/>
+
     </View>
   );
 };

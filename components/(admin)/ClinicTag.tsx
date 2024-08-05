@@ -4,11 +4,10 @@ import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 type Props = {
   label: string;
   action: () => void;
-  disabled: boolean
 };
 
-const BasicButton = ({ label, action, disabled }: Props) => {
-  return <TouchableOpacity onPress={action} style={[styles.button, styles.shadow]} disabled={disabled} >
+const ClinicTag = ({ label, action}: Props) => {
+  return <TouchableOpacity onPress={action} style={[styles.button, styles.shadow]} >
     <Text style={styles.label}>{label}</Text>
   </TouchableOpacity>;
 };
@@ -20,6 +19,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderWidth: 1,
         borderColor: "#52525b", 
+        margin: 10,
     },
     label: {
         fontSize: 22,
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default BasicButton;
+export default ClinicTag;

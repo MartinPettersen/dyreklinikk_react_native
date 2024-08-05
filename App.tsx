@@ -13,7 +13,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Admin" component={AdminScreen}/>
         <Stack.Screen name="Time" component={TimeTableScreen}/>
         <Stack.Screen name="Clinics" component={AdminClinicsScreen}/>
