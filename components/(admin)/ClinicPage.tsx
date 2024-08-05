@@ -141,6 +141,13 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
           disabled={false}
         />
       </View>
+      <View>
+        {employees.length > 0?
+        employees.map((employee) => (
+            <Text>{employee}cd</Text>
+        ))   
+    : null}
+      </View>
       <View style={{ margin: 20 }}>
         <BasicButton
           label={"Oppdater"}
