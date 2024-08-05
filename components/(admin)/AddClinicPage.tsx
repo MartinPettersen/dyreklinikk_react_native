@@ -35,6 +35,9 @@ const AddClinicPage = ({ navigation }: Props) => {
       adress: adress,
       openingHour: openingHour,
       closingHour: closingHour,
+      treatments: treatments,
+      employees: employees,
+      patients: patients
     });
     navigation.navigate("Clinics");
   };

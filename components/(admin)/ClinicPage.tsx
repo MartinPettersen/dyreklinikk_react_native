@@ -13,6 +13,7 @@ import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
 import DeleteButton from "../(util)/DeleteButton";
+import DropDownMenu from "../(util)/DropDownMenu";
 
 type Props = {
   clinic: Clinic;
@@ -21,47 +22,138 @@ type Props = {
 
 const ClinicPage = ({ clinic, navigation }: Props) => {
   const [name, setName] = useState(clinic.name);
+  const [editingName, setEditingName] = useState(false);
+
+  const [adress, setAdress] = useState(clinic.adress);
+  const [editingAdress, setEditingAdress] = useState(false);
+
+  const [employees, setEmployess] = useState(clinic.employees);
+
+  const [openingHour, setOpeningHour] = useState<string | null>(
+    clinic.openingHour
+  );
+  const [editingOpeningHour, setEditingOpeningHour] = useState(false);
+
+  const [closingHour, setClosingHour] = useState<string | null>(
+    clinic.closingHour
+  );
+  const [editingClosingHour, setEditingClosingHour] = useState(false);
 
   const ref = doc(FIRESTORE_DB, `clinics/${clinic.id}`);
   const updateClinic = async () => {
-    updateDoc(ref, { name: name });
+    updateDoc(ref, {
+      name: name,
+      adress: adress,
+      openingHour: openingHour,
+      closingHour: closingHour,
+      employees: employees,
+    });
+    navigation.navigate("Clinics");
   };
   const deleteClinic = async () => {
-    deleteDoc(ref)
-    navigation.navigate('Clinics')
-  }
+    deleteDoc(ref);
+    navigation.navigate("Clinics");
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.sideButton}>
-        <Text>{clinic.name}</Text>
-        <TextInput
-          placeholder="Navn på Klinikken"
-          onChangeText={(text: string) => setName(text)}
-          value={name}
-          style={styles.inputField}
-        />
-        <TouchableOpacity style={styles.button}>
+        {editingName ? (
+          <TextInput
+            placeholder="Navn på Klinikken"
+            onChangeText={(text: string) => setName(text)}
+            value={name}
+            style={styles.inputField}
+          />
+        ) : (
+          <Text>Navn: {name}</Text>
+        )}
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setEditingName(!editingName)}
+        >
+          <Feather name="edit" size={25} color={"#52525b"} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.sideButton}>
+        {editingAdress ? (
+          <TextInput
+            placeholder="Adressen til Klinikken"
+            onChangeText={(text: string) => setAdress(text)}
+            value={adress}
+            style={styles.inputField}
+          />
+        ) : (
+          <Text>Adresse: {adress}</Text>
+        )}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setEditingAdress(!editingAdress)}
+        >
           <Feather name="edit" size={25} color={"#52525b"} />
         </TouchableOpacity>
       </View>
 
-      <BasicButton
-        label={"Oppdater"}
-        action={() => updateClinic()}
-        disabled={false}
-      />
+      <View style={[styles.sideButton, { width: "30%", zIndex: 3 }]}>
+        {editingOpeningHour ? (
+          <DropDownMenu
+            open={editingOpeningHour}
+            setOpen={setEditingOpeningHour}
+            selectedTime={openingHour}
+            setSelectedTime={setOpeningHour}
+          />
+        ) : (
+          <Text>Åpner: {openingHour}</Text>
+        )}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setEditingOpeningHour(!editingOpeningHour)}
+        >
+          <Feather name="edit" size={25} color={"#52525b"} />
+        </TouchableOpacity>
+      </View>
+
+      <View style={[styles.sideButton, { width: "30%", zIndex: 2 }]}>
+        {editingClosingHour ? (
+          <DropDownMenu
+            open={editingClosingHour}
+            setOpen={setEditingClosingHour}
+            selectedTime={closingHour}
+            setSelectedTime={setClosingHour}
+          />
+        ) : (
+          <Text>Stenger{closingHour}</Text>
+        )}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setEditingClosingHour(!editingClosingHour)}
+        >
+          <Feather name="edit" size={25} color={"#52525b"} />
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.sideButton}>
         <Text>Ansatte</Text>
         <TouchableOpacity style={styles.button}>
           <Feather name="user-plus" size={25} color={"#52525b"} />
         </TouchableOpacity>
       </View>
-      <DeleteButton
-        label={"Delete"}
-        action={() => deleteClinic()}
-        disabled={false}
-      />
+
+      <View style={{ margin: 20 }}>
+        <BasicButton
+          label={"Oppdater"}
+          action={() => updateClinic()}
+          disabled={false}
+        />
+      </View>
+      <View style={{ margin: 60 }}>
+        <DeleteButton
+          label={"Delete"}
+          action={() => deleteClinic()}
+          disabled={false}
+        />
+      </View>
     </SafeAreaView>
   );
 };
