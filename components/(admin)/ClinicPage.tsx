@@ -9,8 +9,10 @@ import {
 import { Clinic } from "../../utils/types";
 import { Feather } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
+import BasicButton from "../(util)/BasicButton";
+import DeleteButton from "../(util)/DeleteButton";
 
 type Props = {
   clinic: Clinic;
@@ -22,8 +24,12 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
 
   const ref = doc(FIRESTORE_DB, `clinics/${clinic.id}`);
   const updateClinic = async () => {
-    updateDoc(ref, {name: name})
+    updateDoc(ref, { name: name });
   };
+  const deleteClinic = async () => {
+    deleteDoc(ref)
+    navigation.navigate('Clinics')
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -40,15 +46,22 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => updateClinic()}>
-        <Text>Oppdater</Text>
-      </TouchableOpacity>
+      <BasicButton
+        label={"Oppdater"}
+        action={() => updateClinic()}
+        disabled={false}
+      />
       <View style={styles.sideButton}>
         <Text>Ansatte</Text>
         <TouchableOpacity style={styles.button}>
           <Feather name="user-plus" size={25} color={"#52525b"} />
         </TouchableOpacity>
       </View>
+      <DeleteButton
+        label={"Delete"}
+        action={() => deleteClinic()}
+        disabled={false}
+      />
     </SafeAreaView>
   );
 };
