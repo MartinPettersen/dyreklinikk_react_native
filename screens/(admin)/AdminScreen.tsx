@@ -15,7 +15,7 @@ const AdminScreen = ({ navigation }: any) => {
       <View style={styles.buttonContainer}>
         <BasicButton
           label={"Ansatte"}
-          action={() => navigation.navigate("Clinics")}
+          action={() => navigation.navigate("AdminEmployees")}
           disabled={false}
         />
       </View>

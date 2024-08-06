@@ -9,10 +9,10 @@ import {
 } from "react-native";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
-import ClinicTag from "./ClinicTag";
 import { Clinic } from "../../utils/types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HorizontalLine from "../(util)/HorizontalLine";
+import DisplayTag from "../(util)/DisplayTag";
 
 type Props = {
   navigation: any;
@@ -45,7 +45,7 @@ const ClinicsPage = ({ navigation }: Props) => {
   }, []);
 
   const renderClinic = ({item }: RenderClinicProp) => {
-    return <ClinicTag label={item.name} action={() => navigation.navigate("AdminClinic", {clinic: item})} />;
+    return <DisplayTag label={item.name} action={() => navigation.navigate("AdminClinic", {clinic: item})} />;
   };
 
   return (

@@ -6,7 +6,7 @@ type Props = {
   action: () => void;
 };
 
-const ClinicTag = ({ label, action}: Props) => {
+const DisplayTag = ({ label, action}: Props) => {
   return <TouchableOpacity onPress={action} style={[styles.button, styles.shadow]} >
     <Text style={styles.label}>{label}</Text>
   </TouchableOpacity>;
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default ClinicTag;
+export default DisplayTag;

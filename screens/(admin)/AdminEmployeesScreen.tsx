@@ -1,11 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
+import EmployeePage from "../../components/(admin)/EmployeePage";
 
-const AdminEmployeesScreen = () => {
+const AdminEmployeesScreen = ({navigation}: any) => {
   return (
-    <View>
-      <Text>AdminEmployeesScreen</Text>
-    </View>
+    <EmployeePage navigation={navigation}/>
   );
 };
 
