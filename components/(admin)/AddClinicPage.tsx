@@ -17,14 +17,15 @@ type Props = {
 };
 
 const AddClinicPage = ({ navigation }: Props) => {
-  const [name, SetName] = useState<string>();
-  const [adress, SetAdress] = useState<string>();
+  const [name, setName] = useState<string>();
+  const [adress, setAdress] = useState<string>();
   const [openingHour, setOpeningHour] = useState<string | null>("00:00");
   const [closingHour, setClosingHour] = useState<string | null>("00:00");
   const [treatments, setTreatments] = useState<string[]>([]);
   const [employees, setEmployees] = useState<string[]>([]);
   const [patients, setPatients] = useState<string[]>([]);
-
+  const [email, setEmail] = useState<string>();
+  const [phone, setPhone] = useState<string>();
   const [settingOpeningHours, setSettingOpeningHours] = useState(false);
   const [settingClosingHours, setSettingClosingHours] = useState(false);
 
@@ -47,13 +48,13 @@ const AddClinicPage = ({ navigation }: Props) => {
       <Text style={styles.headline}>Legg til ny Klinikk</Text>
       <TextInput
         placeholder="Navn på Klinikken"
-        onChangeText={(text: string) => SetName(text)}
+        onChangeText={(text: string) => setName(text)}
         value={name}
         style={styles.inputField}
       />
       <TextInput
         placeholder="Adressen til Klinikken"
-        onChangeText={(text: string) => SetAdress(text)}
+        onChangeText={(text: string) => setAdress(text)}
         value={adress}
         style={styles.inputField}
       />

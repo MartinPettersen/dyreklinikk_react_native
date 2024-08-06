@@ -9,6 +9,7 @@ import AdminClinicsScreen from './screens/(admin)/AdminClinicsScreen';
 import AddClinicScreen from './screens/(admin)/AddClinicScreen';
 import AdminClinicScreen from './screens/(admin)/AdminClinicScreen';
 import AddEmployeeScreen from './screens/(admin)/AddEmployeeScreen';
+import AdminEmployeesScreen from './screens/(admin)/AdminEmployeesScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,8 @@ export default function App() {
         <Stack.Screen name="AddClinic" component={AddClinicScreen}/>
         <Stack.Screen name="AddEmployee" component={AddEmployeeScreen}/>
         <Stack.Screen name="AdminClinic" component={AdminClinicScreen}/>
+        <Stack.Screen name="AdminEmployees" component={AdminEmployeesScreen}/>
+
       </Stack.Navigator>
     </NavigationContainer>
     

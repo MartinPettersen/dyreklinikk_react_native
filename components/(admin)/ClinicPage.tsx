@@ -137,7 +137,7 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
         <Text>Ansatte</Text>
         <IconButton
           label={"user-plus"}
-          action={() => console.log("test")}
+          action={() => navigation.navigate("AddEmployee", {clinic: clinic})}
           disabled={false}
         />
       </View>
