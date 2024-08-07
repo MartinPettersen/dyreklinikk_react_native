@@ -15,13 +15,38 @@ import EmployeeStartScreen from "./screens/(employee)/EmployeeStartScreen";
 import PatientStartScreen from "./screens/(patient)/PatientStartScreen";
 import LoginScreen from "./screens/(preloggin)/LoginScreen";
 import SignUpScreen from "./screens/(preloggin)/SignUpScreen";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { FIREBASE_AUTH } from "./firebaseConfig";
 
 const Stack = createNativeStackNavigator();
 
+const PatientStack = createNativeStackNavigator();
+
+function PatientLayout () {
+  return <PatientStack.Navigator>
+    <PatientStack.Screen name="Start" component={PatientStartScreen} />
+  </PatientStack.Navigator>
+}
+
 export default function App() {
+
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    onAuthStateChanged(FIREBASE_AUTH, (user) => {
+      console.log(user)
+      setUser(user)
+    })
+  },[])
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+      { user?
+        <Stack.Screen name="Patient" component={PatientLayout} />
+:
+<>
         <Stack.Screen name="Start" component={StartScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
@@ -34,6 +59,8 @@ export default function App() {
         <Stack.Screen name="AddEmployee" component={AddEmployeeScreen} />
         <Stack.Screen name="AdminClinic" component={AdminClinicScreen} />
         <Stack.Screen name="AdminEmployees" component={AdminEmployeesScreen} />
+</>
+      }
       </Stack.Navigator>
     </NavigationContainer>
   );

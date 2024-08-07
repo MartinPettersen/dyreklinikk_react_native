@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import BasicButton from "../../components/(util)/BasicButton";
+import { FIREBASE_AUTH } from "../../firebaseConfig";
 
 const PatientStartScreen = ({ navigation }: any) => {
   return (
@@ -24,6 +25,13 @@ const PatientStartScreen = ({ navigation }: any) => {
         <BasicButton
           label="Kommende Behandlinger"
           action={() => console.log("Kommende Behandlinger")}
+          disabled={false}
+        />
+      </View>
+      <View style={styles.buttonContainer}>
+        <BasicButton
+          label="Logg Ut"
+          action={() => FIREBASE_AUTH.signOut()}
           disabled={false}
         />
       </View>

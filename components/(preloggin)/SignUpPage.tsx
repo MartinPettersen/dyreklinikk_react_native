@@ -21,7 +21,7 @@ const SignUpPage = ({ navigation }: any) => {
     } catch ( error) {
         console.log(error);
     } finally {
-      navigation.navigate("Login")
+      // navigation.navigate("Login")
     }
   }
 

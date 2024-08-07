@@ -22,7 +22,8 @@ const LoginPage = ({ navigation }: any) => {
     } catch ( error) {
         console.log(error);
     } finally {
-        setLoading(false);
+        //navigation.navigate("PatientStart")
+
     }
   }
 
