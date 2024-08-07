@@ -2,11 +2,16 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import BasicButton from "../../components/(util)/BasicButton";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
+import { useUser } from "../../components/(user)/UserContext";
 
 const PatientStartScreen = ({ navigation }: any) => {
+  
+  const { user } = useUser();
+  console.log("user",user)
+
   return (
     <View style={styles.container}>
-      <Text style={styles.headline}>Logget in som: </Text>
+      <Text style={styles.headline}>Logget in som: name here </Text>
       <View style={styles.buttonContainer}>
         <BasicButton
           label="Min Side"
