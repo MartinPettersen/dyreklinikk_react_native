@@ -24,7 +24,6 @@ export default function App() {
         <Stack.Screen name="AddEmployee" component={AddEmployeeScreen}/>
         <Stack.Screen name="AdminClinic" component={AdminClinicScreen}/>
         <Stack.Screen name="AdminEmployees" component={AdminEmployeesScreen}/>
-
       </Stack.Navigator>
     </NavigationContainer>
     
