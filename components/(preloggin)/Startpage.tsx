@@ -30,7 +30,7 @@ const Startpage = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         <BasicButton
           label="Login"
-          action={() => console.log("Login")}
+          action={() => navigation.navigate("Login")}
           disabled={false}
         />
       </View>
@@ -38,7 +38,7 @@ const Startpage = ({ navigation }: Props) => {
       <View style={styles.buttonContainer}>
         <BasicButton
           label="Ny brukker"
-          action={() => console.log("ny brukker")}
+          action={() => navigation.navigate("SignUp")}
           disabled={false}
         />
       </View>

@@ -47,7 +47,7 @@ const LoginPage = ({ navigation }: any) => {
       <View style={styles.buttonContainer}>
         <BasicButton
           label="login"
-          action={() => console.log("login")}
+          action={() => signIn()}
           disabled={false}
         />
       </View>

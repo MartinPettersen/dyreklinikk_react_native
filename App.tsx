@@ -14,6 +14,7 @@ import StartScreen from "./screens/(preloggin)/StartScreen";
 import EmployeeStartScreen from "./screens/(employee)/EmployeeStartScreen";
 import PatientStartScreen from "./screens/(patient)/PatientStartScreen";
 import LoginScreen from "./screens/(preloggin)/LoginScreen";
+import SignUpScreen from "./screens/(preloggin)/SignUpScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,10 +22,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Start" component={StartScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="PatientStart" component={PatientStartScreen} />
         <Stack.Screen name="EmployeeStart" component={EmployeeStartScreen} />
-        <Stack.Screen name="Start" component={StartScreen} />
         <Stack.Screen name="Admin" component={AdminScreen} />
         <Stack.Screen name="Time" component={TimeTableScreen} />
         <Stack.Screen name="Clinics" component={AdminClinicsScreen} />

@@ -11,7 +11,6 @@ type Props = {
 const SignUpPage = ({ navigation }: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
 
   const signUp = async () => {
@@ -22,7 +21,7 @@ const SignUpPage = ({ navigation }: any) => {
     } catch ( error) {
         console.log(error);
     } finally {
-        setLoading(false);
+      navigation.navigate("Login")
     }
   }
 
@@ -47,7 +46,7 @@ const SignUpPage = ({ navigation }: any) => {
       <View style={styles.buttonContainer}>
         <BasicButton
           label="Opprett"
-          action={() => console.log("Oprett")}
+          action={() => signUp()}
           disabled={false}
         />
       </View>
