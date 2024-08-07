@@ -11,6 +11,7 @@ import AdminClinicScreen from './screens/(admin)/AdminClinicScreen';
 import AddEmployeeScreen from './screens/(admin)/AddEmployeeScreen';
 import AdminEmployeesScreen from './screens/(admin)/AdminEmployeesScreen';
 import StartScreen from './screens/(preloggin)/StartScreen';
+import EmployeeStartScreen from './screens/(employee)/EmployeeStartScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
 
+        <Stack.Screen name="EmployeeStart" component={EmployeeStartScreen}/>
         <Stack.Screen name="Start" component={StartScreen}/>
         <Stack.Screen name="Admin" component={AdminScreen}/>
         <Stack.Screen name="Time" component={TimeTableScreen}/>
