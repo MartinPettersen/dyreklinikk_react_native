@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
-import { FIREBASE_AUTH } from "../../firebaseConfig";
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
 
 type Props = {
   navigation: any;
@@ -13,15 +14,25 @@ const SignUpPage = ({ navigation }: any) => {
   const [password, setPassword] = useState("");
   const auth = FIREBASE_AUTH;
 
+  const addAccount = async () => {
+    const doc = addDoc(collection(FIRESTORE_DB, "roles"), {
+      email: email,
+      role: "patient"
+    })
+  }
+
+
+
   const signUp = async () => {
 
     try {
         const response = await createUserWithEmailAndPassword(auth, email, password);
-
+        //console.log(response)
     } catch ( error) {
         console.log(error);
     } finally {
       // navigation.navigate("Login")
+      addAccount()
     }
   }
 
