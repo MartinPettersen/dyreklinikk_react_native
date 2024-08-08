@@ -137,16 +137,14 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
         <Text>Ansatte</Text>
         <IconButton
           label={"user-plus"}
-          action={() => navigation.navigate("AddEmployee", {clinic: clinic})}
+          action={() => navigation.navigate("AddEmployee", { clinic: clinic })}
           disabled={false}
         />
       </View>
       <View>
-        {employees.length > 0?
-        employees.map((employee) => (
-            <Text>{employee}cd</Text>
-        ))   
-    : null}
+        {employees.length > 0
+          ? employees.map((employee) => <Text>{employee}cd</Text>)
+          : null}
       </View>
       <View style={{ margin: 20 }}>
         <BasicButton
