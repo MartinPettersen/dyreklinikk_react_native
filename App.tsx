@@ -63,7 +63,6 @@ export default function App() {
 
   const getRole = (user: any) => {
     const roleRef = collection(FIRESTORE_DB, "roles");
-    console.log(user);
     const subscriber = onSnapshot(
       query(roleRef, where("email", "==", user!.email)),
       {
@@ -75,7 +74,6 @@ export default function App() {
               role: doc.data().role,
             });
           });
-          console.log(roles);
           setRole(roles[0]);
         },
       }
@@ -84,8 +82,11 @@ export default function App() {
 
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      console.log(user!.email);
-      getRole(user);
+      if (user) {
+        getRole(user);
+      } else {
+        setRole(null);
+      }
       setUser(user);
     });
   }, []);

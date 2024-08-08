@@ -9,9 +9,18 @@ const PatientStartScreen = ({ navigation }: any) => {
   const { user } = useUser();
   console.log("user",user)
 
+  const handleLogout = async () => {
+    try {
+      await FIREBASE_AUTH.signOut();
+      navigation.navigate("Start");
+    } catch (error) {
+      console.error("Error signing out: ", error)
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.headline}>Logget in som: name here </Text>
+      <Text style={styles.headline}>Velkommen </Text>
       <View style={styles.buttonContainer}>
         <BasicButton
           label="Min Side"
@@ -36,7 +45,7 @@ const PatientStartScreen = ({ navigation }: any) => {
       <View style={styles.buttonContainer}>
         <BasicButton
           label="Logg Ut"
-          action={() => FIREBASE_AUTH.signOut()}
+          action={() => handleLogout()}
           disabled={false}
         />
       </View>

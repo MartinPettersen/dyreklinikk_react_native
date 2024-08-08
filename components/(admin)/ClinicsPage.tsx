@@ -37,7 +37,6 @@ const ClinicsPage = ({ navigation }: Props) => {
             ...doc.data(),
           } as Clinic);
         });
-        console.log(clinicsList);
         setClinics(clinicsList);
       },
     });

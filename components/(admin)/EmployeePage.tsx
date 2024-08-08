@@ -29,7 +29,6 @@ const EmployeePage = ({ navigation }: Props) => {
             ...doc.data(),
           } as any);
         });
-        console.log(employeesList);
         setEmployees(employeesList);
       },
     });
