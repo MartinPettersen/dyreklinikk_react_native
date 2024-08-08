@@ -24,6 +24,8 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 const Stack = createNativeStackNavigator();
 
 const PatientStack = createNativeStackNavigator();
+const EmployeeStack = createNativeStackNavigator();
+const AdminStack = createNativeStackNavigator();
 
 function PatientLayout() {
   return (
@@ -33,13 +35,35 @@ function PatientLayout() {
   );
 }
 
+function EmployeeLayout() {
+  return (
+    <EmployeeStack.Navigator>
+      <EmployeeStack.Screen name="Start" component={EmployeeStartScreen} />
+    </EmployeeStack.Navigator>
+  );
+}
+
+function AdminLayout() {
+  return (
+    <AdminStack.Navigator>
+      <AdminStack.Screen name="Start" component={AdminScreen} />
+      <Stack.Screen name="Admin" component={AdminScreen} />
+      <Stack.Screen name="Clinics" component={AdminClinicsScreen} />
+      <Stack.Screen name="AddClinic" component={AddClinicScreen} />
+      <Stack.Screen name="AddEmployee" component={AddEmployeeScreen} />
+      <Stack.Screen name="AdminClinic" component={AdminClinicScreen} />
+      <Stack.Screen name="AdminEmployees" component={AdminEmployeesScreen} />
+    </AdminStack.Navigator>
+  );
+}
+
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
   const [role, setRole] = useState<any | null>(null);
 
   const getRole = (user: any) => {
     const roleRef = collection(FIRESTORE_DB, "roles");
-    console.log(user)
+    console.log(user);
     const subscriber = onSnapshot(
       query(roleRef, where("email", "==", user!.email)),
       {
@@ -51,7 +75,7 @@ export default function App() {
               role: doc.data().role,
             });
           });
-          console.log(roles)
+          console.log(roles);
           setRole(roles[0]);
         },
       }
@@ -61,7 +85,7 @@ export default function App() {
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
       console.log(user!.email);
-      getRole(user)
+      getRole(user);
       setUser(user);
     });
   }, []);
@@ -70,10 +94,22 @@ export default function App() {
     <UserProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          { role && role.role == "patient" ? (
+          {role && role.role == "patient" ? (
             <Stack.Screen
               name="Patient"
               component={PatientLayout}
+              initialParams={{ user: user }}
+            />
+          ) : role && role.role == "employee" ? (
+            <Stack.Screen
+              name="Employee"
+              component={EmployeeLayout}
+              initialParams={{ user: user }}
+            />
+          ) : role && role.role == "admin" ? (
+            <Stack.Screen
+              name="Admin"
+              component={AdminLayout}
               initialParams={{ user: user }}
             />
           ) : (
@@ -81,24 +117,7 @@ export default function App() {
               <Stack.Screen name="Start" component={StartScreen} />
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="SignUp" component={SignUpScreen} />
-              <Stack.Screen
-                name="PatientStart"
-                component={PatientStartScreen}
-              />
-              <Stack.Screen
-                name="EmployeeStart"
-                component={EmployeeStartScreen}
-              />
-              <Stack.Screen name="Admin" component={AdminScreen} />
               <Stack.Screen name="Time" component={TimeTableScreen} />
-              <Stack.Screen name="Clinics" component={AdminClinicsScreen} />
-              <Stack.Screen name="AddClinic" component={AddClinicScreen} />
-              <Stack.Screen name="AddEmployee" component={AddEmployeeScreen} />
-              <Stack.Screen name="AdminClinic" component={AdminClinicScreen} />
-              <Stack.Screen
-                name="AdminEmployees"
-                component={AdminEmployeesScreen}
-              />
             </>
           )}
         </Stack.Navigator>

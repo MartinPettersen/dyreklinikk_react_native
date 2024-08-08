@@ -17,7 +17,7 @@ const SignUpPage = ({ navigation }: any) => {
   const addAccount = async () => {
     const doc = addDoc(collection(FIRESTORE_DB, "roles"), {
       email: email,
-      role: "patient"
+      role: "admin"
     })
   }
 
