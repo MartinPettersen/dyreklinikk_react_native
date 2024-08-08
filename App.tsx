@@ -17,8 +17,9 @@ import LoginScreen from "./screens/(preloggin)/LoginScreen";
 import SignUpScreen from "./screens/(preloggin)/SignUpScreen";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { FIREBASE_AUTH } from "./firebaseConfig";
+import { FIREBASE_AUTH, FIRESTORE_DB } from "./firebaseConfig";
 import { UserProvider } from "./components/(user)/UserContext";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,10 +35,33 @@ function PatientLayout() {
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
+  const [role, setRole] = useState<any | null>(null);
+
+  const getRole = (user: any) => {
+    const roleRef = collection(FIRESTORE_DB, "roles");
+    console.log(user)
+    const subscriber = onSnapshot(
+      query(roleRef, where("email", "==", user!.email)),
+      {
+        next: (snapshot) => {
+          const roles: any[] = [];
+          snapshot.docs.forEach((doc) => {
+            roles.push({
+              email: doc.data().email,
+              role: doc.data().role,
+            });
+          });
+          console.log(roles)
+          setRole(roles[0]);
+        },
+      }
+    );
+  };
 
   useEffect(() => {
     onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      console.log(user);
+      console.log(user!.email);
+      getRole(user)
       setUser(user);
     });
   }, []);
@@ -46,7 +70,7 @@ export default function App() {
     <UserProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {user ? (
+          { role && role.role == "patient" ? (
             <Stack.Screen
               name="Patient"
               component={PatientLayout}
