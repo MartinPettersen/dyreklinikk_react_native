@@ -12,12 +12,24 @@ type Props = {
 const SignUpPage = ({ navigation }: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState<string>();
+  const [adress, setAdress] = useState<string>();
+  const [phone, setPhone] = useState<string>();
+  const [pets, setPets] = useState<string[]>([])
+
   const auth = FIREBASE_AUTH;
 
   const addAccount = async () => {
     const doc = addDoc(collection(FIRESTORE_DB, "roles"), {
       email: email,
       role: "patient"
+    })
+    const docRef = await addDoc(collection(FIRESTORE_DB, "owners"), {
+      name: name,
+      adress: adress,
+      email: email,
+      phone: phone,
+      pets: pets,
     })
   }
 
@@ -31,8 +43,8 @@ const SignUpPage = ({ navigation }: any) => {
     } catch ( error) {
         console.log(error);
     } finally {
-      // navigation.navigate("Login")
       addAccount()
+      // navigation.navigate("AddOwnerInfo")
     }
   }
 
@@ -44,6 +56,24 @@ const SignUpPage = ({ navigation }: any) => {
         onChangeText={(text: string) => setEmail(text)}
         value={email}
         autoCapitalize="none"
+        style={styles.inputField}
+      />
+      <TextInput
+        placeholder="Navn"
+        onChangeText={(text: string) => setName(text)}
+        value={name}
+        style={styles.inputField}
+      />
+      <TextInput
+        placeholder="Adresse"
+        onChangeText={(text: string) => setAdress(text)}
+        value={adress}
+        style={styles.inputField}
+      />
+      <TextInput
+        placeholder="Telefon"
+        onChangeText={(text: string) => setPhone(text)}
+        value={phone}
         style={styles.inputField}
       />
       <TextInput

@@ -21,6 +21,7 @@ import { FIREBASE_AUTH, FIRESTORE_DB } from "./firebaseConfig";
 import { UserProvider } from "./components/(user)/UserContext";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import PatientMyPageScreen from "./screens/(patient)/PatientMyPageScreen";
+import AddOwnerInfoScreen from "./screens/(patient)/AddOwnerInfoScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,8 @@ function PatientLayout() {
     <PatientStack.Navigator screenOptions={{ headerShown: false }}>
       <PatientStack.Screen name="Start" component={PatientStartScreen} />
       <PatientStack.Screen name="MyPage" component={PatientMyPageScreen} />
+      <PatientStack.Screen name="AddOwnerInfo" component={AddOwnerInfoScreen} />
+
     </PatientStack.Navigator>
   );
 }

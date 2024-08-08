@@ -1,17 +1,22 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native';
-import {doc, updateDoc, addDoc, collection, arrayUnion } from "firebase/firestore";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TextInput } from "react-native";
+import {
+  doc,
+  updateDoc,
+  addDoc,
+  collection,
+  arrayUnion,
+} from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
-import BasicButton from '../(util)/BasicButton';
-import { Clinic } from '../../utils/types';
+import BasicButton from "../(util)/BasicButton";
+import { Clinic } from "../../utils/types";
 
 type Props = {
-    navigation: any;
-    clinic: Clinic;
-  };
+  navigation: any;
+  clinic: Clinic;
+};
 
 const AddEmployePage = ({ navigation, clinic }: Props) => {
-
   const [name, setName] = useState<string>();
   const [workplace, setWorkplace] = useState<string>(clinic.id);
   const [title, setTitle] = useState<string>();
@@ -20,7 +25,7 @@ const AddEmployePage = ({ navigation, clinic }: Props) => {
   const [expertise, setExpertise] = useState<string>();
   const [email, setEmail] = useState<string>();
   const [phone, setPhone] = useState<string>();
-  const [patients, setPatients] = useState<string[]>([])
+  const [patients, setPatients] = useState<string[]>([]);
   const [information, setInformation] = useState<string>("");
 
   const addEmployee = async () => {
@@ -34,83 +39,79 @@ const AddEmployePage = ({ navigation, clinic }: Props) => {
       email: email,
       phone: phone,
       patients: patients,
-      information: information
-    })
+      information: information,
+    });
 
-    const employeeId = docRef.id
+    const employeeId = docRef.id;
     navigation.navigate("AdminEmployees");
 
     const clinicRef = doc(FIRESTORE_DB, `clinics/${clinic.id}`);
     await updateDoc(clinicRef, {
-      employeeIds: arrayUnion(employeeId)
+      employeeIds: arrayUnion(employeeId),
     });
-
-  }
+  };
 
   return (
     <View style={styles.container}>
-        <Text style={styles.headline}>Ny Ansatt</Text>
-        <TextInput 
-        placeholder='Navn på Ansatte'
+      <Text style={styles.headline}>Ny Ansatt</Text>
+      <TextInput
+        placeholder="Navn på Ansatte"
         onChangeText={(text: string) => setName(text)}
         value={name}
         style={styles.inputField}
-        />
-      <TextInput 
-        placeholder='Tittel'
+      />
+      <TextInput
+        placeholder="Tittel"
         onChangeText={(text: string) => setTitle(text)}
         value={title}
         style={styles.inputField}
-        />
-        <TextInput 
-        placeholder='Fødselsdato'
+      />
+      <TextInput
+        placeholder="Fødselsdato"
         onChangeText={(text: string) => setBirthday(text)}
         value={birthday}
         style={styles.inputField}
-        />
-        <TextInput 
-        placeholder='Ansettelse Dato'
+      />
+      <TextInput
+        placeholder="Ansettelse Dato"
         onChangeText={(text: string) => setHiringDay(text)}
         value={hiringDay}
         style={styles.inputField}
-        />
-        <TextInput 
-        placeholder='Fagfelt'
+      />
+      <TextInput
+        placeholder="Fagfelt"
         onChangeText={(text: string) => setExpertise(text)}
         value={expertise}
         style={styles.inputField}
-        />
-        <TextInput 
-        placeholder='Email'
+      />
+      <TextInput
+        placeholder="Email"
         onChangeText={(text: string) => setEmail(text)}
         value={email}
         style={styles.inputField}
-        />
-        <TextInput 
-        placeholder='Telefon'
+      />
+      <TextInput
+        placeholder="Telefon"
         onChangeText={(text: string) => setPhone(text)}
         value={phone}
         style={styles.inputField}
-        />
-        <TextInput 
-        placeholder='Ekstra Information'
+      />
+      <TextInput
+        placeholder="Ekstra Information"
         onChangeText={(text: string) => setInformation(text)}
         value={information}
         style={styles.inputField}
+      />
+      <View style={{ width: "60%", paddingTop: 10, zIndex: 1 }}>
+        <BasicButton
+          label={"Legg Til"}
+          action={() => addEmployee()}
+          disabled={name === ""}
         />
-        <View style={{ width: "60%", paddingTop: 10, zIndex: 1 }}>
-          <BasicButton
-            label={"Legg Til"}
-            action={() => addEmployee()}
-            disabled={name === ""}
-          />
-        </View>
-
-
-        
+      </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -141,13 +142,13 @@ const styles = StyleSheet.create({
     color: "#52525b",
     fontWeight: "bold",
   },
-  dropdownContainer:{ 
+  dropdownContainer: {
     width: "30%",
     paddingTop: 10,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-  }
+  },
 });
 
-export default AddEmployePage
+export default AddEmployePage;
