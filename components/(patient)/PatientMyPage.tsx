@@ -48,7 +48,7 @@ const PatientMyPage = ({ navigation, user }: Props) => {
   }, []);
 
   const renderPet = ({ item }: RenderPetProp) => {
-    return <DisplayTag label={item.name} action={() => console.log("da")} />;
+    return <DisplayTag label={item.name} action={() => navigation.navigate("PetInfo", {pet: item})} />;
   };
 
   return (

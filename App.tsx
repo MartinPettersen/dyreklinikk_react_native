@@ -23,6 +23,7 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import PatientMyPageScreen from "./screens/(patient)/PatientMyPageScreen";
 import AddOwnerInfoScreen from "./screens/(patient)/AddOwnerInfoScreen";
 import AddPetScreen from "./screens/(patient)/AddPetScreen";
+import PetInfoScreen from "./screens/(patient)/PetInfoScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ function PatientLayout() {
       <PatientStack.Screen name="MyPage" component={PatientMyPageScreen} />
       <PatientStack.Screen name="AddOwnerInfo" component={AddOwnerInfoScreen} />
       <PatientStack.Screen name="AddPet" component={AddPetScreen} />
+      <PatientStack.Screen name="PetInfo" component={PetInfoScreen} />
     </PatientStack.Navigator>
   );
 }
