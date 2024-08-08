@@ -7,7 +7,7 @@ const PatientMyPageScreen = ({navigation}: any) => {
     console.log("user",user)
   
   return (
-    <PatientMyPage navigation={navigation}/>
+    <PatientMyPage navigation={navigation} user={user} />
 )
 }
 

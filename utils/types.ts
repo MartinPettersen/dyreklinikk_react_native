@@ -10,6 +10,7 @@ export interface Clinic {
 export type RootStackParamList = {
     AdminClinic: { clinic: Clinic };
     AddEmployee: { clinic: Clinic };
+    AddPet: { ownerId: string };
 }
 
 export type Pet = {

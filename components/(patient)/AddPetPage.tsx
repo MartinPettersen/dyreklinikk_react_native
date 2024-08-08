@@ -6,19 +6,19 @@ import BasicButton from "../(util)/BasicButton";
 
 type Props = {
   navigation: any;
-  user: any;
+  ownerId: string;
 };
 
-const AddPetPage = ({ navigation, user }: Props) => {
+const AddPetPage = ({ navigation, ownerId }: Props) => {
   const [name, setName] = useState<string>("");
-  const [owner, setOwner] = useState<string | null>(user.name);
+  const [owner, setOwner] = useState<string | null>(ownerId);
   const [species, setSpecies] = useState<string>("");
   const [race, setRace] = useState<string>("");
   const [treatments, setTreatments] = useState<any[] | null>([]);
 
   const addPet = async () => {
-    console.log("user.id", user)
-    const docRef = doc(FIRESTORE_DB, `owners/${user.id}`);
+    console.log("user.id", ownerId)
+    const docRef = doc(FIRESTORE_DB, `owners/${ownerId}`);
     
 
     

@@ -2,10 +2,10 @@ import React from 'react'
 import { useUser } from "../../components/(user)/UserContext";
 import AddPetPage from '../../components/(patient)/AddPetPage';
 
-const AddPetScreen = ({navigation}: any) => {
-    const { user } = useUser();
+const AddPetScreen = ({navigation, route}: any) => {
+    const { ownerId } = route.params; 
   return (
-    <AddPetPage navigation={navigation} user={user} />
+    <AddPetPage navigation={navigation} ownerId={ownerId} />
   )
 }
 
