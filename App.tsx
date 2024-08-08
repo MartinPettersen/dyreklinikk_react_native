@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "./firebaseConfig";
 import { UserProvider } from "./components/(user)/UserContext";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
+import PatientMyPageScreen from "./screens/(patient)/PatientMyPageScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -29,15 +30,16 @@ const AdminStack = createNativeStackNavigator();
 
 function PatientLayout() {
   return (
-    <PatientStack.Navigator>
+    <PatientStack.Navigator screenOptions={{ headerShown: false }}>
       <PatientStack.Screen name="Start" component={PatientStartScreen} />
+      <PatientStack.Screen name="MyPage" component={PatientMyPageScreen} />
     </PatientStack.Navigator>
   );
 }
 
 function EmployeeLayout() {
   return (
-    <EmployeeStack.Navigator>
+    <EmployeeStack.Navigator screenOptions={{ headerShown: false }}>
       <EmployeeStack.Screen name="Start" component={EmployeeStartScreen} />
     </EmployeeStack.Navigator>
   );
@@ -45,7 +47,7 @@ function EmployeeLayout() {
 
 function AdminLayout() {
   return (
-    <AdminStack.Navigator>
+    <AdminStack.Navigator screenOptions={{ headerShown: false }}>
       <AdminStack.Screen name="Start" component={AdminScreen} />
       <Stack.Screen name="Admin" component={AdminScreen} />
       <Stack.Screen name="Clinics" component={AdminClinicsScreen} />

@@ -24,7 +24,7 @@ const PatientStartScreen = ({ navigation }: any) => {
       <View style={styles.buttonContainer}>
         <BasicButton
           label="Min Side"
-          action={() => console.log("Min Side")}
+          action={() => navigation.navigate("MyPage")}
           disabled={false}
         />
       </View>
