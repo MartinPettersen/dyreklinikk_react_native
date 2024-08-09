@@ -7,9 +7,10 @@ import {
   collection,
   arrayUnion,
 } from "firebase/firestore";
-import { FIRESTORE_DB } from "../../firebaseConfig";
+import { FIREBASE_AUTH, FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
 import { Clinic } from "../../utils/types";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 type Props = {
   navigation: any;
@@ -28,7 +29,13 @@ const AddEmployePage = ({ navigation, clinic }: Props) => {
   const [patients, setPatients] = useState<string[]>([]);
   const [information, setInformation] = useState<string>("");
 
+  const auth = FIREBASE_AUTH;
+
   const addEmployee = async () => {
+    const docR = await addDoc(collection(FIRESTORE_DB, "roles"), {
+      email: email,
+      role: "employee"
+    })
     const docRef = await addDoc(collection(FIRESTORE_DB, "employees"), {
       name: name,
       workplace: workplace,
@@ -50,6 +57,17 @@ const AddEmployePage = ({ navigation, clinic }: Props) => {
       employeeIds: arrayUnion(employeeId),
     });
   };
+
+  const createEmployeeAccount = async () => {
+
+    try {
+        const response = await createUserWithEmailAndPassword(auth, email!, "test123");
+    } catch ( error) {
+        console.log(error);
+    } finally {
+      addEmployee()
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -105,7 +123,7 @@ const AddEmployePage = ({ navigation, clinic }: Props) => {
       <View style={{ width: "60%", paddingTop: 10, zIndex: 1 }}>
         <BasicButton
           label={"Legg Til"}
-          action={() => addEmployee()}
+          action={() => createEmployeeAccount()}
           disabled={name === ""}
         />
       </View>

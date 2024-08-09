@@ -26,6 +26,7 @@ import AddPetScreen from "./screens/(patient)/AddPetScreen";
 import PetInfoScreen from "./screens/(patient)/PetInfoScreen";
 import ClinicsScreen from "./screens/(universal)/ClinicsScreen";
 import ClinicScreen from "./screens/(universal)/ClinicScreen";
+import AdminEmployeeScreen from "./screens/(admin)/AdminEmployeeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +66,8 @@ function AdminLayout() {
       <Stack.Screen name="AddEmployee" component={AddEmployeeScreen} />
       <Stack.Screen name="AdminClinic" component={AdminClinicScreen} />
       <Stack.Screen name="AdminEmployees" component={AdminEmployeesScreen} />
+      <Stack.Screen name="AdminEmployee" component={AdminEmployeeScreen} />
+
     </AdminStack.Navigator>
   );
 }

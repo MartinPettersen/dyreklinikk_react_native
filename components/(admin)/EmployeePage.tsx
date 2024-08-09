@@ -36,7 +36,7 @@ const EmployeePage = ({ navigation }: Props) => {
   }, []);
 
   const renderEmployee = ({item}: RenderEmployeeProp) => {
-    return <DisplayTag label={item.name} action={() => console.log("h")} />
+    return <DisplayTag label={item.name} action={() => navigation.navigate("AdminEmployee", {employee: item})} />
   }
 
   return (
