@@ -24,6 +24,7 @@ import PatientMyPageScreen from "./screens/(patient)/PatientMyPageScreen";
 import AddOwnerInfoScreen from "./screens/(patient)/AddOwnerInfoScreen";
 import AddPetScreen from "./screens/(patient)/AddPetScreen";
 import PetInfoScreen from "./screens/(patient)/PetInfoScreen";
+import ClinicsScreen from "./screens/ClinicsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +40,7 @@ function PatientLayout() {
       <PatientStack.Screen name="AddOwnerInfo" component={AddOwnerInfoScreen} />
       <PatientStack.Screen name="AddPet" component={AddPetScreen} />
       <PatientStack.Screen name="PetInfo" component={PetInfoScreen} />
+      <PatientStack.Screen name="Clinics" component={ClinicsScreen} />
     </PatientStack.Navigator>
   );
 }
@@ -128,6 +130,8 @@ export default function App() {
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="SignUp" component={SignUpScreen} />
               <Stack.Screen name="Time" component={TimeTableScreen} />
+              <Stack.Screen name="Clinics" component={ClinicsScreen} />
+
             </>
           )}
         </Stack.Navigator>

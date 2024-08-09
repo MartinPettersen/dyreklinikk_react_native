@@ -16,6 +16,7 @@ const PetInfoPage = ({ pet }: Props) => {
         <Text style={[styles.text, styles.bold]}>Rase:</Text> {pet.species}
       </Text>
     </View>
+    
   );
 };
 

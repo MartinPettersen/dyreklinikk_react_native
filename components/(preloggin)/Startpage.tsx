@@ -12,17 +12,11 @@ const Startpage = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.headline}>Velkommen til {name}</Text>
-      <View style={styles.buttonContainer}>
-        <BasicButton
-          label="Ledige Timer"
-          action={() => console.log("ledige timer")}
-          disabled={false}
-        />
-      </View>
+
       <View style={styles.buttonContainer}>
         <BasicButton
           label="Våre Klinikker"
-          action={() => console.log("se våre klinikker")}
+          action={() => navigation.navigate("Clinics")}
           disabled={false}
         />
       </View>

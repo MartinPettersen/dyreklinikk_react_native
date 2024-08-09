@@ -1,26 +1,17 @@
-import { addDoc, collection, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  FlatList,
-} from "react-native";
-import { FIRESTORE_DB } from "../../firebaseConfig";
-import BasicButton from "../(util)/BasicButton";
-import { Clinic } from "../../utils/types";
-import { SafeAreaView } from "react-native-safe-area-context";
-import HorizontalLine from "../(util)/HorizontalLine";
-import DisplayTag from "../(util)/DisplayTag";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import { Clinic } from "../utils/types";
+import { collection, onSnapshot } from "firebase/firestore";
+import { FIRESTORE_DB } from "../firebaseConfig";
+import ClinicTag from "./(util)/ClinicTag";
 
 type Props = {
   navigation: any;
 };
 
 type RenderClinicProp = {
-  item: Clinic
-}
+  item: Clinic;
+};
 
 const ClinicsPage = ({ navigation }: Props) => {
   const [clinics, setClinics] = useState<any[] | null>(null);
@@ -43,19 +34,14 @@ const ClinicsPage = ({ navigation }: Props) => {
     return () => subscriber();
   }, []);
 
-  const renderClinic = ({item }: RenderClinicProp) => {
-    return <DisplayTag label={item.name} action={() => navigation.navigate("AdminClinic", {clinic: item})} />;
-  };
+
+  const renderClinic = ({ item }:RenderClinicProp ) => {
+    return <ClinicTag clinic={item} action={() => console.log("clinic")}/>
+  }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.headline}>Klinikker</Text>
-      <BasicButton
-        label={"Ny Klinikk"}
-        action={() => navigation.navigate("AddClinic")}
-        disabled={false}
-      />
-        <HorizontalLine />
       {clinics ? (
         <View style={styles.clinicsContainer}>
           {
@@ -67,24 +53,28 @@ const ClinicsPage = ({ navigation }: Props) => {
           }
         </View>
       ) : null}
-    </SafeAreaView>
+    </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "flex-start",
-  },
-  clinicsContainer: {
-    margin: 0,
+    alignItems: "center",
+    marginTop: 40,
   },
   headline: {
     fontSize: 40,
     margin: 20,
     color: "#52525b",
     fontWeight: "bold",
+  },
+  buttonContainer: {
+    margin: 10,
+    width: "50%",
+  },
+  clinicsContainer: {
+    margin: 0,
   },
 });
 
