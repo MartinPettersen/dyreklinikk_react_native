@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { Clinic } from "../utils/types";
+import { Clinic } from "../../utils/types";
 import { collection, onSnapshot } from "firebase/firestore";
-import { FIRESTORE_DB } from "../firebaseConfig";
-import ClinicTag from "./(util)/ClinicTag";
+import { FIRESTORE_DB } from "../../firebaseConfig";
+import ClinicTag from "../(util)/ClinicTag";
 
 type Props = {
   navigation: any;
@@ -35,8 +35,8 @@ const ClinicsPage = ({ navigation }: Props) => {
   }, []);
 
 
-  const renderClinic = ({ item }:RenderClinicProp ) => {
-    return <ClinicTag clinic={item} action={() => console.log("clinic")}/>
+  const renderClinic = ({ item }: RenderClinicProp ) => {
+    return <ClinicTag clinic={item} action={() => navigation.navigate("Clinic", {clinic: item})}/>
   }
 
   return (

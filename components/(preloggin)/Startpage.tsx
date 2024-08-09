@@ -31,7 +31,7 @@ const Startpage = ({ navigation }: Props) => {
 
       <View style={styles.buttonContainer}>
         <BasicButton
-          label="Ny brukker"
+          label="Ny bruker"
           action={() => navigation.navigate("SignUp")}
           disabled={false}
         />
