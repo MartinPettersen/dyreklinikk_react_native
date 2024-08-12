@@ -4,7 +4,6 @@ import { StyleSheet, Text, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import AdminScreen from "./screens/(admin)/AdminScreen";
-import TimeTableScreen from "./screens/TimeTableScreen";
 import AdminClinicsScreen from "./screens/(admin)/AdminClinicsScreen";
 import AddClinicScreen from "./screens/(admin)/AddClinicScreen";
 import AdminClinicScreen from "./screens/(admin)/AdminClinicScreen";
@@ -137,7 +136,6 @@ export default function App() {
               <Stack.Screen name="Start" component={StartScreen} />
               <Stack.Screen name="Login" component={LoginScreen} />
               <Stack.Screen name="SignUp" component={SignUpScreen} />
-              <Stack.Screen name="Time" component={TimeTableScreen} />
               <Stack.Screen name="Clinics" component={ClinicsScreen} />
               <Stack.Screen name="Clinic" component={ClinicScreen} />
             </>

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, SafeAreaView, FlatList } from "react-native";
+import { Text, View, StyleSheet, SafeAreaView, FlatList, ScrollView } from "react-native";
 import { Clinic } from "../../utils/types";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import EmployeeTag from "../(util)/EmployeeTag";
+import ClinicBookingPage from "./ClinicBookingPage";
 
 type Props = {
   clinic: Clinic;
@@ -17,9 +18,10 @@ type RenderEmployeeProp = {
 const ClinicPage = ({ clinic, navigation }: Props) => {
   const [employees, setEmployees] = useState<any[] | null>(null);
 
+  const [selectedVet, setSelectedVet] = useState<any | null>(null);
+
   const getEmployees = () => {
     const employeeRef = collection(FIRESTORE_DB, "employees");
-
 
     const subscriber = onSnapshot(
       query(employeeRef, where("workplace", "==", clinic.id)),
@@ -34,24 +36,27 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
               id: doc.data().id,
             });
           });
-          console.log(employeeList)
+          console.log(employeeList);
           setEmployees(employeeList);
+          setSelectedVet(employeeList[0]);
         },
       }
     );
-
   };
 
   useEffect(() => {
     getEmployees();
   }, []);
 
-  const renderEmployee = ({item}: RenderEmployeeProp) => {
-    return <EmployeeTag employee={item} action={() => console.log("h")} />
-  }
+  const renderEmployee = ({ item }: RenderEmployeeProp) => {
+    return <EmployeeTag employee={item} action={() => setSelectedVet(item)} />;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}
+      showsVerticalScrollIndicator={false}>
+
       <Text style={styles.headline}>{`${clinic.name}`}</Text>
       <Text style={styles.text}>
         <Text style={styles.bold}>Åpningstider: </Text>
@@ -68,16 +73,19 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
         <Text style={styles.bold}>Våre Ansatte:</Text>
       </Text>
       {employees ? (
-      <View style={styles.employeesContainer}>
-        {
-          <FlatList
-            data={employees}
-            renderItem={renderEmployee}
-            keyExtractor={(employee: any) => employee.id}
-          />
-        }
-      </View>
-    ) : null}
+        <View style={styles.employeesContainer}>
+          {
+            <FlatList
+              data={employees}
+              renderItem={renderEmployee}
+              keyExtractor={(employee: any) => employee.id}
+            />
+          }
+        </View>
+      ) : null}
+      {selectedVet ? <ClinicBookingPage vet={selectedVet} /> : null}
+      </ScrollView>
+    
     </SafeAreaView>
   );
 };
@@ -108,7 +116,11 @@ const styles = StyleSheet.create({
   },
   employeesContainer: {
     margin: 0,
+    flex: 1,
   },
+  scrollContainer: {
+    alignItems: "center"
+  }
 });
 
 export default ClinicPage;
