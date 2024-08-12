@@ -83,7 +83,7 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
           }
         </View>
       ) : null}
-      {selectedVet ? <ClinicBookingPage vet={selectedVet} /> : null}
+      {selectedVet ? <ClinicBookingPage vet={selectedVet} clinic={clinic} /> : null}
       </ScrollView>
     
     </SafeAreaView>
