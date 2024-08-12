@@ -16,7 +16,7 @@ const EmployeeStartScreen = ({ navigation }: any) => {
       <View style={styles.buttonContainer}>
         <BasicButton
           label="Mine Pasienter"
-          action={() => console.log("Mine Pasienter")}
+          action={() => navigation.navigate("MyPatients")}
           disabled={false}
         />
       </View>
