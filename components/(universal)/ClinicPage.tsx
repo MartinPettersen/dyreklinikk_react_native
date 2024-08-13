@@ -33,10 +33,10 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
               name: doc.data().name,
               expertise: doc.data().expertise,
               patients: doc.data().patients,
-              id: doc.data().id,
+              id: doc.id,
             });
           });
-          console.log(employeeList);
+          console.log("empl", employeeList);
           setEmployees(employeeList);
           setSelectedVet(employeeList[0]);
         },

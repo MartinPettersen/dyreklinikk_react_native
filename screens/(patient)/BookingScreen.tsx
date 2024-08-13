@@ -24,7 +24,7 @@ const BookingScreen = ({navigation, route}: any) => {
                             name: doc.data().name,
                             pets: doc.data().pets,
                             phone: doc.data().phone,
-                            id: doc.data().id,
+                            id: doc.id,
                         })
                     })
                     setOwner(owners[0])

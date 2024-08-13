@@ -19,7 +19,7 @@ const PetDropDownMenu = ({
   pet,
   setPet,
 }: Props) => {
-  const [petNames, setPetNames] = useState<{ label: string; value: string }[]>(
+  const [petNames, setPetNames] = useState<{ label: string; value: any }[]>(
     []
   );
 
@@ -29,7 +29,7 @@ const PetDropDownMenu = ({
     for (let i = 0; i < pets.length; i++) {
       petNameList.push({
         label: pets[i].name,
-        value: pets[i],
+        value: {pet: pets[i], petIndex: i},
       });
     }
     setPetNames(petNameList)
@@ -50,7 +50,7 @@ const PetDropDownMenu = ({
           setValue={setPet}
           setItems={setPets}
           style={{}}
-          placeholder={pet!}
+          placeholder={"Velg dyr"}
         />
       ) : null}
     </View>
