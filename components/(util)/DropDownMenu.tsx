@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, View, Text } from "react-native";
-import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownPicker from "react-native-dropdown-picker";
 
 type Props = {
-    open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    selectedTime: string | null,
-    setSelectedTime: React.Dispatch<React.SetStateAction<string | null>>
-}
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedTime: string | null;
+  setSelectedTime: React.Dispatch<React.SetStateAction<string | null>>;
+};
 
-const DropDownMenu = ({open, setOpen, setSelectedTime, selectedTime}: Props) => {
-
-
-    const [times, setTimes] = useState<{label: string, value: string}[]>([]);
+const DropDownMenu = ({
+  open,
+  setOpen,
+  setSelectedTime,
+  selectedTime,
+}: Props) => {
+  const [times, setTimes] = useState<{ label: string; value: string }[]>([]);
 
   const intervals = 15;
 
@@ -34,7 +37,10 @@ const DropDownMenu = ({open, setOpen, setSelectedTime, selectedTime}: Props) => 
         } else {
           minute = j * intervals;
         }
-        tempTimes.push({label: `${hour}:${minute}`, value: `${hour}:${minute}`});
+        tempTimes.push({
+          label: `${hour}:${minute}`,
+          value: `${hour}:${minute}`,
+        });
       }
     }
     setTimes(tempTimes);
@@ -44,19 +50,22 @@ const DropDownMenu = ({open, setOpen, setSelectedTime, selectedTime}: Props) => 
     getTimes();
   }, []);
 
-  return <View style={{}}>
-  {times.length > 0 ? 
-    <DropDownPicker
-        open={open}
-        value={selectedTime}
-        items={times}
-        setOpen={setOpen}
-        setValue={setSelectedTime}
-        setItems={setTimes}
-        style={{}}
-        placeholder={selectedTime!}
-      /> 
-  : null}</View>;
+  return (
+    <View style={{}}>
+      {times.length > 0 ? (
+        <DropDownPicker
+          open={open}
+          value={selectedTime}
+          items={times}
+          setOpen={setOpen}
+          setValue={setSelectedTime}
+          setItems={setTimes}
+          style={{}}
+          placeholder={selectedTime!}
+        />
+      ) : null}
+    </View>
+  );
 };
 
 export default DropDownMenu;

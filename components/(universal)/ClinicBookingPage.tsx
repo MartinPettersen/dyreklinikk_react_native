@@ -57,7 +57,7 @@ const ClinicBookingPage = ({ vet, clinic, navigation }: Props) => {
       <View style={{ margin: 10 }}>
         <BasicButton
           label="Bestill Time"
-          action={() => user? console.log("Bestill time") : navigation.navigate("Login")}
+          action={() => user? navigation.navigate("Booking", {vet: vet, clinic: clinic, date: selectedDate, time: selectedTime}) : navigation.navigate("Login")}
           disabled={false}
         />
       </View>

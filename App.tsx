@@ -27,6 +27,7 @@ import ClinicsScreen from "./screens/(universal)/ClinicsScreen";
 import ClinicScreen from "./screens/(universal)/ClinicScreen";
 import AdminEmployeeScreen from "./screens/(admin)/AdminEmployeeScreen";
 import MyPatientsScreen from "./screens/(employee)/MyPatientsScreen";
+import BookingScreen from "./screens/(patient)/BookingScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +45,7 @@ function PatientLayout() {
       <PatientStack.Screen name="PetInfo" component={PetInfoScreen} />
       <PatientStack.Screen name="Clinics" component={ClinicsScreen} />
       <PatientStack.Screen name="Clinic" component={ClinicScreen} />
+      <PatientStack.Screen name="Booking" component={BookingScreen} />
       
     </PatientStack.Navigator>
   );
