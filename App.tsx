@@ -44,6 +44,7 @@ function PatientLayout() {
       <PatientStack.Screen name="PetInfo" component={PetInfoScreen} />
       <PatientStack.Screen name="Clinics" component={ClinicsScreen} />
       <PatientStack.Screen name="Clinic" component={ClinicScreen} />
+      
     </PatientStack.Navigator>
   );
 }

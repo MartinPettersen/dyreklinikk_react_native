@@ -4,6 +4,7 @@ import { Calendar } from "react-native-calendars";
 import TimePicker from "./TimePicker";
 import { Clinic } from "../../utils/types";
 import BasicButton from "../(util)/BasicButton";
+import { useUser } from "../../components/(user)/UserContext";
 
 type DayObject = {
   dateString: string;
@@ -16,13 +17,15 @@ type DayObject = {
 type Props = {
   vet: any;
   clinic: Clinic;
+  navigation: any
 };
 
-const ClinicBookingPage = ({ vet, clinic }: Props) => {
+const ClinicBookingPage = ({ vet, clinic, navigation }: Props) => {
   const [selectedDate, setSelectedDate] = useState<string>("");
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [showTimePicker, setShowTimePicker] = useState(false);
-
+  const { user } = useUser();
+  console.log("user ",user)
   const onDayPress = (day: DayObject) => {
     setSelectedDate(day.dateString);
     setShowTimePicker(true);
@@ -54,7 +57,7 @@ const ClinicBookingPage = ({ vet, clinic }: Props) => {
       <View style={{ margin: 10 }}>
         <BasicButton
           label="Bestill Time"
-          action={() => console.log("Bestill time")}
+          action={() => user? console.log("Bestill time") : navigation.navigate("Login")}
           disabled={false}
         />
       </View>
@@ -73,6 +76,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "white",
+    fontWeight: "bold",
+    marginBottom: 10,
   },
 });
 

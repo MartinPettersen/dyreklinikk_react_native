@@ -30,8 +30,8 @@ const PatientStartScreen = ({ navigation }: any) => {
       </View>
       <View style={styles.buttonContainer}>
         <BasicButton
-          label="Vetrinærer"
-          action={() => console.log("Vetrinærer")}
+          label="Våre Klinikker"
+          action={() => navigation.navigate("Clinics")}
           disabled={false}
         />
       </View>
