@@ -4,7 +4,13 @@ import { Text, TextInput, View, StyleSheet } from "react-native";
 import PetDropDownMenu from "../(util)/PetDropDownMenu";
 import BasicButton from "../(util)/BasicButton";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { addDoc, arrayUnion, collection, doc, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 
 type Props = {
@@ -23,59 +29,59 @@ const BookingPage = ({ clinic, vet, date, time, owner }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(owner);
     if (owner) {
       setPets(owner.pets);
     }
   }, [owner]);
 
   const registerBooking = async () => {
-    console.log("booking")
     const order = {
-        vetId: vet.id,
-        clinicId: clinic.id,
-        owner: owner.id,
-        pet: pet.petIndex,
-        reason: reason,
-        date: date,
-        time: time,
-        status: "waiting",
-        note: ""
-    }
-    console.log("order", order)
-    const docBooking = await addDoc(collection(FIRESTORE_DB, "treatments"), order) 
-    console.log("docbookin", docBooking)
+      vetId: vet.id,
+      clinicId: clinic.id,
+      owner: owner.id,
+      pet: pet.petIndex,
+      reason: reason,
+      date: date,
+      time: time,
+      status: "waiting",
+      note: "",
+    };
+    const docBooking = await addDoc(
+      collection(FIRESTORE_DB, "treatments"),
+      order
+    );
     const bookingId = docBooking.id;
-    
+
     const clinicRef = doc(FIRESTORE_DB, `clinics/${clinic.id}`);
     await updateDoc(clinicRef, {
       treatments: arrayUnion(bookingId),
-      patients: arrayUnion({ownerId: owner.id, patient: pet.petIndex}),
+      patients: arrayUnion({ ownerId: owner.id, patient: pet.petIndex }),
     });
-    
+
     const employeeRef = doc(FIRESTORE_DB, `employees/${vet.id}`);
     await updateDoc(employeeRef, {
-      patients: arrayUnion({ownerId: owner.id, patient: pet.petIndex}),
+      patients: arrayUnion({ ownerId: owner.id, patient: pet.petIndex }),
     });
-  
+
     const tempPets = pets;
     tempPets[pet.petIndex].treatments = [
-        ...(pets[pet.petIndex].treatments || []),
+      ...(pets[pet.petIndex].treatments || []),
       bookingId,
-    ]
+    ];
 
     const ownerRef = doc(FIRESTORE_DB, `owners/${owner.id}`);
     await updateDoc(ownerRef, {
       pets: pets,
     });
-}
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-        <View style={styles.textContainer}>
-
-      <Text style={styles.text}>{`Time hos ${vet.name} ved ${clinic.name} den ${date} klokken ${time}`}</Text>
-        </View>
+      <View style={styles.textContainer}>
+        <Text
+          style={styles.text}
+        >{`Time hos ${vet.name} ved ${clinic.name} den ${date} klokken ${time}`}</Text>
+      </View>
 
       <View style={[styles.dropdownContainer, , { zIndex: 3 }]}>
         <PetDropDownMenu
@@ -144,7 +150,7 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "bold",
     fontSize: 20,
-  }
+  },
 });
 
 export default BookingPage;

@@ -7,7 +7,6 @@ type Props = {
 };
 
 const EmployeeTag = ({ employee, action }: Props) => {
-  console.log(employee)
   return (
     <TouchableOpacity onPress={action} style={[styles.button, styles.shadow]}>
       <Text style={styles.text}>

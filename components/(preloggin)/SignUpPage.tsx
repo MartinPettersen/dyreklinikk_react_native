@@ -39,12 +39,10 @@ const SignUpPage = ({ navigation }: any) => {
 
     try {
         const response = await createUserWithEmailAndPassword(auth, email, password);
-        //console.log(response)
     } catch ( error) {
         console.log(error);
     } finally {
       addAccount()
-      // navigation.navigate("AddOwnerInfo")
     }
   }
 

@@ -25,8 +25,6 @@ const ClinicBookingPage = ({ vet, clinic, navigation }: Props) => {
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const { user } = useUser();
-  console.log("user ",user)
-  console.log("vet ",vet)
 
   const onDayPress = (day: DayObject) => {
     setSelectedDate(day.dateString);

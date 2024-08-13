@@ -7,7 +7,6 @@ import { useUser } from "../../components/(user)/UserContext";
 const PatientStartScreen = ({ navigation }: any) => {
   
   const { user } = useUser();
-  console.log("user",user)
 
   const handleLogout = async () => {
     try {

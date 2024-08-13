@@ -24,7 +24,6 @@ const PetDropDownMenu = ({
   );
 
   const getPetNames = () => {
-    console.log("pets", pets);
     const petNameList = [];
     for (let i = 0; i < pets.length; i++) {
       petNameList.push({

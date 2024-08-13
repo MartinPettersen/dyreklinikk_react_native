@@ -17,7 +17,6 @@ const AddPetPage = ({ navigation, ownerId }: Props) => {
   const [treatments, setTreatments] = useState<any[] | null>([]);
 
   const addPet = async () => {
-    console.log("user.id", ownerId)
     const docRef = doc(FIRESTORE_DB, `owners/${ownerId}`);
     
 

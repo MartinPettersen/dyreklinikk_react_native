@@ -36,7 +36,6 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
               id: doc.id,
             });
           });
-          console.log("empl", employeeList);
           setEmployees(employeeList);
           setSelectedVet(employeeList[0]);
         },

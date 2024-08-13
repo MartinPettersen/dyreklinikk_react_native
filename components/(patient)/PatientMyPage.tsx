@@ -26,7 +26,6 @@ const PatientMyPage = ({ navigation, user }: Props) => {
         next: (snapshot) => {
           const owners: any[] = [];
           snapshot.docs.forEach((doc) => {
-            console.log("owner.id", doc.id);
             setOwnerId(doc.id);
             owners.push({
               adress: doc.data().adress,
@@ -36,7 +35,6 @@ const PatientMyPage = ({ navigation, user }: Props) => {
               phone: doc.data().phone,
             });
           });
-          console.log(owners[0]);
           setOwner(owners[0]);
         },
       }

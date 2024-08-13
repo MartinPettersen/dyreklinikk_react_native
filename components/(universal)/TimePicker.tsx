@@ -28,7 +28,6 @@ const TimePicker = ({
     const times = [];
     for (let i = openingHour; i < closingHour; i++) {
       for (let j = 0; j < 60; j += 15) {
-        console.log(`${i}:${j}`);
         times.push(`${i < 10 ? `0${i}` : i}:${j < 10 ? `0${j}` : j}`);
       }
     }

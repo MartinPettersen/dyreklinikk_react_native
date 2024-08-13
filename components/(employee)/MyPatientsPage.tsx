@@ -11,9 +11,6 @@ type Props = {
 };
 
 const MyPatientsPage = ({ navigation, user, patients }: Props) => {
-  console.log(user)
-  //const [patients, setPatients] = useState([])
-  console.log(patients)
 
   return (
     <View style={styles.container}>

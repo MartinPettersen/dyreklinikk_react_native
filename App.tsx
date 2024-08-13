@@ -89,7 +89,6 @@ export default function App() {
         next: (snapshot) => {
           const roles: any[] = [];
           snapshot.docs.forEach((doc) => {
-            console.log("doc ",doc.id)
             roles.push({
               email: doc.data().email,
               role: doc.data().role,
