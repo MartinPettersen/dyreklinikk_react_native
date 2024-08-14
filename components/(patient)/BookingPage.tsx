@@ -22,7 +22,7 @@ type Props = {
   owner: any;
 };
 
-const BookingPage = ({ clinic, vet, date, time, owner }: Props) => {
+const BookingPage = ({ clinic, vet, date, time, owner, navigation }: Props) => {
   const [pet, setPet] = useState<any | null>(null);
   const [reason, setReason] = useState<string>("");
   const [pets, setPets] = useState<any[]>([]);
@@ -73,6 +73,8 @@ const BookingPage = ({ clinic, vet, date, time, owner }: Props) => {
     await updateDoc(ownerRef, {
       pets: pets,
     });
+    navigation.navigate("Start");
+
   };
 
   return (

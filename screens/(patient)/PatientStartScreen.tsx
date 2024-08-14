@@ -36,8 +36,8 @@ const PatientStartScreen = ({ navigation }: any) => {
       </View>
       <View style={styles.buttonContainer}>
         <BasicButton
-          label="Kommende Behandlinger"
-          action={() => console.log("Kommende Behandlinger")}
+          label="Behandlinger"
+          action={() => navigation.navigate("PatientTreatments")}
           disabled={false}
         />
       </View>
