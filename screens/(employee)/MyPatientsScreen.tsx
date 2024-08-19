@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { useUser } from "../../components/(user)/UserContext";
 import MyPatientsPage from '../../components/(employee)/MyPatientsPage';
@@ -27,6 +27,9 @@ const MyPatientsScreen = ({navigation }: any) => {
 
     }
 
+    useEffect(() => {
+      getPatients()
+    },[])
 
   return (
     <MyPatientsPage navigation={navigation} user={user} patients={patients}/>

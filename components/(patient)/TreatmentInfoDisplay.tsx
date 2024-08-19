@@ -11,7 +11,7 @@ type Props = {
 
 const TreatmentInfoDisplay = ({ treatmentId, navigation, owner }: Props) => {
   const [treatment, setTreatment] = useState<any | null>(null);
-
+  console.log("treatmentId", treatmentId)
   const getTreatment = async () => {
     const docRef = doc(FIRESTORE_DB, `treatments/${treatmentId}`);
 

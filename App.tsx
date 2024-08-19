@@ -29,6 +29,8 @@ import AdminEmployeeScreen from "./screens/(admin)/AdminEmployeeScreen";
 import MyPatientsScreen from "./screens/(employee)/MyPatientsScreen";
 import BookingScreen from "./screens/(patient)/BookingScreen";
 import PatientTreatmentsScreen from "./screens/(patient)/PatientTreatmentsScreen";
+import VetTreatmentsScreen from "./screens/(employee)/VetTreatmentsScreen";
+import VetPatientInfoScreen from "./screens/(employee)/VetPatientInfoScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +60,8 @@ function EmployeeLayout() {
     <EmployeeStack.Navigator screenOptions={{ headerShown: false }}>
       <EmployeeStack.Screen name="Start" component={EmployeeStartScreen} />
       <EmployeeStack.Screen name="MyPatients" component={MyPatientsScreen} />
+      <EmployeeStack.Screen name="VetTreatments" component={VetTreatmentsScreen} />
+      <EmployeeStack.Screen name="VetPatientInfo" component={VetPatientInfoScreen} />
 
     </EmployeeStack.Navigator>
   );

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import BasicButton from "../(util)/BasicButton";
 import IconButton from "../(util)/IconButton";
 import AddPetButton from "../(util)/AddPetButton";
+import { FIRESTORE_DB } from "../../firebaseConfig";
+import PatientDisplay from "./PatientDisplay";
 
 type Props = {
   navigation: any;
@@ -10,7 +12,19 @@ type Props = {
   patients: any;
 };
 
+type RenderPatientProp = {
+  item: any;
+}
+
+
 const MyPatientsPage = ({ navigation, user, patients }: Props) => {
+
+
+  const renderPatient = ({ item }: RenderPatientProp) => {
+    return <PatientDisplay patient={item} navigation={navigation}/>
+  }
+
+  console.log(patients)
 
   return (
     <View style={styles.container}>
@@ -20,6 +34,13 @@ const MyPatientsPage = ({ navigation, user, patients }: Props) => {
         action={() => navigation.navigate("AddPatient")}
         disabled={false}
       />
+      {patients.length > 0 ? (
+        <FlatList
+        data={patients}
+        renderItem={renderPatient}
+        keyExtractor={(patient: any, index: number) => `${patient.patient}${patient.ownerId}${index}`}
+        />
+      ): null}
     </View>
   );
 };
@@ -29,6 +50,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 40,
   },
   headline: {
     fontSize: 40,
