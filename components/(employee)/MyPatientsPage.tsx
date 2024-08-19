@@ -24,7 +24,6 @@ const MyPatientsPage = ({ navigation, user, patients }: Props) => {
     return <PatientDisplay patient={item} navigation={navigation}/>
   }
 
-  console.log(patients)
 
   return (
     <View style={styles.container}>

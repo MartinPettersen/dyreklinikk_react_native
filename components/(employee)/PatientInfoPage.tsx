@@ -16,12 +16,8 @@ type RenderTreatmentProp = {
 
 
 const PatientInfoPage = ({ navigation, owner, patient }: Props) => {
-  console.log("owner", owner.pets);
-  console.log("patient", patient.patient);
-  //console.log("owner.pets[patient.patient].treatments?.length ", owner.pets[patient.patient].treatments?.length)
 
   const renderTreatment = ({ item }: RenderTreatmentProp) => {
-    console.log(item)
     return (
       <PatientTreatmentDisplay
         navigation={navigation}

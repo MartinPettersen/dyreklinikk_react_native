@@ -37,12 +37,10 @@ const PatientTreatmentsScreen = ({ navigation }: Props) => {
               owner: doc.data(),
             });
           });
-          console.log("petlist", petsList[0].pets.length);
           let list: any[] = [];
           for (let i = 0; i < petsList[0].pets.length; i++) {
             const petTreatments = petsList[0].pets[i].treatments || [];
             const petName = petsList[0].pets[i].name;
-            console.log("petTreatments", petTreatments);
             list = [...list, ...petTreatments];
           }
           setTreatments(list);

@@ -9,7 +9,6 @@ type Props = {
 };
 
 const PatientDisplay = ({ patient, navigation }: Props) => {
-  console.log(patient);
   const [owner, setOwner] = useState<any | null>(null);
 
   const getPatients = async () => {
@@ -17,7 +16,6 @@ const PatientDisplay = ({ patient, navigation }: Props) => {
 
     const subscriber = onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
-        console.log("snapshot", snapshot.data());
         setOwner(snapshot.data());
       } else {
         console.log("Problem with fetching documents");

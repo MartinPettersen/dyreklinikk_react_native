@@ -11,13 +11,11 @@ type Props = {
 
 const TreatmentInfoDisplay = ({ treatmentId, navigation, owner }: Props) => {
   const [treatment, setTreatment] = useState<any | null>(null);
-  console.log("treatmentId", treatmentId)
   const getTreatment = async () => {
     const docRef = doc(FIRESTORE_DB, `treatments/${treatmentId}`);
 
     const subscriber = onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
-        console.log(snapshot.data());
         setTreatment(snapshot.data());
       } else {
         console.log("Problemer med å hente dokumentet");
