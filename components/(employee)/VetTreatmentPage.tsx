@@ -13,6 +13,7 @@ const VetTreatmentPage = ({ patientTreatment, navigation }: Props) => {
   const [treatment, setTreatment] = useState(patientTreatment);
   const [updated, setUpdated] = useState(false);
   const [noteActive, setNoteActive] = useState(false);
+  const [note, setNote] = useState(patientTreatment.note);
 
   const updateTreatment = async () => {
     console.log("treatmen id", treatment.id);
@@ -27,12 +28,21 @@ const VetTreatmentPage = ({ patientTreatment, navigation }: Props) => {
     setUpdated(!updated);
   };
 
+  const addNote = async () => {
+    const docRef = doc(FIRESTORE_DB, `treatments/${treatment.id}`);
+    updateDoc(docRef, {
+      note: note,
+    });
+    setNoteActive(false)
+    setUpdated(!updated);
+  };
+
+
   const deleteTreatment = async () => {
     const docRef = doc(FIRESTORE_DB, `treatments/${treatment.id}`);
-    deleteDoc(docRef)
+    deleteDoc(docRef);
     navigation.navigate("VetTreatments");
-
-  }
+  };
 
   useEffect(() => {}, [updated]);
 
@@ -66,10 +76,23 @@ const VetTreatmentPage = ({ patientTreatment, navigation }: Props) => {
           <Text style={[styles.text, styles.bold]}>Status:</Text>{" "}
           {treatment.status}
         </Text>
-        <Text style={styles.text}>
-          <Text style={[styles.text, styles.bold]}>Notat:</Text>{" "}
-          {treatment.note}
-        </Text>
+        {noteActive ? (
+            <View style={styles.inputContainer}>
+
+          <TextInput
+            placeholder="Kommentar"
+            onChangeText={(text: string) => setNote(text)}
+            value={note}
+            style={styles.inputField}
+            />
+            <BasicButton label="Legg til" disabled={note == ""} action={() => addNote()}/>
+            </View>
+        ) : (
+          <Text style={styles.text}>
+            <Text style={[styles.text, styles.bold]}>Notat:</Text>{" "}
+            {note}
+          </Text>
+        )}
       </View>
       <View style={styles.buttonView}>
         <BasicButton
@@ -140,8 +163,22 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     marginTop: 30,
-    width: "60%"
+    width: "60%",
   },
+  inputField: {
+    padding: 10,
+    paddingBottom: 2,
+    paddingTop: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    margin: 10,
+    backgroundColor: "white",
+    width: "60%",
+    fontSize: 16,
+  },
+  inputContainer: {
+    flexDirection: "row",
+  }
 });
 
 export default VetTreatmentPage;
