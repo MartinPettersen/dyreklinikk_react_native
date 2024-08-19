@@ -16,6 +16,7 @@ export type RootStackParamList = {
     Clinic: { clinic: Clinic };
     VetPatientInfo: { owner: any, patient: any };
     Booking: { clinic: Clinic, vet: any, date: string, time: any };
+    VetTreatment: { treatment: any };
 
 }
 

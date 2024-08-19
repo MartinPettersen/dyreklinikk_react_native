@@ -75,7 +75,6 @@ const VetTreatmentsScreen = ({ navigation }: Props) => {
   }, [vetId]);
 
   const renderTreatment = ({ item }: RenderTreatmentProp) => {
-    console.log("item ", item);
     return (
       <TouchableOpacity
         style={[
@@ -85,6 +84,7 @@ const VetTreatmentsScreen = ({ navigation }: Props) => {
             ? { backgroundColor: "#94a3b8" }
             : { backgroundColor: "#7dd3fc" },
         ]}
+        onPress={() => navigation.navigate("VetTreatment", { treatment: item })}
       >
         <Text>
           Dato: {item.date} kl. {item.time}
