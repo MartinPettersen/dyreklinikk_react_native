@@ -33,10 +33,9 @@ const VetTreatmentPage = ({ patientTreatment, navigation }: Props) => {
     updateDoc(docRef, {
       note: note,
     });
-    setNoteActive(false)
+    setNoteActive(false);
     setUpdated(!updated);
   };
-
 
   const deleteTreatment = async () => {
     const docRef = doc(FIRESTORE_DB, `treatments/${treatment.id}`);
@@ -77,20 +76,22 @@ const VetTreatmentPage = ({ patientTreatment, navigation }: Props) => {
           {treatment.status}
         </Text>
         {noteActive ? (
-            <View style={styles.inputContainer}>
-
-          <TextInput
-            placeholder="Kommentar"
-            onChangeText={(text: string) => setNote(text)}
-            value={note}
-            style={styles.inputField}
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Kommentar"
+              onChangeText={(text: string) => setNote(text)}
+              value={note}
+              style={styles.inputField}
             />
-            <BasicButton label="Legg til" disabled={note == ""} action={() => addNote()}/>
-            </View>
+            <BasicButton
+              label="Legg til"
+              disabled={note == ""}
+              action={() => addNote()}
+            />
+          </View>
         ) : (
           <Text style={styles.text}>
-            <Text style={[styles.text, styles.bold]}>Notat:</Text>{" "}
-            {note}
+            <Text style={[styles.text, styles.bold]}>Notat:</Text> {note}
           </Text>
         )}
       </View>
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: "row",
-  }
+  },
 });
 
 export default VetTreatmentPage;

@@ -29,30 +29,43 @@ const TreatmentInfoDisplay = ({ treatmentId, navigation, owner }: Props) => {
   }, []);
 
   return (
-    <View style={[styles.container, styles.shadow]}>
+    <View>
       {treatment && owner ? (
-        <>
-          <Text style={[styles.text, styles.bold]}>Behandling</Text>
-          <Text style={styles.text}>
-            <Text style={[styles.text, styles.bold]}>Dato:</Text>{" "}
-            {treatment.date}
-          </Text>
-          <Text style={styles.text}>
-            <Text style={[styles.text, styles.bold]}>Grunn for besøket:</Text>{" "}
-            {treatment.reason}
-          </Text>
-          <Text style={styles.text}>
-            <Text style={[styles.text, styles.bold]}>Dyr:</Text>{" "}
-            {owner.owner.pets[treatment.pet].name} 
-          </Text>
-          <Text style={styles.text}>
-            <Text style={[styles.text, styles.bold]}>Status:</Text>{" "}
-            {treatment.status === "waiting" ? "Venter på godkjennelse" : "Godkjent"}
-          </Text>
-        </>
-      ) : (
-        <Text>Problemer med å finne Behandlingen</Text>
-      )}
+      <View
+        style={[
+          styles.container,
+          styles.shadow,
+          {
+            backgroundColor:
+              treatment.status === "waiting" ? "#d4d4d8" : "#7dd3fc",
+          },
+        ]}
+      >
+          <>
+            <Text style={[styles.text, styles.bold]}>Behandling</Text>
+            <Text style={styles.text}>
+              <Text style={[styles.text, styles.bold]}>Dato:</Text>{" "}
+              {treatment.date}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={[styles.text, styles.bold]}>Grunn for besøket:</Text>{" "}
+              {treatment.reason}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={[styles.text, styles.bold]}>Dyr:</Text>{" "}
+              {owner.owner.pets[treatment.pet].name}
+            </Text>
+            <Text style={styles.text}>
+              <Text style={[styles.text, styles.bold]}>Status:</Text>{" "}
+              {treatment.status === "waiting"
+                ? "Venter på godkjennelse"
+                : "Godkjent"}
+            </Text>
+          </>
+      </View>
+        ) : (
+          <Text>Problemer med å finne Behandlingen</Text>
+        )}
     </View>
   );
 };

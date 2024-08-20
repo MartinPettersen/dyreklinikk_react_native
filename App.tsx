@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -32,6 +32,11 @@ import PatientTreatmentsScreen from "./screens/(patient)/PatientTreatmentsScreen
 import VetTreatmentsScreen from "./screens/(employee)/VetTreatmentsScreen";
 import VetPatientInfoScreen from "./screens/(employee)/VetPatientInfoScreen";
 import VetTreatmentScreen from "./screens/(employee)/VetTreatmentScreen";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RouteProp } from "@react-navigation/native";
+import { RootStackParamList } from "./utils/types";
+import BasicButton from "./components/(util)/BasicButton";
+import BackButton from "./components/(util)/BackButton";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,9 +44,27 @@ const PatientStack = createNativeStackNavigator();
 const EmployeeStack = createNativeStackNavigator();
 const AdminStack = createNativeStackNavigator();
 
+type PatientScreenNavigationProp =
+  NativeStackNavigationProp<RootStackParamList>;
+
 function PatientLayout() {
   return (
-    <PatientStack.Navigator screenOptions={{ headerShown: false }}>
+    <PatientStack.Navigator screenOptions={({ navigation }) => ({
+      headerShown: true,
+      headerLeft: () => (
+        <BackButton
+          action={() => navigation.goBack()}
+          label="Tilbake"
+          disabled={false}
+        />
+      ),
+      headerTitle: "",
+      headerStyle: {
+        backgroundColor: 'transparent',
+      },
+      headerShadowVisible: false,
+    })}
+    >
       <PatientStack.Screen name="Start" component={PatientStartScreen} />
       <PatientStack.Screen name="MyPage" component={PatientMyPageScreen} />
       <PatientStack.Screen name="AddOwnerInfo" component={AddOwnerInfoScreen} />
@@ -50,28 +73,68 @@ function PatientLayout() {
       <PatientStack.Screen name="Clinics" component={ClinicsScreen} />
       <PatientStack.Screen name="Clinic" component={ClinicScreen} />
       <PatientStack.Screen name="Booking" component={BookingScreen} />
-      <PatientStack.Screen name="PatientTreatments" component={PatientTreatmentsScreen} />
-      
+      <PatientStack.Screen
+        name="PatientTreatments"
+        component={PatientTreatmentsScreen}
+      />
     </PatientStack.Navigator>
   );
 }
 
 function EmployeeLayout() {
   return (
-    <EmployeeStack.Navigator screenOptions={{ headerShown: false }}>
-      <EmployeeStack.Screen name="Start" component={EmployeeStartScreen} />
+    <EmployeeStack.Navigator screenOptions={({ navigation }) => ({
+      headerShown: true,
+      headerLeft: () => (
+        <BackButton
+          action={() => navigation.goBack()}
+          label="Tilbake"
+          disabled={false}
+        />
+      ),
+    })}>
+      <EmployeeStack.Screen
+        name="Start"
+        component={EmployeeStartScreen}
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <BackButton
+              action={() => navigation.goBack()}
+              label="Tilbake"
+              disabled={false}
+            />
+          ),
+        })}
+      />
       <EmployeeStack.Screen name="MyPatients" component={MyPatientsScreen} />
-      <EmployeeStack.Screen name="VetTreatments" component={VetTreatmentsScreen} />
-      <EmployeeStack.Screen name="VetTreatment" component={VetTreatmentScreen} />
-      <EmployeeStack.Screen name="VetPatientInfo" component={VetPatientInfoScreen} />
-
+      <EmployeeStack.Screen
+        name="VetTreatments"
+        component={VetTreatmentsScreen}
+      />
+      <EmployeeStack.Screen
+        name="VetTreatment"
+        component={VetTreatmentScreen}
+      />
+      <EmployeeStack.Screen
+        name="VetPatientInfo"
+        component={VetPatientInfoScreen}
+      />
     </EmployeeStack.Navigator>
   );
 }
 
 function AdminLayout() {
   return (
-    <AdminStack.Navigator screenOptions={{ headerShown: false }}>
+    <AdminStack.Navigator screenOptions={({ navigation }) => ({
+      headerShown: true,
+      headerLeft: () => (
+        <BackButton
+          action={() => navigation.goBack()}
+          label="Tilbake"
+          disabled={false}
+        />
+      ),
+    })}>
       <AdminStack.Screen name="Start" component={AdminScreen} />
       <Stack.Screen name="Admin" component={AdminScreen} />
       <Stack.Screen name="Clinics" component={AdminClinicsScreen} />
@@ -80,7 +143,6 @@ function AdminLayout() {
       <Stack.Screen name="AdminClinic" component={AdminClinicScreen} />
       <Stack.Screen name="AdminEmployees" component={AdminEmployeesScreen} />
       <Stack.Screen name="AdminEmployee" component={AdminEmployeeScreen} />
-
     </AdminStack.Navigator>
   );
 }
