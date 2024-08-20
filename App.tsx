@@ -37,6 +37,9 @@ import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "./utils/types";
 import BasicButton from "./components/(util)/BasicButton";
 import BackButton from "./components/(util)/BackButton";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -44,26 +47,30 @@ const PatientStack = createNativeStackNavigator();
 const EmployeeStack = createNativeStackNavigator();
 const AdminStack = createNativeStackNavigator();
 
+const Tab = createBottomTabNavigator();
+
 type PatientScreenNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;
 
-function PatientLayout() {
+
+function PatientHomeStack() {
   return (
-    <PatientStack.Navigator screenOptions={({ navigation }) => ({
-      headerShown: true,
-      headerLeft: () => (
-        <BackButton
-          action={() => navigation.goBack()}
-          label="Tilbake"
-          disabled={false}
-        />
-      ),
-      headerTitle: "",
-      headerStyle: {
-        backgroundColor: 'transparent',
-      },
-      headerShadowVisible: false,
-    })}
+    <PatientStack.Navigator
+      screenOptions={({ navigation }) => ({
+        headerShown: true,
+        headerLeft: () => (
+          <BackButton
+            action={() => navigation.goBack()}
+            label="Tilbake"
+            disabled={false}
+          />
+        ),
+        headerTitle: "",
+        headerStyle: {
+          backgroundColor: "transparent",
+        },
+        headerShadowVisible: false,
+      })}
     >
       <PatientStack.Screen name="Start" component={PatientStartScreen} />
       <PatientStack.Screen name="MyPage" component={PatientMyPageScreen} />
@@ -81,18 +88,20 @@ function PatientLayout() {
   );
 }
 
-function EmployeeLayout() {
+function EmployeeHomeStack() {
   return (
-    <EmployeeStack.Navigator screenOptions={({ navigation }) => ({
-      headerShown: true,
-      headerLeft: () => (
-        <BackButton
-          action={() => navigation.goBack()}
-          label="Tilbake"
-          disabled={false}
-        />
-      ),
-    })}>
+    <EmployeeStack.Navigator
+      screenOptions={({ navigation }) => ({
+        headerShown: true,
+        headerLeft: () => (
+          <BackButton
+            action={() => navigation.goBack()}
+            label="Tilbake"
+            disabled={false}
+          />
+        ),
+      })}
+    >
       <EmployeeStack.Screen
         name="Start"
         component={EmployeeStartScreen}
@@ -123,18 +132,20 @@ function EmployeeLayout() {
   );
 }
 
-function AdminLayout() {
+function AdminHomeStack() {
   return (
-    <AdminStack.Navigator screenOptions={({ navigation }) => ({
-      headerShown: true,
-      headerLeft: () => (
-        <BackButton
-          action={() => navigation.goBack()}
-          label="Tilbake"
-          disabled={false}
-        />
-      ),
-    })}>
+    <AdminStack.Navigator
+      screenOptions={({ navigation }) => ({
+        headerShown: true,
+        headerLeft: () => (
+          <BackButton
+            action={() => navigation.goBack()}
+            label="Tilbake"
+            disabled={false}
+          />
+        ),
+      })}
+    >
       <AdminStack.Screen name="Start" component={AdminScreen} />
       <Stack.Screen name="Admin" component={AdminScreen} />
       <Stack.Screen name="Clinics" component={AdminClinicsScreen} />
@@ -182,39 +193,41 @@ export default function App() {
   }, []);
 
   return (
-    <UserProvider>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {role && role.role == "patient" ? (
-            <Stack.Screen
-              name="Patient"
-              component={PatientLayout}
-              initialParams={{ user: user }}
-            />
-          ) : role && role.role == "employee" ? (
-            <Stack.Screen
-              name="Employee"
-              component={EmployeeLayout}
-              initialParams={{ user: user }}
-            />
-          ) : role && role.role == "admin" ? (
-            <Stack.Screen
-              name="Admin"
-              component={AdminLayout}
-              initialParams={{ user: user }}
-            />
-          ) : (
-            <>
-              <Stack.Screen name="Start" component={StartScreen} />
-              <Stack.Screen name="Login" component={LoginScreen} />
-              <Stack.Screen name="SignUp" component={SignUpScreen} />
-              <Stack.Screen name="Clinics" component={ClinicsScreen} />
-              <Stack.Screen name="Clinic" component={ClinicScreen} />
-            </>
-          )}
-        </Stack.Navigator>
-      </NavigationContainer>
-    </UserProvider>
+    <SafeAreaProvider>
+      <UserProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            {role && role.role == "patient" ? (
+              <Stack.Screen
+                name="Patient"
+                component={PatientHomeStack}
+                initialParams={{ user: user }}
+              />
+            ) : role && role.role == "employee" ? (
+              <Stack.Screen
+                name="Employee"
+                component={EmployeeHomeStack}
+                initialParams={{ user: user }}
+              />
+            ) : role && role.role == "admin" ? (
+              <Stack.Screen
+                name="Admin"
+                component={AdminHomeStack}
+                initialParams={{ user: user }}
+              />
+            ) : (
+              <>
+                <Stack.Screen name="Start" component={StartScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="SignUp" component={SignUpScreen} />
+                <Stack.Screen name="Clinics" component={ClinicsScreen} />
+                <Stack.Screen name="Clinic" component={ClinicScreen} />
+              </>
+            )}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </UserProvider>
+    </SafeAreaProvider>
   );
 }
 

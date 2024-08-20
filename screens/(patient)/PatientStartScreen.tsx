@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from "react-native";
 import BasicButton from "../../components/(util)/BasicButton";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import { useUser } from "../../components/(user)/UserContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const PatientStartScreen = ({ navigation }: any) => {
   
@@ -18,7 +19,7 @@ const PatientStartScreen = ({ navigation }: any) => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.headline}>Velkommen </Text>
       <View style={styles.buttonContainer}>
         <BasicButton
@@ -48,7 +49,7 @@ const PatientStartScreen = ({ navigation }: any) => {
           disabled={false}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
