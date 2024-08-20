@@ -9,7 +9,7 @@ type Props = {
 
 const TimeSlotTag = ({ bracket, action, selectedTime }: Props) => {
   return (
-    <TouchableOpacity onPress={action} style={[styles.button, styles.shadow, {backgroundColor: bracket.booked ? "#a3a3a3" : ""}, {backgroundColor: (selectedTime == bracket.time) ? "#0ea5e9" : "#7dd3fc"}]} disabled={bracket.booked}>
+    <TouchableOpacity onPress={action} style={[styles.button, styles.shadow, {backgroundColor: bracket.booked ? "#a3a3a3" : (selectedTime == bracket.time) ? "#0ea5e9" : "#7dd3fc"}, ]} disabled={bracket.booked}>
       <Text style={styles.text}>
         <Text style={styles.bold}>{bracket.time}</Text>
       </Text>
