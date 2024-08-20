@@ -5,6 +5,8 @@ import TimePicker from "./TimePicker";
 import { Clinic } from "../../utils/types";
 import BasicButton from "../(util)/BasicButton";
 import { useUser } from "../../components/(user)/UserContext";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { FIRESTORE_DB } from "../../firebaseConfig";
 
 type DayObject = {
   dateString: string;
@@ -26,9 +28,34 @@ const ClinicBookingPage = ({ vet, clinic, navigation }: Props) => {
   const [showTimePicker, setShowTimePicker] = useState(false);
   const { user } = useUser();
 
+  const [bookedTimeSlots, setBookedTimeSlots] = useState<any[]>([])
+
+  const getBookedTimeSlots = (day: string) => {
+    const treatmentRef = collection(FIRESTORE_DB, "treatments");
+
+    const subscriber = onSnapshot(
+      query(treatmentRef, where("date", "==", day)),
+      {
+        next: (snapshot) => {
+          const treatmentsList: any[] = [];
+          snapshot.docs.forEach((doc) => {
+            treatmentsList.push({
+              time: doc.data().time,
+            });
+          });
+          console.log("treat,emtlist",treatmentsList)
+          setBookedTimeSlots(treatmentsList);
+          setShowTimePicker(true);
+
+        },
+      }
+    );
+  }
+
   const onDayPress = (day: DayObject) => {
     setSelectedDate(day.dateString);
-    setShowTimePicker(true);
+    console.log("selected time is",day.dateString)
+    getBookedTimeSlots(day.dateString)
   };
 
   return (
@@ -52,6 +79,7 @@ const ClinicBookingPage = ({ vet, clinic, navigation }: Props) => {
           openingHours={clinic.openingHour}
           closingHours={clinic.closingHour}
           timeBrackets={15}
+          bookedTimeSlots={bookedTimeSlots}
         />
       ) : null}
       <View style={{ margin: 10 }}>

@@ -2,16 +2,16 @@ import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 
 type Props = {
-  time: string;
+  bracket: {time: string, booked: boolean};
   action: () => void;
+  selectedTime: string | null
 };
 
-const TimeSlotTag = ({ time, action }: Props) => {
+const TimeSlotTag = ({ bracket, action, selectedTime }: Props) => {
   return (
-    <TouchableOpacity onPress={action} style={[styles.button, styles.shadow]}>
-      
+    <TouchableOpacity onPress={action} style={[styles.button, styles.shadow, {backgroundColor: bracket.booked ? "#a3a3a3" : ""}, {backgroundColor: (selectedTime == bracket.time) ? "#0ea5e9" : "#7dd3fc"}]} disabled={bracket.booked}>
       <Text style={styles.text}>
-        <Text style={styles.bold}>{time}</Text>
+        <Text style={styles.bold}>{bracket.time}</Text>
       </Text>
     </TouchableOpacity>
   );
