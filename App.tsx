@@ -100,6 +100,11 @@ function EmployeeHomeStack() {
             disabled={false}
           />
         ),
+        headerTitle: "",
+        headerStyle: {
+          backgroundColor: "transparent",
+        },
+        headerShadowVisible: false,
       })}
     >
       <EmployeeStack.Screen
@@ -144,6 +149,11 @@ function AdminHomeStack() {
             disabled={false}
           />
         ),
+        headerTitle: "",
+        headerStyle: {
+          backgroundColor: "transparent",
+        },
+        headerShadowVisible: false,
       })}
     >
       <AdminStack.Screen name="Start" component={AdminScreen} />
