@@ -29,8 +29,8 @@ const EmployeeStartScreen = ({ navigation }: any) => {
       </View>
       <View style={styles.buttonContainer}>
         <BasicButton
-          label="Kollegaer"
-          action={() => console.log("Kollegaer")}
+          label="Klinikker"
+          action={() => navigation.navigate("VetClinics")}
           disabled={false}
         />
       </View>

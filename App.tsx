@@ -39,6 +39,10 @@ import BasicButton from "./components/(util)/BasicButton";
 import BackButton from "./components/(util)/BackButton";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import VetClinicsScreen from "./screens/(employee)/VetClinicsScreen";
+import VetClinicScreen from "./screens/(employee)/VetClinicScreen";
+import CoworkersScreen from "./screens/(employee)/CoworkerScreen";
+import CoworkerScreen from "./screens/(employee)/CoworkerScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -128,6 +132,19 @@ function EmployeeHomeStack() {
       <EmployeeStack.Screen
         name="VetTreatment"
         component={VetTreatmentScreen}
+      />
+      
+      <EmployeeStack.Screen
+        name="VetClinics"
+        component={VetClinicsScreen}
+      />
+              <EmployeeStack.Screen
+        name="Coworker"
+        component={CoworkerScreen}
+      />    
+      <EmployeeStack.Screen
+        name="VetClinic"
+        component={VetClinicScreen}
       />
       <EmployeeStack.Screen
         name="VetPatientInfo"
