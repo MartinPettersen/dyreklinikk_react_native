@@ -27,6 +27,7 @@ import ClinicsScreen from "./screens/(universal)/ClinicsScreen";
 import ClinicScreen from "./screens/(universal)/ClinicScreen";
 import AdminEmployeeScreen from "./screens/(admin)/AdminEmployeeScreen";
 import MyPatientsScreen from "./screens/(employee)/MyPatientsScreen";
+import AddPatientScreen from "./screens/(employee)/AddPatientScreen";
 import BookingScreen from "./screens/(patient)/BookingScreen";
 import PatientTreatmentsScreen from "./screens/(patient)/PatientTreatmentsScreen";
 import VetTreatmentsScreen from "./screens/(employee)/VetTreatmentsScreen";
@@ -43,6 +44,7 @@ import VetClinicsScreen from "./screens/(employee)/VetClinicsScreen";
 import VetClinicScreen from "./screens/(employee)/VetClinicScreen";
 import CoworkersScreen from "./screens/(employee)/CoworkerScreen";
 import CoworkerScreen from "./screens/(employee)/CoworkerScreen";
+import VetMyPageScreen from "./screens/(employee)/VetMyPageScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -125,9 +127,14 @@ function EmployeeHomeStack() {
         })}
       />
       <EmployeeStack.Screen name="MyPatients" component={MyPatientsScreen} />
+      <EmployeeStack.Screen name="AddPatient" component={AddPatientScreen} />
       <EmployeeStack.Screen
         name="VetTreatments"
         component={VetTreatmentsScreen}
+      />
+      <EmployeeStack.Screen
+        name="VetMyPage"
+        component={VetMyPageScreen}
       />
       <EmployeeStack.Screen
         name="VetTreatment"

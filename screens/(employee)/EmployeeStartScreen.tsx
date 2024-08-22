@@ -9,7 +9,7 @@ const EmployeeStartScreen = ({ navigation }: any) => {
       <View style={styles.buttonContainer}>
         <BasicButton
           label="Min Side"
-          action={() => console.log("Min Side")}
+          action={() => navigation.navigate("VetMyPage")}
           disabled={false}
         />
       </View>

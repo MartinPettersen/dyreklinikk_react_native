@@ -8,14 +8,12 @@ type Props = {
 };
 
 type RenderPatientProp = {
-    item: any;
-  }
+  item: any;
+};
 const CoworkerPage = ({ navigation, employee }: Props) => {
-
-
-    const renderPatient = ({ item }: RenderPatientProp) => {
-        return <PatientDisplay patient={item} navigation={navigation}/>
-      }
+  const renderPatient = ({ item }: RenderPatientProp) => {
+    return <PatientDisplay patient={item} navigation={navigation} />;
+  };
 
   return (
     <View style={styles.container}>
@@ -30,11 +28,13 @@ const CoworkerPage = ({ navigation, employee }: Props) => {
       <Text style={styles.bold}>Pasienter: </Text>
       {employee.patients.length > 0 ? (
         <FlatList
-        data={employee.patients}
-        renderItem={renderPatient}
-        keyExtractor={(patient: any, index: number) => `${patient.patient}${patient.ownerId}${index}`}
+          data={employee.patients}
+          renderItem={renderPatient}
+          keyExtractor={(patient: any, index: number) =>
+            `${patient.patient}${patient.ownerId}${index}`
+          }
         />
-      ): null}
+      ) : null}
     </View>
   );
 };

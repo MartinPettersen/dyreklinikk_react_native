@@ -30,7 +30,7 @@ const MyPatientsPage = ({ navigation, user, patients }: Props) => {
       <Text style={styles.headline}>Mine Pasienter</Text>
       <AddPetButton
         label={"github"}
-        action={() => navigation.navigate("AddPatient")}
+        action={() => navigation.navigate("AddPatient", {patients: patients})}
         disabled={false}
       />
       {patients.length > 0 ? (
