@@ -5,10 +5,11 @@ import { FIRESTORE_DB } from "../../firebaseConfig";
 
 type Props = {
   patient: any;
-  navigation: any
+  navigation: any;
+  user: any;
 };
 
-const PatientDisplay = ({ patient, navigation }: Props) => {
+const PatientDisplay = ({ patient, navigation, user }: Props) => {
   const [owner, setOwner] = useState<any | null>(null);
 
   const getPatients = async () => {
@@ -29,7 +30,7 @@ const PatientDisplay = ({ patient, navigation }: Props) => {
   }, []);
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("VetPatientInfo", { owner: owner, patient: patient })} disabled={owner == undefined || patient == undefined}>
+    <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("VetPatientInfo", { owner: owner, patient: patient, user: user })} disabled={owner == undefined || patient == undefined}>
       {owner ? (
         <>
           <Text style={styles.text}>

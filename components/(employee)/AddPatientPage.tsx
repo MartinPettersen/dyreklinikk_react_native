@@ -38,9 +38,7 @@ const AddPatientPage = ({ navigation, patients }: Props) => {
   const [treatments, setTreatments] = useState<any[] | null>();
 
   const addPet = async () => {
-    console.log("owner",owner)
     const docRef = doc(FIRESTORE_DB, `owners/${owner}`);
-    console.log("docref",docRef)
     const test = updateDoc(docRef, {
       pets: arrayUnion({
         name: name,
@@ -51,7 +49,6 @@ const AddPatientPage = ({ navigation, patients }: Props) => {
       }),
     });
 
-    console.log("test",test)
     navigation.navigate("MyPatients")
   };
 
@@ -90,6 +87,7 @@ const AddPatientPage = ({ navigation, patients }: Props) => {
           disabled={name === ""}
         />
       </View>
+      
     </View>
   );
 };

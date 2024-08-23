@@ -21,7 +21,7 @@ const MyPatientsPage = ({ navigation, user, patients }: Props) => {
 
 
   const renderPatient = ({ item }: RenderPatientProp) => {
-    return <PatientDisplay patient={item} navigation={navigation}/>
+    return <PatientDisplay patient={item} navigation={navigation} user={user}/>
   }
 
 

@@ -2,11 +2,17 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, FlatList, SafeAreaView } from "react-native";
 import TreatmentInfoDisplay from "../(patient)/TreatmentInfoDisplay";
 import PatientTreatmentDisplay from "./PatientTreatmentDisplay";
+import HorizontalLine from "../(util)/HorizontalLine";
+import DeleteButton from "../(util)/DeleteButton";
+import { FIRESTORE_DB } from "../../firebaseConfig";
+import { addDoc, collection } from "firebase/firestore";
+import VetDeletePatient from "./VetDeletePatient";
 
 type Props = {
   navigation: any;
   owner: any;
   patient: any;
+  user: any
 };
 
 
@@ -15,7 +21,9 @@ type RenderTreatmentProp = {
 };
 
 
-const PatientInfoPage = ({ navigation, owner, patient }: Props) => {
+const PatientInfoPage = ({ navigation, owner, patient, user }: Props) => {
+
+
 
   const renderTreatment = ({ item }: RenderTreatmentProp) => {
     return (
@@ -52,7 +60,7 @@ const PatientInfoPage = ({ navigation, owner, patient }: Props) => {
           keyExtractor={(treatment: any) => treatment}
         />
       ) : null}
-
+    <VetDeletePatient user={user} patient={patient} owner={owner}/>
     </SafeAreaView>
   );
 };
