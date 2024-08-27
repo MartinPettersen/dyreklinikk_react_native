@@ -2,9 +2,10 @@ import React from 'react'
 import { View } from 'react-native'
 import AdminDeletePatientsPage from '../../components/(admin)/AdminDeletePatientsPage'
 
-const AdminDeletePatientsScreen = () => {
+
+const AdminDeletePatientsScreen = ({navigation}: any) => {
   return (
-    <AdminDeletePatientsPage />
+    <AdminDeletePatientsPage navigation={navigation}/>
   )
 }
 

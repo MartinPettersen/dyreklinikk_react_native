@@ -18,10 +18,6 @@ const VetDeletePatient = ({ owner, patient, user }: Props) => {
   const [deleteReason, setDeleteReason] = useState<string>("");
 
   const deletePatient = () => {
-    console.log("owner", owner.pets[patient.patient].owner);
-    console.log("patient", patient);
-    console.log("user.email", user.email);
-    console.log("reason", deleteReason)
     const doc = addDoc(collection(FIRESTORE_DB, "deleterequest"), {
         owner: owner.pets[patient.patient].owner,
         patient: patient,

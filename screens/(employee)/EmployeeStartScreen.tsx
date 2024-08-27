@@ -1,8 +1,19 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import BasicButton from "../../components/(util)/BasicButton";
+import { FIREBASE_AUTH } from "../../firebaseConfig";
 
 const EmployeeStartScreen = ({ navigation }: any) => {
+
+  const handleLogout = async () => {
+    try {
+      await FIREBASE_AUTH.signOut();
+      navigation.navigate("Start");
+    } catch (error) {
+      console.error("Error signing out: ", error)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.headline}>Logget in som: </Text>
@@ -35,6 +46,13 @@ const EmployeeStartScreen = ({ navigation }: any) => {
         />
       </View>
 
+      <View style={styles.buttonContainer}>
+        <BasicButton
+          label="Logg Ut"
+          action={() => handleLogout()}
+          disabled={false}
+        />
+      </View>
     </View>
   );
 };

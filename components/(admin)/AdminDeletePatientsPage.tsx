@@ -4,14 +4,16 @@ import { View, Text, StyleSheet, SafeAreaView, FlatList } from "react-native";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import DeleteRequestTag from "./DeleteRequestTag";
 
-type Props = {};
+type Props = {
+  navigation: any
+};
 
 
 type RenderRequestProp = {
   item: any
 }
 
-const AdminDeletePatientsPage = () => {
+const AdminDeletePatientsPage = ({navigation}: any) => {
   const [deleteRequests, setDeleteRequests] = useState<any[] | null>(null);
 
   const getRequests = () => {
@@ -36,8 +38,7 @@ const AdminDeletePatientsPage = () => {
   }, []);
 
   const renderRequest = ({item }: RenderRequestProp) => {
-    console.log("item", item)
-    return <DeleteRequestTag request={item} action={() => console.log("delete this")}/>
+    return <DeleteRequestTag request={item} action={() => navigation.navigate("AdminDeletePatient", {deleteRequest: item})}/>
   };
 
   return (

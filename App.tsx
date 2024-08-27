@@ -46,6 +46,7 @@ import CoworkersScreen from "./screens/(employee)/CoworkerScreen";
 import CoworkerScreen from "./screens/(employee)/CoworkerScreen";
 import VetMyPageScreen from "./screens/(employee)/VetMyPageScreen";
 import AdminDeletePatientsScreen from "./screens/(admin)/AdminDeletePatientsScreen";
+import AdminDeletePatientScreen from "./screens/(admin)/AdminDeletePatientScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -184,8 +185,7 @@ function AdminHomeStack() {
       <AdminStack.Screen name="Start" component={AdminScreen} />
       <AdminStack.Screen name="Admin" component={AdminScreen} />
       <AdminStack.Screen name="AdminDeletePatients" component={AdminDeletePatientsScreen} />
-
-      
+      <AdminStack.Screen name="AdminDeletePatient" component={AdminDeletePatientScreen} />
       <AdminStack.Screen name="Clinics" component={AdminClinicsScreen} />
       <AdminStack.Screen name="AddClinic" component={AddClinicScreen} />
       <AdminStack.Screen name="AddEmployee" component={AddEmployeeScreen} />
