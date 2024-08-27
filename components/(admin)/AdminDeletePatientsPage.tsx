@@ -1,0 +1,81 @@
+import { collection, onSnapshot } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, SafeAreaView, FlatList } from "react-native";
+import { FIRESTORE_DB } from "../../firebaseConfig";
+import DeleteRequestTag from "./DeleteRequestTag";
+
+type Props = {};
+
+
+type RenderRequestProp = {
+  item: any
+}
+
+const AdminDeletePatientsPage = () => {
+  const [deleteRequests, setDeleteRequests] = useState<any[] | null>(null);
+
+  const getRequests = () => {
+    const docRef = collection(FIRESTORE_DB, "deleterequest");
+    const subscriber = onSnapshot(docRef, {
+      next: (snapshot) => {
+        const deleteRequestsList: any[] = [];
+        snapshot.docs.forEach((doc) => {
+          deleteRequestsList.push({
+            id: doc.id,
+            ...doc.data(),
+          } as any);
+        });
+        setDeleteRequests(deleteRequestsList);
+      },
+    });
+    return () => subscriber();
+  };
+
+  useEffect(() => {
+    getRequests();
+  }, []);
+
+  const renderRequest = ({item }: RenderRequestProp) => {
+    console.log("item", item)
+    return <DeleteRequestTag request={item} action={() => console.log("delete this")}/>
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.headline}>Henvendelser for sletting av pasienter</Text>
+      {deleteRequests ? 
+      (
+        <View style={styles.requestContainer}>
+          {
+            <FlatList
+              data={deleteRequests}
+              renderItem={renderRequest}
+              keyExtractor={(request: any) => request.id}
+            />
+          }
+        </View>
+      )  : null}
+    </SafeAreaView>
+  );
+};
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  requestContainer: {
+    margin: 0,
+  },
+  headline: {
+    fontSize: 30,
+    margin: 20,
+    color: "#52525b",
+    fontWeight: "bold",
+  },
+});
+
+
+export default AdminDeletePatientsPage;

@@ -45,6 +45,7 @@ import VetClinicScreen from "./screens/(employee)/VetClinicScreen";
 import CoworkersScreen from "./screens/(employee)/CoworkerScreen";
 import CoworkerScreen from "./screens/(employee)/CoworkerScreen";
 import VetMyPageScreen from "./screens/(employee)/VetMyPageScreen";
+import AdminDeletePatientsScreen from "./screens/(admin)/AdminDeletePatientsScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -181,13 +182,16 @@ function AdminHomeStack() {
       })}
     >
       <AdminStack.Screen name="Start" component={AdminScreen} />
-      <Stack.Screen name="Admin" component={AdminScreen} />
-      <Stack.Screen name="Clinics" component={AdminClinicsScreen} />
-      <Stack.Screen name="AddClinic" component={AddClinicScreen} />
-      <Stack.Screen name="AddEmployee" component={AddEmployeeScreen} />
-      <Stack.Screen name="AdminClinic" component={AdminClinicScreen} />
-      <Stack.Screen name="AdminEmployees" component={AdminEmployeesScreen} />
-      <Stack.Screen name="AdminEmployee" component={AdminEmployeeScreen} />
+      <AdminStack.Screen name="Admin" component={AdminScreen} />
+      <AdminStack.Screen name="AdminDeletePatients" component={AdminDeletePatientsScreen} />
+
+      
+      <AdminStack.Screen name="Clinics" component={AdminClinicsScreen} />
+      <AdminStack.Screen name="AddClinic" component={AddClinicScreen} />
+      <AdminStack.Screen name="AddEmployee" component={AddEmployeeScreen} />
+      <AdminStack.Screen name="AdminClinic" component={AdminClinicScreen} />
+      <AdminStack.Screen name="AdminEmployees" component={AdminEmployeesScreen} />
+      <AdminStack.Screen name="AdminEmployee" component={AdminEmployeeScreen} />
     </AdminStack.Navigator>
   );
 }

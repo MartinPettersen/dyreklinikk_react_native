@@ -22,8 +22,8 @@ const AdminScreen = ({ navigation }: any) => {
 
       <View style={styles.buttonContainer}>
         <BasicButton
-          label={"Pasienter"}
-          action={() => navigation.navigate("Clinics")}
+          label={"Slette Pasienter"}
+          action={() => navigation.navigate("AdminDeletePatients")}
           disabled={false}
         />
       </View>

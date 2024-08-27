@@ -23,11 +23,12 @@ const VetDeletePatient = ({ owner, patient, user }: Props) => {
     console.log("user.email", user.email);
     console.log("reason", deleteReason)
     const doc = addDoc(collection(FIRESTORE_DB, "deleterequest"), {
-        owner: patient.owner,
-        patient: patient.patient,
+        owner: owner.pets[patient.patient].owner,
+        patient: patient,
         requestedBy: user.email,
-        reason: deleteReason,
+        reason: deleteReason
     })
+    setOpenDeleteField(false)
   };
 
   return (
