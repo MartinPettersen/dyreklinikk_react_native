@@ -12,7 +12,6 @@ type Props = {
 };
 
 const AdminDeletePatientPage = ({ navigation, deleteRequest }: Props) => {
-  console.log("deleteRequest", deleteRequest);
   const [openDeleteField, setOpenDeleteField] = useState<boolean>(false);
 
   const [owner, setOwner] = useState<any | null>(null);
@@ -24,10 +23,8 @@ const AdminDeletePatientPage = ({ navigation, deleteRequest }: Props) => {
 
     const subscriber = onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
-        console.log("owner", snapshot.data());
         setOwner(snapshot.data());
       } else {
-        console.log("Problem with fetching documents");
         setOwner(null);
       }
     });
@@ -48,7 +45,6 @@ const AdminDeletePatientPage = ({ navigation, deleteRequest }: Props) => {
               name: doc.data().name
             });
           });
-          console.log("clinics", clinics[0].name)
           setClinic(clinics[0]);
         },
       }
@@ -69,7 +65,6 @@ const AdminDeletePatientPage = ({ navigation, deleteRequest }: Props) => {
               id: doc.id,
             });
           });
-          console.log("vets", vets)
           setVet(vets[0]);
         },
       }

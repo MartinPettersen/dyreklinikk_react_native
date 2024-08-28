@@ -27,7 +27,6 @@ const BookingPage = ({ clinic, vet, date, time, owner, navigation }: Props) => {
   const [reason, setReason] = useState<string>("");
   const [pets, setPets] = useState<any[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-
   useEffect(() => {
     if (owner) {
       setPets(owner.pets);
@@ -50,6 +49,7 @@ const BookingPage = ({ clinic, vet, date, time, owner, navigation }: Props) => {
       collection(FIRESTORE_DB, "treatments"),
       order
     );
+
     const bookingId = docBooking.id;
 
     const clinicRef = doc(FIRESTORE_DB, `clinics/${clinic.id}`);

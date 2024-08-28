@@ -19,7 +19,6 @@ const PatientDisplay = ({ patient, navigation, user }: Props) => {
       if (snapshot.exists()) {
         setOwner(snapshot.data());
       } else {
-        console.log("Problem with fetching documents");
         setOwner(null);
       }
     });

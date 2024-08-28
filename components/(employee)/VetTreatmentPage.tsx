@@ -16,14 +16,12 @@ const VetTreatmentPage = ({ patientTreatment, navigation }: Props) => {
   const [note, setNote] = useState(patientTreatment.note);
 
   const updateTreatment = async () => {
-    console.log("treatmen id", treatment.id);
     const docRef = doc(FIRESTORE_DB, `treatments/${treatment.id}`);
     updateDoc(docRef, {
       status: "accepted",
     });
 
     treatment.status = "accepted";
-    console.log(treatment);
     setTreatment(treatment);
     setUpdated(!updated);
   };

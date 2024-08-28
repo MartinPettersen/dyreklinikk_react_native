@@ -22,7 +22,6 @@ const PetDropDownMenu = ({
   const [petNames, setPetNames] = useState<{ label: string; value: any }[]>(
     []
   );
-
   const getPetNames = () => {
     const petNameList = [];
     for (let i = 0; i < pets.length; i++) {

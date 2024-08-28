@@ -34,7 +34,6 @@ const VetTreatmentsScreen = ({ navigation }: Props) => {
         next: (snapshot) => {
           const vetIdList: any[] = [];
           snapshot.docs.forEach((doc) => {
-            console.log(doc.data());
             vetIdList.push({
               id: doc.id,
             });

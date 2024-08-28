@@ -30,8 +30,8 @@ const TimePicker = ({
 
 
   const checkIfTaken = (time: string) => {
+
     for (let i = 0; i < bookedTimeSlots.length; i++ ){
-      console.log(time + " | " + bookedTimeSlots[i].time)
       if (time == bookedTimeSlots[i].time) {
         return true;
       }
@@ -44,9 +44,7 @@ const TimePicker = ({
     for (let i = openingHour; i < closingHour; i++) {
       for (let j = 0; j < 60; j += 15) {
         const isBooked  = checkIfTaken(`${i < 10 ? `0${i}` : i}:${j < 10 ? `0${j}` : j}`)
-        console.log("booked", checkIfTaken(`${i < 10 ? `0${i}` : i}:${j < 10 ? `0${j}` : j}`))
         times.push({time: `${i < 10 ? `0${i}` : i}:${j < 10 ? `0${j}` : j}`, booked: isBooked});
-        console.log("treatments that day", bookedTimeSlots)
       }
     }
     setBrackets(times);

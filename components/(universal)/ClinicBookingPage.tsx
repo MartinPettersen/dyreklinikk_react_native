@@ -43,7 +43,6 @@ const ClinicBookingPage = ({ vet, clinic, navigation }: Props) => {
               time: doc.data().time,
             });
           });
-          console.log("treat,emtlist",treatmentsList)
           setBookedTimeSlots(treatmentsList);
           setShowTimePicker(true);
 
@@ -54,7 +53,6 @@ const ClinicBookingPage = ({ vet, clinic, navigation }: Props) => {
 
   const onDayPress = (day: DayObject) => {
     setSelectedDate(day.dateString);
-    console.log("selected time is",day.dateString)
     setShowTimePicker(false);
 
     getBookedTimeSlots(day.dateString)

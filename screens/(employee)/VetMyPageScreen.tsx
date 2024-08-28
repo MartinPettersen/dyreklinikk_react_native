@@ -19,7 +19,6 @@ const VetMyPageScreen = ({ navigation }: any) => {
           snapshot.docs.forEach((doc) => {
             vetInfoList.push(doc.data());
           });
-          console.log("vetInfoList", vetInfoList);
           setVetInfo(vetInfoList[0]);
         },
       }
