@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text } from "react-native";
 import DeleteButton from "../(util)/DeleteButton";
 import BasicButton from "../(util)/BasicButton";
-import { deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { collection, deleteDoc, doc, onSnapshot, query, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
+import AdminDeleteCheck from "./AdminDeleteCheck";
 
 type Props = {
   navigation: any;
@@ -14,15 +15,16 @@ const AdminDeletePatientPage = ({ navigation, deleteRequest }: Props) => {
   console.log("deleteRequest", deleteRequest);
   const [openDeleteField, setOpenDeleteField] = useState<boolean>(false);
 
-
   const [owner, setOwner] = useState<any | null>(null);
+  const [clinic, setClinic] = useState<any | null>(null);
+  const [vet, setVet] = useState<any | null>(null);
 
-  const getPatients = async () => {
+  const getOwner = async () => {
     const docRef = doc(FIRESTORE_DB, `owners/${deleteRequest.owner}`);
 
     const subscriber = onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
-        console.log("owner", snapshot.data())
+        console.log("owner", snapshot.data());
         setOwner(snapshot.data());
       } else {
         console.log("Problem with fetching documents");
@@ -31,8 +33,59 @@ const AdminDeletePatientPage = ({ navigation, deleteRequest }: Props) => {
     });
   };
 
+  const getClinic = async () => {
+    const clinicRef = collection(FIRESTORE_DB, `clinics`);
+
+    const subscriber = onSnapshot(
+      query(clinicRef, where("patients", "array-contains", deleteRequest.patient)),
+      {
+        next: (snapshot) => {
+          const clinics: any[] = [];
+          snapshot.docs.forEach((doc) => {
+            clinics.push({
+              patients: doc.data().patients,
+              id: doc.id,
+              name: doc.data().name
+            });
+          });
+          console.log("clinics", clinics[0].name)
+          setClinic(clinics[0]);
+        },
+      }
+    );
+  };
+
+
+  const getVet = () => {
+    const vetRef = collection(FIRESTORE_DB, "employees");
+    const subscriber = onSnapshot(
+      query(vetRef, where("email", "==", deleteRequest.requestedBy)),
+      {
+        next: (snapshot) => {
+          const vets: any[] = [];
+          snapshot.docs.forEach((doc) => {
+            vets.push({
+              patients: doc.data().patients,
+              id: doc.id,
+            });
+          });
+          console.log("vets", vets)
+          setVet(vets[0]);
+        },
+      }
+    );
+  };
+
   useEffect(() => {
-    getPatients();
+    getClinic();
+  }, [owner]);
+
+  useEffect(() => {
+    getOwner();
+  }, []);
+
+  useEffect(() => {
+    getVet();
   }, []);
 
   const deletePatient = () => {
@@ -42,43 +95,46 @@ const AdminDeletePatientPage = ({ navigation, deleteRequest }: Props) => {
   };
 
   return (
-    <View>
-        <View>
-            {owner?
-                <View>
-                    <Text>{owner.name}</Text>
-
-                </View>
-        :null}
-
-        </View>
-
+    <View style={styles.container}>
       {openDeleteField ? (
-        <View style={styles.buttonContainer}>
-          <View style={styles.buttonView}>
-            <DeleteButton
-              label={"Delete"}
-              action={() => deletePatient()}
-              disabled={false}
-            />
-          </View>
-
-          <View style={styles.buttonView}>
-            <BasicButton
-              label="Kansler"
-              action={() => setOpenDeleteField(false)}
-              disabled={false}
-            />
-          </View>
-        </View>
+          <AdminDeleteCheck navigation={navigation} vet={vet} clinic={clinic} deleteRequest={deleteRequest} openDeletefield={openDeleteField} setOpenDeleteField={setOpenDeleteField} owner={owner}/>
       ) : (
-        <View style={{ margin: 60 }}>
-          <DeleteButton
-            label={"Slett Pasient"}
-            action={() => setOpenDeleteField(true)}
-            disabled={false}
-          />
-        </View>
+        <>
+          <View>
+            {owner && clinic ? (
+              <View>
+                <Text style={styles.text}>
+                  <Text style={[styles.text, styles.bold]}>Pasient:</Text>{" "}
+                  {owner.pets[deleteRequest.patient.patient].name}
+                </Text>
+                
+                <Text style={styles.text}>
+                  <Text style={[styles.text, styles.bold]}>Klinikk:</Text>{" "}
+                  {clinic.name}
+                </Text>
+                <Text style={styles.text}>
+                  <Text style={[styles.text, styles.bold]}>Eier:</Text>{" "}
+                  {owner.name}
+                </Text>
+                <Text style={styles.text}>
+                  <Text style={[styles.text, styles.bold]}>Begrunnelse:</Text>{" "}
+                  {deleteRequest.reason}
+                </Text>
+                <Text style={styles.text}>
+                  <Text style={[styles.text, styles.bold]}>Sent av:</Text>{" "}
+                  {deleteRequest.requestedBy}
+                </Text>
+              </View>
+            ) : null}
+          </View>
+          <View style={{ margin: 60 }}>
+            <DeleteButton
+              label={"Slett Pasient"}
+              action={() => setOpenDeleteField(true)}
+              disabled={false}
+            />
+          </View>
+        </>
       )}
     </View>
   );
@@ -116,6 +172,14 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     padding: 18,
+  },
+  text: {
+    fontSize: 20,
+    color: "#52525b",
+    margin: 3,
+  },
+  bold: {
+    fontWeight: "bold",
   },
 });
 
