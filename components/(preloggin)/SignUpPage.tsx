@@ -1,8 +1,17 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  KeyboardAvoidingView,
+} from "react-native";
 import { FIREBASE_AUTH, FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
 
 type Props = {
@@ -15,39 +24,40 @@ const SignUpPage = ({ navigation }: any) => {
   const [name, setName] = useState<string>();
   const [adress, setAdress] = useState<string>();
   const [phone, setPhone] = useState<string>();
-  const [pets, setPets] = useState<string[]>([])
+  const [pets, setPets] = useState<string[]>([]);
 
   const auth = FIREBASE_AUTH;
 
   const addAccount = async () => {
     const doc = await addDoc(collection(FIRESTORE_DB, "roles"), {
       email: email,
-      role: "patient"
-    })
+      role: "patient",
+    });
     const docRef = await addDoc(collection(FIRESTORE_DB, "owners"), {
       name: name,
       adress: adress,
       email: email,
       phone: phone,
       pets: pets,
-    })
-  }
-
-
+    });
+  };
 
   const signUp = async () => {
-
     try {
-        const response = await createUserWithEmailAndPassword(auth, email, password);
-    } catch ( error) {
-        console.log(error);
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+    } catch (error) {
+      console.log(error);
     } finally {
-      addAccount()
+      addAccount();
     }
-  }
+  };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior={"padding"} enabled style={styles.container}>
       <Text style={styles.headline}>Opprett Konto</Text>
       <TextInput
         placeholder="Email"
@@ -83,13 +93,9 @@ const SignUpPage = ({ navigation }: any) => {
         style={styles.inputField}
       />
       <View style={styles.buttonContainer}>
-        <BasicButton
-          label="Opprett"
-          action={() => signUp()}
-          disabled={false}
-        />
+        <BasicButton label="Opprett" action={() => signUp()} disabled={false} />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

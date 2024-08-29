@@ -32,31 +32,27 @@ const LoginPage = ({ navigation }: any) => {
   };
 
   return (
-       <KeyboardAvoidingView
-      behavior={'padding'}
-      enabled
-      style={styles.container}
-    >
-        <Text style={styles.headline}>Login</Text>
-        <TextInput
-          placeholder="Email"
-          onChangeText={(text: string) => setEmail(text)}
-          value={email}
-          autoCapitalize="none"
-          style={styles.inputField}
-        />
-        <TextInput
-          secureTextEntry={true}
-          placeholder="Passord"
-          onChangeText={(text: string) => setPassword(text)}
-          value={password}
-          autoCapitalize="none"
-          style={styles.inputField}
-        />
-        <View style={styles.buttonContainer}>
-          <BasicButton label="login" action={() => signIn()} disabled={false} />
-        </View>
-      </KeyboardAvoidingView>
+    <KeyboardAvoidingView behavior={"padding"} enabled style={styles.container}>
+      <Text style={styles.headline}>Login</Text>
+      <TextInput
+        placeholder="Email"
+        onChangeText={(text: string) => setEmail(text)}
+        value={email}
+        autoCapitalize="none"
+        style={styles.inputField}
+      />
+      <TextInput
+        secureTextEntry={true}
+        placeholder="Passord"
+        onChangeText={(text: string) => setPassword(text)}
+        value={password}
+        autoCapitalize="none"
+        style={styles.inputField}
+      />
+      <View style={styles.buttonContainer}>
+        <BasicButton label="login" action={() => signIn()} disabled={false} />
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 
