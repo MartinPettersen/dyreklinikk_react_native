@@ -32,14 +32,26 @@ const VetMyPageScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       {vetInfo ? (
-        <>
+        <View >
         <Text style={styles.text}>
           <Text style={[styles.text, styles.bold]}>Navn:</Text> {vetInfo.name}
         </Text>
         <Text style={styles.text}>
           <Text style={[styles.text, styles.bold]}>Fødselsdato:</Text> {vetInfo.birthday}
         </Text>
-        </>
+        <Text style={styles.text}>
+          <Text style={[styles.text, styles.bold]}>Ekspertise:</Text> {vetInfo.expertise}
+        </Text>
+        <Text style={styles.text}>
+          <Text style={[styles.text, styles.bold]}>Dato for ansettelse:</Text> {vetInfo.hiringDay}
+        </Text>
+        <Text style={styles.text}>
+          <Text style={[styles.text, styles.bold]}>Telefon:</Text> {vetInfo.phone}
+        </Text>
+        <Text style={styles.text}>
+          <Text style={[styles.text, styles.bold]}>Ansatt som:</Text> {vetInfo.title}
+        </Text>
+        </View>
       ) : null}
     </View>
   );

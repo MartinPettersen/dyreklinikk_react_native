@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
 import {
   addDoc,
   arrayUnion,
@@ -53,7 +53,9 @@ const AddPatientPage = ({ navigation, patients }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior={"padding"} enabled style={styles.container}>
+
+
       <Text style={styles.headline}>Nytt Kjeledyr</Text>
       <VetOwnerDropDown
         patients={patients}
@@ -61,34 +63,34 @@ const AddPatientPage = ({ navigation, patients }: Props) => {
         setOpen={setOpen}
         selectedOwner={owner}
         setSelectedOwner={setOwner}
-      />
+        />
       <TextInput
         placeholder="Navn på Dyret"
         onChangeText={(text: string) => setName(text)}
         value={name}
         style={styles.inputField}
-      />
+        />
       <TextInput
         placeholder="Art"
         onChangeText={(text: string) => setSpecies(text)}
         value={species}
         style={styles.inputField}
-      />
+        />
       <TextInput
         placeholder="Rase"
         onChangeText={(text: string) => setRace(text)}
         value={race}
         style={styles.inputField}
-      />
+        />
       <View style={{ width: "60%", paddingTop: 10, zIndex: 1 }}>
         <BasicButton
           label={"Legg Til"}
           action={() => addPet()}
           disabled={name === ""}
-        />
+          />
       </View>
       
-    </View>
+          </KeyboardAvoidingView>
   );
 };
 
