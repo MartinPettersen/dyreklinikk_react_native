@@ -86,7 +86,7 @@ const ClinicBookingPage = ({ vet, clinic, navigation }: Props) => {
         <BasicButton
           label="Bestill Time"
           action={() => user? navigation.navigate("Booking", {vet: vet, clinic: clinic, date: selectedDate, time: selectedTime}) : navigation.navigate("Login")}
-          disabled={false}
+          disabled={selectedDate == "" || selectedTime == null}
         />
       </View>
     </View>
