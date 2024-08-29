@@ -39,7 +39,7 @@ import { RootStackParamList } from "./utils/types";
 import BasicButton from "./components/(util)/BasicButton";
 import BackButton from "./components/(util)/BackButton";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import VetClinicsScreen from "./screens/(employee)/VetClinicsScreen";
 import VetClinicScreen from "./screens/(employee)/VetClinicScreen";
 import CoworkersScreen from "./screens/(employee)/CoworkerScreen";
@@ -48,18 +48,45 @@ import VetMyPageScreen from "./screens/(employee)/VetMyPageScreen";
 import AdminDeletePatientsScreen from "./screens/(admin)/AdminDeletePatientsScreen";
 import AdminDeletePatientScreen from "./screens/(admin)/AdminDeletePatientScreen";
 
-
 const Stack = createNativeStackNavigator();
 
 const PatientStack = createNativeStackNavigator();
 const EmployeeStack = createNativeStackNavigator();
 const AdminStack = createNativeStackNavigator();
+const GuestStack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
 type PatientScreenNavigationProp =
   NativeStackNavigationProp<RootStackParamList>;
 
+function GuestHomeStack() {
+  return (
+    <GuestStack.Navigator
+      screenOptions={({ navigation }) => ({
+        headerShown: true,
+        headerLeft: () => (
+          <BackButton
+            action={() => navigation.goBack()}
+            label="Tilbake"
+            disabled={false}
+          />
+        ),
+        headerTitle: "",
+        headerStyle: {
+          backgroundColor: "transparent",
+        },
+        headerShadowVisible: false,
+      })}
+    >
+      <GuestStack.Screen name="Start" component={StartScreen} />
+      <GuestStack.Screen name="Login" component={LoginScreen} />
+      <GuestStack.Screen name="SignUp" component={SignUpScreen} />
+      <GuestStack.Screen name="Clinics" component={ClinicsScreen} />
+      <GuestStack.Screen name="Clinic" component={ClinicScreen} />
+    </GuestStack.Navigator>
+  );
+}
 
 function PatientHomeStack() {
   return (
@@ -134,27 +161,15 @@ function EmployeeHomeStack() {
         name="VetTreatments"
         component={VetTreatmentsScreen}
       />
-      <EmployeeStack.Screen
-        name="VetMyPage"
-        component={VetMyPageScreen}
-      />
+      <EmployeeStack.Screen name="VetMyPage" component={VetMyPageScreen} />
       <EmployeeStack.Screen
         name="VetTreatment"
         component={VetTreatmentScreen}
       />
-      
-      <EmployeeStack.Screen
-        name="VetClinics"
-        component={VetClinicsScreen}
-      />
-              <EmployeeStack.Screen
-        name="Coworker"
-        component={CoworkerScreen}
-      />    
-      <EmployeeStack.Screen
-        name="VetClinic"
-        component={VetClinicScreen}
-      />
+
+      <EmployeeStack.Screen name="VetClinics" component={VetClinicsScreen} />
+      <EmployeeStack.Screen name="Coworker" component={CoworkerScreen} />
+      <EmployeeStack.Screen name="VetClinic" component={VetClinicScreen} />
       <EmployeeStack.Screen
         name="VetPatientInfo"
         component={VetPatientInfoScreen}
@@ -184,13 +199,22 @@ function AdminHomeStack() {
     >
       <AdminStack.Screen name="Start" component={AdminScreen} />
       <AdminStack.Screen name="Admin" component={AdminScreen} />
-      <AdminStack.Screen name="AdminDeletePatients" component={AdminDeletePatientsScreen} />
-      <AdminStack.Screen name="AdminDeletePatient" component={AdminDeletePatientScreen} />
+      <AdminStack.Screen
+        name="AdminDeletePatients"
+        component={AdminDeletePatientsScreen}
+      />
+      <AdminStack.Screen
+        name="AdminDeletePatient"
+        component={AdminDeletePatientScreen}
+      />
       <AdminStack.Screen name="Clinics" component={AdminClinicsScreen} />
       <AdminStack.Screen name="AddClinic" component={AddClinicScreen} />
       <AdminStack.Screen name="AddEmployee" component={AddEmployeeScreen} />
       <AdminStack.Screen name="AdminClinic" component={AdminClinicScreen} />
-      <AdminStack.Screen name="AdminEmployees" component={AdminEmployeesScreen} />
+      <AdminStack.Screen
+        name="AdminEmployees"
+        component={AdminEmployeesScreen}
+      />
       <AdminStack.Screen name="AdminEmployee" component={AdminEmployeeScreen} />
     </AdminStack.Navigator>
   );
@@ -254,13 +278,7 @@ export default function App() {
                 initialParams={{ user: user }}
               />
             ) : (
-              <>
-                <Stack.Screen name="Start" component={StartScreen} />
-                <Stack.Screen name="Login" component={LoginScreen} />
-                <Stack.Screen name="SignUp" component={SignUpScreen} />
-                <Stack.Screen name="Clinics" component={ClinicsScreen} />
-                <Stack.Screen name="Clinic" component={ClinicScreen} />
-              </>
+              <Stack.Screen name="Guest" component={GuestHomeStack} />
             )}
           </Stack.Navigator>
         </NavigationContainer>
