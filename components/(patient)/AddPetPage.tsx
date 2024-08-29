@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TextInput, Text } from "react-native";
+import { View, StyleSheet, TextInput, Text, KeyboardAvoidingView } from "react-native";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import BasicButton from "../(util)/BasicButton";
@@ -34,35 +34,37 @@ const AddPetPage = ({ navigation, ownerId }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior={"padding"} enabled style={styles.container}>
+
+
       <Text style={styles.headline}>Nytt Kjeledyr</Text>
       <TextInput
         placeholder="Navn på Dyret"
         onChangeText={(text: string) => setName(text)}
         value={name}
         style={styles.inputField}
-      />
+        />
       <TextInput
         placeholder="Art"
         onChangeText={(text: string) => setSpecies(text)}
         value={species}
         style={styles.inputField}
-      />
+        />
       <TextInput
         placeholder="Rase"
         onChangeText={(text: string) => setRace(text)}
         value={race}
         style={styles.inputField}
-      />
+        />
 
       <View style={{ width: "60%", paddingTop: 10, zIndex: 1 }}>
         <BasicButton
           label={"Legg Til"}
           action={() => addPet()}
           disabled={name === ""}
-        />
+          />
       </View>
-    </View>
+          </KeyboardAvoidingView>
   );
 };
 
