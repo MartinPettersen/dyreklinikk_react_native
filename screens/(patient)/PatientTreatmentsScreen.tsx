@@ -67,14 +67,18 @@ const PatientTreatmentsScreen = ({ navigation }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Behandlinger {treatments.length}</Text>
       {treatments?.length > 0 ? (
+        <>
+        <Text>Behandlinger {treatments.length}</Text>
         <FlatList
           data={treatments}
           renderItem={renderTreatment}
           keyExtractor={(treatment: any) => treatment}
-        />
-      ) : null}
+          />
+          </>
+      ) : 
+      <Text>Det er ingen kommende Behandlinger</Text>
+      }
     </SafeAreaView>
   );
 };
