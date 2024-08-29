@@ -6,6 +6,7 @@ import {
   View,
   StyleSheet,
   TextInput,
+  KeyboardAvoidingView,
 } from "react-native";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
@@ -44,14 +45,16 @@ const AddClinicPage = ({ navigation }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior={"padding"} enabled style={styles.container}>
+
+
       <Text style={styles.headline}>Legg til ny Klinikk</Text>
       <TextInput
         placeholder="Navn på Klinikken"
         onChangeText={(text: string) => setName(text)}
         value={name}
         style={styles.inputField}
-      />
+        />
       <TextInput
         placeholder="Adressen til Klinikken"
         onChangeText={(text: string) => setAdress(text)}
@@ -65,7 +68,7 @@ const AddClinicPage = ({ navigation }: Props) => {
           setOpen={setSettingOpeningHours}
           selectedTime={openingHour}
           setSelectedTime={setOpeningHour}
-        />
+          />
       </View>
       <View style={[styles.dropdownContainer, {zIndex: 2}]}>
         <Text style={styles.timerText}>Stenger</Text>
@@ -74,16 +77,16 @@ const AddClinicPage = ({ navigation }: Props) => {
           setOpen={setSettingClosingHours}
           selectedTime={closingHour}
           setSelectedTime={setClosingHour}
-        />
+          />
       </View>
       <View style={{ width: "60%", paddingTop: 10, zIndex: 1 }}>
         <BasicButton
           label={"Legg Til"}
           action={() => addClinic()}
           disabled={name === ""}
-        />
+          />
       </View>
-    </View>
+          </KeyboardAvoidingView>
   );
 };
 
