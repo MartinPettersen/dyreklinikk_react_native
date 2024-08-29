@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Clinic } from "../../utils/types";
-import { Text, TextInput, View, StyleSheet } from "react-native";
+import {
+  Text,
+  TextInput,
+  View,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from "react-native";
 import PetDropDownMenu from "../(util)/PetDropDownMenu";
 import BasicButton from "../(util)/BasicButton";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -74,44 +80,43 @@ const BookingPage = ({ clinic, vet, date, time, owner, navigation }: Props) => {
       pets: pets,
     });
     navigation.navigate("Start");
-
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.textContainer}>
-        <Text
-          style={styles.text}
-        >{`Time hos ${vet.name} ved ${clinic.name} den ${date} klokken ${time}`}</Text>
-      </View>
+    <KeyboardAvoidingView behavior={"padding"} enabled style={styles.container}>
+        <View style={styles.textContainer}>
+          <Text
+            style={styles.text}
+          >{`Time hos ${vet.name} ved ${clinic.name} den ${date} klokken ${time}`}</Text>
+        </View>
 
-      <View style={[styles.dropdownContainer, , { zIndex: 3 }]}>
-        <PetDropDownMenu
-          open={open}
-          setOpen={setOpen}
-          pet={pet}
-          setPet={setPet}
-          pets={pets}
-          setPets={setPets}
+        <View style={[styles.dropdownContainer, , { zIndex: 3 }]}>
+          <PetDropDownMenu
+            open={open}
+            setOpen={setOpen}
+            pet={pet}
+            setPet={setPet}
+            pets={pets}
+            setPets={setPets}
+          />
+        </View>
+
+        <Text>Beskriv kort grunnen for besøket</Text>
+        <TextInput
+          placeholder="Grunnen for besøket"
+          onChangeText={(text: string) => setReason(text)}
+          value={reason}
+          style={styles.inputField}
+          multiline={true}
+          blurOnSubmit={true}
         />
-      </View>
 
-      <Text>Beskriv kort grunnen for besøket</Text>
-      <TextInput
-        placeholder="Grunnen for besøket"
-        onChangeText={(text: string) => setReason(text)}
-        value={reason}
-        style={styles.inputField}
-        multiline={true}
-        blurOnSubmit={true}
-      />
-
-      <BasicButton
-        label="Bestil Time"
-        action={() => registerBooking()}
-        disabled={reason == "" || pet == null}
-      />
-    </SafeAreaView>
+        <BasicButton
+          label="Bestil Time"
+          action={() => registerBooking()}
+          disabled={reason == "" || pet == null}
+        />
+    </KeyboardAvoidingView>
   );
 };
 
