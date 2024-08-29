@@ -1,8 +1,15 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  KeyboardAvoidingView,
+} from "react-native";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Props = {
   navigation: any;
@@ -15,44 +22,41 @@ const LoginPage = ({ navigation }: any) => {
   const auth = FIREBASE_AUTH;
 
   const signIn = async () => {
-
     try {
-        const response = await signInWithEmailAndPassword(auth, email, password);
-
-    } catch ( error) {
-        console.log(error);
+      const response = await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.log(error);
     } finally {
-        //navigation.navigate("PatientStart")
-
+      //navigation.navigate("PatientStart")
     }
-  }
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.headline}>Login</Text>
-      <TextInput
-        placeholder="Email"
-        onChangeText={(text: string) => setEmail(text)}
-        value={email}
-        autoCapitalize="none"
-        style={styles.inputField}
-      />
-      <TextInput
-        secureTextEntry={true}
-        placeholder="Passord"
-        onChangeText={(text: string) => setPassword(text)}
-        value={password}
-        autoCapitalize="none"
-        style={styles.inputField}
-      />
-      <View style={styles.buttonContainer}>
-        <BasicButton
-          label="login"
-          action={() => signIn()}
-          disabled={false}
+       <KeyboardAvoidingView
+      behavior={'padding'}
+      enabled
+      style={styles.container}
+    >
+        <Text style={styles.headline}>Login</Text>
+        <TextInput
+          placeholder="Email"
+          onChangeText={(text: string) => setEmail(text)}
+          value={email}
+          autoCapitalize="none"
+          style={styles.inputField}
         />
-      </View>
-    </View>
+        <TextInput
+          secureTextEntry={true}
+          placeholder="Passord"
+          onChangeText={(text: string) => setPassword(text)}
+          value={password}
+          autoCapitalize="none"
+          style={styles.inputField}
+        />
+        <View style={styles.buttonContainer}>
+          <BasicButton label="login" action={() => signIn()} disabled={false} />
+        </View>
+      </KeyboardAvoidingView>
   );
 };
 
