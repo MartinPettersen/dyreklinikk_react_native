@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import PatientDisplay from "./PatientDisplay";
+import CoworkerPatientDisplay from "./CoworkerPatientDisplay";
 
 type Props = {
   navigation: any;
@@ -12,7 +13,7 @@ type RenderPatientProp = {
 };
 const CoworkerPage = ({ navigation, employee }: Props) => {
   const renderPatient = ({ item }: RenderPatientProp) => {
-    return <PatientDisplay patient={item} navigation={navigation} />;
+    return <CoworkerPatientDisplay patient={item} navigation={navigation} user={undefined} />;
   };
 
   return (

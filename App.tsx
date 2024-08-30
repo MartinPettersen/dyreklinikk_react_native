@@ -47,6 +47,7 @@ import CoworkerScreen from "./screens/(employee)/CoworkerScreen";
 import VetMyPageScreen from "./screens/(employee)/VetMyPageScreen";
 import AdminDeletePatientsScreen from "./screens/(admin)/AdminDeletePatientsScreen";
 import AdminDeletePatientScreen from "./screens/(admin)/AdminDeletePatientScreen";
+import CoworkerPatientInfoScreen from "./screens/(employee)/CoworkerPatientInfoScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -173,6 +174,10 @@ function EmployeeHomeStack() {
       <EmployeeStack.Screen
         name="VetPatientInfo"
         component={VetPatientInfoScreen}
+      />
+      <EmployeeStack.Screen
+        name="CoworkerPatientInfo"
+        component={CoworkerPatientInfoScreen}
       />
     </EmployeeStack.Navigator>
   );
