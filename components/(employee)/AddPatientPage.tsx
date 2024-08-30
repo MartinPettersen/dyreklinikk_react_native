@@ -5,6 +5,7 @@ import {
   arrayUnion,
   collection,
   doc,
+  onSnapshot,
   updateDoc,
 } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
@@ -14,6 +15,7 @@ import VetOwnerDropDown from "./VetOwnerDropDown";
 type Props = {
   navigation: any;
   patients: any[];
+  vetInfo: any;
 };
 
 type Owner = {
@@ -29,7 +31,7 @@ type Treatment = {
   date: string;
 };
 
-const AddPatientPage = ({ navigation, patients }: Props) => {
+const AddPatientPage = ({ navigation, patients, vetInfo }: Props) => {
   const [name, setName] = useState<string>();
   const [owner, setOwner] = useState<string | null>(null);
   const [race, setRace] = useState<string>();
@@ -37,17 +39,68 @@ const AddPatientPage = ({ navigation, patients }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
   const [treatments, setTreatments] = useState<any[] | null>();
 
+  const addPatient = async (petIndex: number) => {
+        //console.log("test", test);
+        console.log("vetInfo", vetInfo)
+        const employeeRef = doc(FIRESTORE_DB, `employees/${vetInfo.vetId}`);
+        await updateDoc(employeeRef, {
+          patients: arrayUnion({ ownerId: owner, patient: petIndex }),
+        });
+        console.log("her også")
+        const clinicRef = doc(FIRESTORE_DB, `clinics/${vetInfo.clinicId}`);
+        await updateDoc(clinicRef, {
+          patients: arrayUnion({ ownerId: owner, patient: petIndex }),
+        });
+    
+  }
+
+
   const addPet = async () => {
     const docRef = doc(FIRESTORE_DB, `owners/${owner}`);
+    const thePet = {
+      name: name,
+      owner: owner,
+      species: species,
+      race: race,
+      treatments: treatments || [],
+    }
     const test = updateDoc(docRef, {
-      pets: arrayUnion({
-        name: name,
-        owner: owner,
-        species: species,
-        race: race,
-        treatments: treatments || [],
-      }),
+      pets: arrayUnion(thePet),
     });
+
+    //console.log("we com hit")
+    //console.log("owner", owner)
+    const ownerRef = doc(FIRESTORE_DB, `owners/${owner}`);
+    //console.log("ownerRef",ownerRef)
+    let ownerTemp;
+    let petIndex;
+
+    const subscriber = onSnapshot(ownerRef, (snapshot) => {
+      //console.log("snapshot.data()",snapshot.data())
+      if (snapshot.exists()) {
+        //console.log("it exists")
+        ownerTemp = snapshot.data();
+    
+    
+        //console.log("ownerTemp", ownerTemp)
+        for (let i = 0; i < ownerTemp!.pets.length; i++) {
+          //console.log("ownerTemp!.pets[i]",ownerTemp!.pets[i])
+          //console.log("thePet", thePet)
+          if (ownerTemp!.pets[i].name === thePet.name){
+            petIndex = i;
+              addPatient(i)
+
+            //console.log("we found the pet")
+          } else {
+            //console.log("no pet")
+          }
+        }
+    
+      } else {
+        ownerTemp = null;
+      }
+    });
+    
 
     navigation.navigate("MyPatients")
   };
