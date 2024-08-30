@@ -40,6 +40,7 @@ const LoginPage = ({ navigation }: any) => {
         value={email}
         autoCapitalize="none"
         style={styles.inputField}
+        spellCheck={false}
       />
       <TextInput
         secureTextEntry={true}
@@ -48,6 +49,7 @@ const LoginPage = ({ navigation }: any) => {
         value={password}
         autoCapitalize="none"
         style={styles.inputField}
+        spellCheck={false}
       />
       <View style={styles.buttonContainer}>
         <BasicButton label="login" action={() => signIn()} disabled={false} />
