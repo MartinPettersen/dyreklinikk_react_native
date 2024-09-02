@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Text, TextInput } from "react-native";
 import { FIRESTORE_DB } from "../../firebaseConfig";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  arrayRemove,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  onSnapshot,
+  updateDoc,
+} from "firebase/firestore";
 import BasicButton from "../(util)/BasicButton";
 
 type Props = {
   patientTreatment: any;
   navigation: any;
+  clinicId: any;
 };
 
 const VetTreatmentPage = ({ patientTreatment, navigation }: Props) => {
@@ -35,9 +44,51 @@ const VetTreatmentPage = ({ patientTreatment, navigation }: Props) => {
     setUpdated(!updated);
   };
 
+  const removeClinicTreatment = async (clinic: any) => {
+    console.log("treatment", treatment)
+
+    const clinicRef = doc(FIRESTORE_DB, `clinics/${treatment.clinicId}`);
+    console.log("clinicRef", clinicRef)
+    await updateDoc(clinicRef, {
+      treatments: arrayRemove(treatment.id),
+    });
+    console.log("kom hit")
+  };
+
+  const removePetTreatment = async (owner: any) => {
+    const ownerRef = doc(FIRESTORE_DB, `owners/${treatment.owner}`);
+    const updatedPets = owner!.pets[treatment.pet].treatments.filter(
+      (petTreatment: any, index: number) => petTreatment !== treatment.id
+    );
+
+    const pets = [...owner.pets];
+
+    pets[treatment.pet].treatments = pets[treatment.pet].treatments.filter(
+      (petTreatment: any) => petTreatment !== treatment.id
+    );
+    await updateDoc(ownerRef, { pets });
+  };
+
   const deleteTreatment = async () => {
     const docRef = doc(FIRESTORE_DB, `treatments/${treatment.id}`);
     deleteDoc(docRef);
+
+    const ownerRef = doc(FIRESTORE_DB, `owners/${treatment.owner}`);
+    let owner;
+    const subscriber = onSnapshot(ownerRef, (snapshot) => {
+      if (snapshot.exists()) {
+        removePetTreatment(snapshot.data());
+      }
+    });
+
+    const clinicRef = doc(FIRESTORE_DB, `clinics/${treatment.clinicId}`);
+
+    const subscriberClinic = onSnapshot(clinicRef, (snapshot) => {
+      if (snapshot.exists()) {
+        removeClinicTreatment(snapshot.data());
+      }
+    });
+
     navigation.navigate("VetTreatments");
   };
 

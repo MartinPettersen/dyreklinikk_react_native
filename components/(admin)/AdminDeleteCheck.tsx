@@ -2,7 +2,16 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import DeleteButton from "../(util)/DeleteButton";
 import BasicButton from "../(util)/BasicButton";
-import { arrayUnion, collection, deleteDoc, doc, onSnapshot, query, updateDoc, where } from "firebase/firestore";
+import {
+  arrayUnion,
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 
 type Props = {
@@ -24,43 +33,40 @@ const AdminDeleteCheck = ({
   openDeletefield,
   setOpenDeleteField,
 }: Props) => {
+  const deleteTreatment = () => {
+    const docRef = collection(FIRESTORE_DB, "treatments");
+    let treatmentId = "";
 
+    const subscriber = onSnapshot(
+      query(
+        docRef,
+        where("owner", "==", deleteRequest.owner),
+        where("pet", "==", deleteRequest.patient.patient)
+      ),
+      {
+        next: (snapshot) => {
+          let vetInfoList: any[] = [];
+          snapshot.docs.forEach((doc) => {
+            vetInfoList.push(doc.id);
+          });
 
-    const deleteTreatment = () => {
-        const docRef = collection(FIRESTORE_DB, "treatments");
-        let treatmentId = "";
-
-        const subscriber = onSnapshot(
-          query(
-            docRef, 
-            where("owner", "==", deleteRequest.owner),
-            where("pet", "==", deleteRequest.patient.patient)
-          ),
-          {
-            next: (snapshot) => {
-              let vetInfoList: any[] = [];
-              snapshot.docs.forEach((doc) => {
-                vetInfoList.push(doc.id);
-              });
-
-              for (let i = 0; i < vetInfoList.length; i++) {
-
-                const treatmentRef = doc(FIRESTORE_DB, `treatments/${vetInfoList[i]}`);
-                deleteDoc(treatmentRef);
-              }
-            },
+          for (let i = 0; i < vetInfoList.length; i++) {
+            const treatmentRef = doc(
+              FIRESTORE_DB,
+              `treatments/${vetInfoList[i]}`
+            );
+            deleteDoc(treatmentRef);
           }
-        );
-      };
-    
-    
-
+        },
+      }
+    );
+  };
 
   const deletePatient = async () => {
-
-
     const ownerRef = doc(FIRESTORE_DB, `owners/${deleteRequest.owner}`);
-    const updatedPets = owner.pets.filter((pet: any, index: number) => index !== deleteRequest.patient.patient);
+    const updatedPets = owner.pets.filter(
+      (pet: any, index: number) => index !== deleteRequest.patient.patient
+    );
     await updateDoc(ownerRef, {
       pets: updatedPets,
     });
@@ -86,7 +92,7 @@ const AdminDeleteCheck = ({
     const docRef = doc(FIRESTORE_DB, `deleterequest/${deleteRequest.id}`);
     deleteDoc(docRef);
 
-    deleteTreatment()
+    deleteTreatment();
     navigation.navigate("Start");
   };
 
