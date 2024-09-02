@@ -5,11 +5,20 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  ScrollView,
 } from "react-native";
 import { Clinic } from "../../utils/types";
 import { Feather } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { doc, updateDoc, deleteDoc, collection, onSnapshot, query, where } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  deleteDoc,
+  collection,
+  onSnapshot,
+  query,
+  where,
+} from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
 import DeleteButton from "../(util)/DeleteButton";
@@ -86,108 +95,117 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.headline}>Oppdater Dyreklinikk</Text>
-      <HorizontalLine />
-      <View style={styles.sideButton}>
-        {editingName ? (
-          <TextInput
-            placeholder="Navn på Klinikken"
-            onChangeText={(text: string) => setName(text)}
-            value={name}
-            style={styles.inputField}
-          />
-        ) : (
-          <Text>Navn: {name}</Text>
-        )}
+      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+        <Text style={styles.headline}>Oppdater Dyreklinikk</Text>
+        <HorizontalLine />
+        <View style={styles.sideButton}>
+          {editingName ? (
+            <TextInput
+              placeholder="Navn på Klinikken"
+              onChangeText={(text: string) => setName(text)}
+              value={name}
+              style={styles.inputField}
+            />
+          ) : (
+            <Text>Navn: {name}</Text>
+          )}
 
-        <IconButton
-          label={"edit"}
-          action={() => setEditingName(!editingName)}
-          disabled={false}
-        />
-      </View>
-      <View style={styles.sideButton}>
-        {editingAdress ? (
-          <TextInput
-            placeholder="Adressen til Klinikken"
-            onChangeText={(text: string) => setAdress(text)}
-            value={adress}
-            style={styles.inputField}
+          <IconButton
+            label={"edit"}
+            action={() => setEditingName(!editingName)}
+            disabled={false}
           />
-        ) : (
-          <Text>Adresse: {adress}</Text>
-        )}
+        </View>
+        <View style={styles.sideButton}>
+          {editingAdress ? (
+            <TextInput
+              placeholder="Adressen til Klinikken"
+              onChangeText={(text: string) => setAdress(text)}
+              value={adress}
+              style={styles.inputField}
+            />
+          ) : (
+            <Text>Adresse: {adress}</Text>
+          )}
 
-        <IconButton
-          label={"edit"}
-          action={() => setEditingAdress(!editingAdress)}
-          disabled={false}
-        />
-      </View>
-
-      <View style={[styles.sideButton, { width: "30%", zIndex: 3 }]}>
-        {editingOpeningHour ? (
-          <DropDownMenu
-            open={editingOpeningHour}
-            setOpen={setEditingOpeningHour}
-            selectedTime={openingHour}
-            setSelectedTime={setOpeningHour}
+          <IconButton
+            label={"edit"}
+            action={() => setEditingAdress(!editingAdress)}
+            disabled={false}
           />
-        ) : (
-          <Text>Åpner: {openingHour}</Text>
-        )}
-        <IconButton
-          label={"edit"}
-          action={() => setEditingOpeningHour(!editingOpeningHour)}
-          disabled={false}
-        />
-      </View>
+        </View>
 
-      <View style={[styles.sideButton, { width: "30%", zIndex: 2 }]}>
-        {editingClosingHour ? (
-          <DropDownMenu
-            open={editingClosingHour}
-            setOpen={setEditingClosingHour}
-            selectedTime={closingHour}
-            setSelectedTime={setClosingHour}
+        <View style={[styles.sideButton, { width: "30%", zIndex: 3 }]}>
+          {editingOpeningHour ? (
+            <DropDownMenu
+              open={editingOpeningHour}
+              setOpen={setEditingOpeningHour}
+              selectedTime={openingHour}
+              setSelectedTime={setOpeningHour}
+            />
+          ) : (
+            <Text>Åpner: {openingHour}</Text>
+          )}
+          <IconButton
+            label={"edit"}
+            action={() => setEditingOpeningHour(!editingOpeningHour)}
+            disabled={false}
           />
-        ) : (
-          <Text>Stenger: {closingHour}</Text>
-        )}
-        <IconButton
-          label={"edit"}
-          action={() => setEditingClosingHour(!editingClosingHour)}
-          disabled={false}
-        />
-      </View>
-      <View style={styles.sideButton}>
-        <Text>Ansatte</Text>
-        <IconButton
-          label={"user-plus"}
-          action={() => navigation.navigate("AddEmployee", { clinic: clinic })}
-          disabled={false}
-        />
-      </View>
-      <View>
-        {employees.length > 0
-          ? employees.map((employee, i) => <EmployeeTag employee={employee} action={() => navigation.navigate("AdminEmployee", {employee: employee})} />)
-          : null}
-      </View>
-      <View style={{ margin: 20 }}>
-        <BasicButton
-          label={"Oppdater"}
-          action={() => updateClinic()}
-          disabled={false}
-        />
-      </View>
-      <HorizontalLine />
-      <View style={{ margin: 60 }}>
-        <DeleteButton
-          label={"Delete"}
-          action={() => deleteClinic()}
-          disabled={false}
-        />
-      </View>
+        </View>
+
+        <View style={[styles.sideButton, { width: "30%", zIndex: 2 }]}>
+          {editingClosingHour ? (
+            <DropDownMenu
+              open={editingClosingHour}
+              setOpen={setEditingClosingHour}
+              selectedTime={closingHour}
+              setSelectedTime={setClosingHour}
+            />
+          ) : (
+            <Text>Stenger: {closingHour}</Text>
+          )}
+          <IconButton
+            label={"edit"}
+            action={() => setEditingClosingHour(!editingClosingHour)}
+            disabled={false}
+          />
+        </View>
+        <View style={styles.sideButton}>
+          <Text>Ansatte</Text>
+          <IconButton
+            label={"user-plus"}
+            action={() =>
+              navigation.navigate("AddEmployee", { clinic: clinic })
+            }
+            disabled={false}
+          />
+        </View>
+          {employees.length > 0
+            ? employees.map((employee, i) => (
+                <EmployeeTag
+                  employee={employee}
+                  action={() =>
+                    navigation.navigate("AdminEmployee", { employee: employee })
+                  }
+                />
+              ))
+            : null}
+        <View style={{ margin: 20 }}>
+          <BasicButton
+            label={"Oppdater"}
+            action={() => updateClinic()}
+            disabled={false}
+          />
+        </View>
+        <HorizontalLine />
+        <View style={{ margin: 60 }}>
+          <DeleteButton
+            label={"Delete"}
+            action={() => deleteClinic()}
+            disabled={false}
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -223,6 +241,16 @@ const styles = StyleSheet.create({
     margin: 0,
     color: "#52525b",
     fontWeight: "bold",
+  },
+  employeeContainer: {
+    flex: 1,
+    paddingBottom: 100,
+  },
+  scrollViewContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    width: "100%",
+    alignItems: "center",
   },
 });
 
