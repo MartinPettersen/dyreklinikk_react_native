@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,13 +9,14 @@ import {
 import { Clinic } from "../../utils/types";
 import { Feather } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { doc, updateDoc, deleteDoc, collection, onSnapshot, query, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
 import DeleteButton from "../(util)/DeleteButton";
 import DropDownMenu from "../(util)/DropDownMenu";
 import HorizontalLine from "../(util)/HorizontalLine";
 import IconButton from "../(util)/IconButton";
+import EmployeeTag from "../(util)/EmployeeTag";
 
 type Props = {
   clinic: Clinic;
@@ -29,7 +30,7 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
   const [adress, setAdress] = useState(clinic.adress);
   const [editingAdress, setEditingAdress] = useState(false);
 
-  const [employees, setEmployess] = useState(clinic.employees);
+  const [employees, setEmployees] = useState(clinic.employees);
 
   const [openingHour, setOpeningHour] = useState<string | null>(
     clinic.openingHour
@@ -56,6 +57,32 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
     deleteDoc(ref);
     navigation.navigate("Clinics");
   };
+
+  const getEmployees = () => {
+    const employeeRef = collection(FIRESTORE_DB, "employees");
+
+    const subscriber = onSnapshot(
+      query(employeeRef, where("workplace", "==", clinic.id)),
+      {
+        next: (snapshot) => {
+          const employeeList: any[] = [];
+          snapshot.docs.forEach((doc) => {
+            employeeList.push({
+              name: doc.data().name,
+              expertise: doc.data().expertise,
+              patients: doc.data().patients,
+              id: doc.id,
+            });
+          });
+          setEmployees(employeeList);
+        },
+      }
+    );
+  };
+
+  useEffect(() => {
+    getEmployees();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -143,7 +170,7 @@ const ClinicPage = ({ clinic, navigation }: Props) => {
       </View>
       <View>
         {employees.length > 0
-          ? employees.map((employee) => <Text>{employee}cd</Text>)
+          ? employees.map((employee, i) => <EmployeeTag employee={employee} action={() => navigation.navigate("AdminEmployee", {employee: employee})} />)
           : null}
       </View>
       <View style={{ margin: 20 }}>
