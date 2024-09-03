@@ -29,7 +29,7 @@ const MyPatientsPage = ({ navigation, user, patients }: Props) => {
     <View style={styles.container}>
       <Text style={styles.headline}>Mine Pasienter</Text>
       <AddPetButton
-        label={"github"}
+        label={"patient"}
         action={() => navigation.navigate("AddPatient", {patients: patients})}
         disabled={false}
       />

@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Text, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  FlatList,
+  ScrollView,
+} from "react-native";
 import IconButton from "../(util)/IconButton";
 import EditableText from "../(util)/EditableText";
 import HorizontalLine from "../(util)/HorizontalLine";
@@ -7,16 +14,23 @@ import DeleteButton from "../(util)/DeleteButton";
 import BasicButton from "../(util)/BasicButton";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
+import PatientDisplay from "../(employee)/PatientDisplay";
 
 type Props = {
   employee: any;
   navigation: any;
+  user: any;
 };
 
-const EmployeeInfoPage = ({ employee, navigation }: Props) => {
+type RenderPatientProp = {
+  item: any;
+};
+
+const EmployeeInfoPage = ({ employee, navigation, user }: Props) => {
   const [name, setName] = useState(employee.name);
   const [editingName, setEditingName] = useState(false);
-
+  console.log("employee", employee);
+  console.log("employee.patients.length ", employee.patients.length);
   const [email, setEmail] = useState(employee.email);
   const [phone, setPhone] = useState(employee.phone);
   const [expertise, setExpertise] = useState(employee.expertise);
@@ -36,6 +50,12 @@ const EmployeeInfoPage = ({ employee, navigation }: Props) => {
   const deleteEmployee = async () => {
     deleteDoc(ref);
     navigation.navigate("AdminEmployees");
+  };
+
+  const renderPatient = ({ item }: RenderPatientProp) => {
+    return (
+      <PatientDisplay patient={item} navigation={navigation} user={user} />
+    );
   };
 
   return (
@@ -80,7 +100,19 @@ const EmployeeInfoPage = ({ employee, navigation }: Props) => {
         label={`Informasjon: ${information}`}
       />
 
-      <View style={{ margin: 20 }}>
+      <Text style={[styles.text, { fontWeight: "bold" }]}>Pasienter:</Text>
+
+      {employee.patients.length > 0 ? (
+          <FlatList
+            data={employee.patients}
+            renderItem={renderPatient}
+            keyExtractor={(patient: any, index: number) =>
+              `${patient.patient}${patient.ownerId}${index}`
+            }
+            contentContainerStyle={{paddingBottom: 20}}
+            />
+        ) : null}
+      <View style={{ padding: 0 }}>
         <BasicButton
           label={"Oppdater"}
           action={() => updateEmployee()}
@@ -89,7 +121,7 @@ const EmployeeInfoPage = ({ employee, navigation }: Props) => {
       </View>
 
       <HorizontalLine />
-      <View style={{ margin: 60 }}>
+      <View style={{ padding: 20 }}>
         <DeleteButton
           label={"Delete"}
           action={() => deleteEmployee()}
@@ -103,7 +135,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
   headline: {
     fontSize: 40,

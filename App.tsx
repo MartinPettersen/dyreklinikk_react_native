@@ -220,6 +220,10 @@ function AdminHomeStack() {
         name="AdminEmployees"
         component={AdminEmployeesScreen}
       />
+      <EmployeeStack.Screen
+        name="VetPatientInfo"
+        component={VetPatientInfoScreen}
+      />
       <AdminStack.Screen name="AdminEmployee" component={AdminEmployeeScreen} />
     </AdminStack.Navigator>
   );
