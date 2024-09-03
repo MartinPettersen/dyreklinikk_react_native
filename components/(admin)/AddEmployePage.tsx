@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
 import {
   doc,
   updateDoc,
@@ -70,7 +70,8 @@ const AddEmployePage = ({ navigation, clinic }: Props) => {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView behavior={"padding"} enabled style={styles.container}>
+
       <Text style={styles.headline}>Ny Ansatt</Text>
       <TextInput
         placeholder="Navn på Ansatte"
@@ -106,6 +107,7 @@ const AddEmployePage = ({ navigation, clinic }: Props) => {
         placeholder="Email"
         onChangeText={(text: string) => setEmail(text)}
         value={email}
+        autoCapitalize="none" 
         style={styles.inputField}
       />
       <TextInput
@@ -127,7 +129,7 @@ const AddEmployePage = ({ navigation, clinic }: Props) => {
           disabled={name === ""}
         />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -16,7 +16,6 @@ const EmployeeStartScreen = ({ navigation }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headline}>Logget in som: </Text>
       <View style={styles.buttonContainer}>
         <BasicButton
           label="Min Side"
