@@ -11,9 +11,11 @@ import {
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
 import VetOwnerDropDown from "./VetOwnerDropDown";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   patients: any[];
   vetInfo: any;
 };

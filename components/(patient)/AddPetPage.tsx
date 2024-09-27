@@ -4,8 +4,12 @@ import { FIRESTORE_DB } from "../../firebaseConfig";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import BasicButton from "../(util)/BasicButton";
 
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
+
+
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   ownerId: string;
 };
 

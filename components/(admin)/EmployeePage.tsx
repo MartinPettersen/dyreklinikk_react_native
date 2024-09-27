@@ -4,9 +4,11 @@ import { View, Text, SafeAreaView, StyleSheet, FlatList } from "react-native";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import DisplayTag from "../(util)/DisplayTag";
 import HorizontalLine from "../(util)/HorizontalLine";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
 };
 
 type RenderEmployeeProp = {

@@ -1,7 +1,13 @@
 import React from 'react'
 import Startpage from '../../components/(preloggin)/Startpage'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../utils/types';
 
-const StartScreen = ({navigation}: any) => {
+type StartScreenProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Start'>;
+};
+
+const StartScreen = ({navigation}: StartScreenProps) => {
   return (
     <Startpage navigation={navigation} />
   )

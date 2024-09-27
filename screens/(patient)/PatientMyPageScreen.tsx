@@ -1,8 +1,13 @@
 import React from 'react'
 import PatientMyPage from '../../components/(patient)/PatientMyPage'
 import { useUser } from "../../components/(user)/UserContext";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../utils/types';
 
-const PatientMyPageScreen = ({navigation}: any) => {
+type PatientMyPageScreenProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, 'MyPage'>;
+};
+const PatientMyPageScreen = ({navigation}: PatientMyPageScreenProps) => {
     const { user } = useUser();
   
   return (

@@ -11,9 +11,11 @@ import { FIREBASE_AUTH, FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
 import { Clinic } from "../../utils/types";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   clinic: Clinic;
 };
 

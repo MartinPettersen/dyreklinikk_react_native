@@ -12,9 +12,11 @@ import { FIRESTORE_DB } from "../../firebaseConfig";
 import BasicButton from "../(util)/BasicButton";
 import SmallButton from "../(util)/SmallButton";
 import DropDownMenu from "../(util)/DropDownMenu";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
 };
 
 const AddClinicPage = ({ navigation }: Props) => {

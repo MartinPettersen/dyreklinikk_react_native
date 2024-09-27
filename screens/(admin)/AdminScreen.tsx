@@ -2,8 +2,14 @@ import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import BasicButton from "../../components/(util)/BasicButton";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../utils/types';
 
-const AdminScreen = ({ navigation }: any) => {
+type Props = {
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Admin'>;
+};
+
+const AdminScreen = ({ navigation }: Props) => {
   
   const handleLogout = async () => {
     try {

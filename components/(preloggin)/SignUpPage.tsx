@@ -13,12 +13,14 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
 };
 
-const SignUpPage = ({ navigation }: any) => {
+const SignUpPage = ({ navigation }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState<string>();

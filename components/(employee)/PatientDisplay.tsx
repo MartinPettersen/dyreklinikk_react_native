@@ -2,10 +2,12 @@ import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { FIRESTORE_DB } from "../../firebaseConfig";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
   patient: any;
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   user: any;
 };
 

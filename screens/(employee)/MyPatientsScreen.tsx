@@ -4,11 +4,19 @@ import { useUser } from "../../components/(user)/UserContext";
 import MyPatientsPage from '../../components/(employee)/MyPatientsPage';
 import { FIRESTORE_DB } from '../../firebaseConfig';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList, Vet, VetPatients } from '../../utils/types';
 
-const MyPatientsScreen = ({navigation }: any) => {
+type Props = {
+  navigation: NativeStackNavigationProp<RootStackParamList, 'MyPatients'>;
+};
+
+
+
+const MyPatientsScreen = ({navigation }: Props) => {
     const { user } = useUser();
 
-    const [patients, setPatients] = useState<any[] | null>([])
+    const [patients, setPatients] = useState<VetPatients[] | null>([])
 
     const getPatients = () => {
       const docRef = collection(FIRESTORE_DB, "employees");
@@ -16,7 +24,7 @@ const MyPatientsScreen = ({navigation }: any) => {
         query(docRef, where("email", "==", user!.email)),
         {
           next: (snapshot) => {
-            let patientsList: any[] = [];
+            let patientsList: VetPatients[] = [];
             snapshot.docs.forEach((doc) => {
               patientsList = doc.data().patients
             })

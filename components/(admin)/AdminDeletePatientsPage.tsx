@@ -3,17 +3,18 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, FlatList } from "react-native";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import DeleteRequestTag from "./DeleteRequestTag";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any
+  navigation: NavigationProp<RootStackParamList>;
 };
-
 
 type RenderRequestProp = {
   item: any
 }
 
-const AdminDeletePatientsPage = ({navigation}: any) => {
+const AdminDeletePatientsPage = ({navigation}: Props) => {
   const [deleteRequests, setDeleteRequests] = useState<any[] | null>(null);
 
   const getRequests = () => {

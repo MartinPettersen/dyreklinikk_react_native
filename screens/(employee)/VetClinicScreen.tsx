@@ -1,7 +1,16 @@
 import React from 'react'
 import VetClinicPage from '../../components/(employee)/VetClinicPage'
 
-const VetClinicScreen = ({navigation, route}: any) => {
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../utils/types';
+import { RouteProp } from '@react-navigation/native';
+
+type VetClinicScreenProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, 'VetClinic'>;
+  route: RouteProp<RootStackParamList, 'VetClinic'>;
+};
+
+const VetClinicScreen = ({navigation, route}: VetClinicScreenProps) => {
 
     const { clinic } = route.params
 

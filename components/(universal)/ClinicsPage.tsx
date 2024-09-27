@@ -4,9 +4,11 @@ import { Clinic } from "../../utils/types";
 import { collection, onSnapshot } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import ClinicTag from "../(util)/ClinicTag";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
 };
 
 type RenderClinicProp = {

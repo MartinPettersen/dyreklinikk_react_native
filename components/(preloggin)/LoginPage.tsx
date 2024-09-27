@@ -11,11 +11,14 @@ import BasicButton from "../(util)/BasicButton";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
+
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
 };
 
-const LoginPage = ({ navigation }: any) => {
+const LoginPage = ({ navigation }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);

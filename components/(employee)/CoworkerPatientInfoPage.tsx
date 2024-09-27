@@ -7,9 +7,11 @@ import DeleteButton from "../(util)/DeleteButton";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
 import VetDeletePatient from "./VetDeletePatient";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   owner: any;
   patient: any;
   user: any

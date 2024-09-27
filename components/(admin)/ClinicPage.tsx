@@ -26,10 +26,12 @@ import DropDownMenu from "../(util)/DropDownMenu";
 import HorizontalLine from "../(util)/HorizontalLine";
 import IconButton from "../(util)/IconButton";
 import EmployeeTag from "../(util)/EmployeeTag";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
   clinic: Clinic;
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
 };
 
 const ClinicPage = ({ clinic, navigation }: Props) => {

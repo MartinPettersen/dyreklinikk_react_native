@@ -5,10 +5,12 @@ import { FIRESTORE_DB } from "../../firebaseConfig";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import EmployeeTag from "../(util)/EmployeeTag";
 import ClinicBookingPage from "./ClinicBookingPage";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
   clinic: Clinic;
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
 };
 
 type RenderEmployeeProp = {

@@ -5,9 +5,11 @@ import BasicButton from "../(util)/BasicButton";
 import { collection, deleteDoc, doc, onSnapshot, query, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import AdminDeleteCheck from "./AdminDeleteCheck";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   deleteRequest: any;
 };
 

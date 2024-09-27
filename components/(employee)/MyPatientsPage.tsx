@@ -5,9 +5,11 @@ import IconButton from "../(util)/IconButton";
 import AddPetButton from "../(util)/AddPetButton";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import PatientDisplay from "./PatientDisplay";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   user: any;
   patients: any;
 };

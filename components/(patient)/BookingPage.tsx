@@ -19,23 +19,35 @@ import {
 } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 
+import { NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../utils/types";
+
 type Props = {
   clinic: Clinic;
   vet: any;
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   date: string;
   time: any;
   owner: any;
 };
 
 const BookingPage = ({ clinic, vet, date, time, owner, navigation }: Props) => {
+  console.log("clinic", clinic);
+  console.log("vet", vet);
+  console.log("date", date);
+  console.log("time", time);
+  console.log("owner", owner);
+  console.log("navigation", navigation);
+
   const [pet, setPet] = useState<any | null>(null);
   const [reason, setReason] = useState<string>("");
   const [pets, setPets] = useState<any[]>([]);
   const [open, setOpen] = useState<boolean>(false);
+
   useEffect(() => {
     if (owner) {
       setPets(owner.pets);
+      console.log("pets", owner.pets);
     }
   }, [owner]);
 
@@ -44,38 +56,46 @@ const BookingPage = ({ clinic, vet, date, time, owner, navigation }: Props) => {
       vetId: vet.id,
       clinicId: clinic.id,
       owner: owner.id,
-      pet: pet.petIndex,
+      pet: pet,
       reason: reason,
       date: date,
       time: time,
       status: "waiting",
       note: "",
     };
+
+    console.log("order", order);
+
     const docBooking = await addDoc(
       collection(FIRESTORE_DB, "treatments"),
       order
     );
+    console.log("docBooking", docBooking);
 
     const bookingId = docBooking.id;
 
     const clinicRef = doc(FIRESTORE_DB, `clinics/${clinic.id}`);
     await updateDoc(clinicRef, {
       treatments: arrayUnion(bookingId),
-      patients: arrayUnion({ ownerId: owner.id, patient: pet.petIndex }),
+      patients: arrayUnion({ ownerId: owner.id, patient: pet }),
     });
+    console.log("clinicRef", clinicRef);
 
     const employeeRef = doc(FIRESTORE_DB, `employees/${vet.id}`);
     await updateDoc(employeeRef, {
-      patients: arrayUnion({ ownerId: owner.id, patient: pet.petIndex }),
+      patients: arrayUnion({ ownerId: owner.id, patient: pet }),
     });
 
+    console.log("employeeRef", employeeRef);
+
     const tempPets = pets;
-    tempPets[pet.petIndex].treatments = [
-      ...(pets[pet.petIndex].treatments || []),
+    tempPets[pet].treatments = [
+      ...(pets[pet].treatments || []),
       bookingId,
     ];
 
     const ownerRef = doc(FIRESTORE_DB, `owners/${owner.id}`);
+    console.log("ownerRef", ownerRef);
     await updateDoc(ownerRef, {
       pets: pets,
     });
@@ -84,38 +104,38 @@ const BookingPage = ({ clinic, vet, date, time, owner, navigation }: Props) => {
 
   return (
     <KeyboardAvoidingView behavior={"padding"} enabled style={styles.container}>
-        <View style={styles.textContainer}>
-          <Text
-            style={styles.text}
-          >{`Time hos ${vet.name} ved ${clinic.name} den ${date} klokken ${time}`}</Text>
-        </View>
+      <View style={styles.textContainer}>
+        <Text
+          style={styles.text}
+        >{`Time hos ${vet.name} ved ${clinic.name} den ${date} klokken ${time}`}</Text>
+      </View>
 
-        <View style={[styles.dropdownContainer, , { zIndex: 3 }]}>
-          <PetDropDownMenu
-            open={open}
-            setOpen={setOpen}
-            pet={pet}
-            setPet={setPet}
-            pets={pets}
-            setPets={setPets}
-          />
-        </View>
-
-        <Text>Beskriv kort grunnen for besøket</Text>
-        <TextInput
-          placeholder="Grunnen for besøket"
-          onChangeText={(text: string) => setReason(text)}
-          value={reason}
-          style={styles.inputField}
-          multiline={true}
-          blurOnSubmit={true}
+      <View style={[styles.dropdownContainer, , { zIndex: 3 }]}>
+        <PetDropDownMenu
+          open={open}
+          setOpen={setOpen}
+          pet={pet}
+          setPet={setPet}
+          pets={pets}
+          setPets={setPets}
         />
+      </View>
 
-        <BasicButton
-          label="Bestil Time"
-          action={() => registerBooking()}
-          disabled={reason == "" || pet == null}
-        />
+      <Text>Beskriv kort grunnen for besøket</Text>
+      <TextInput
+        placeholder="Grunnen for besøket"
+        onChangeText={(text: string) => setReason(text)}
+        value={reason}
+        style={styles.inputField}
+        multiline={true}
+        blurOnSubmit={true}
+      />
+
+      <BasicButton
+        label="Bestil Time"
+        action={() => registerBooking()}
+        disabled={reason == "" || pet == null}
+      />
     </KeyboardAvoidingView>
   );
 };

@@ -7,6 +7,8 @@ import BasicButton from "../(util)/BasicButton";
 import { useUser } from "../../components/(user)/UserContext";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type DayObject = {
   dateString: string;
@@ -19,7 +21,7 @@ type DayObject = {
 type Props = {
   vet: any;
   clinic: Clinic;
-  navigation: any
+  navigation: NavigationProp<RootStackParamList>;
 };
 
 const ClinicBookingPage = ({ vet, clinic, navigation }: Props) => {

@@ -35,7 +35,7 @@ import VetPatientInfoScreen from "./screens/(employee)/VetPatientInfoScreen";
 import VetTreatmentScreen from "./screens/(employee)/VetTreatmentScreen";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
-import { RootStackParamList } from "./utils/types";
+import { Role, RootStackParamList } from "./utils/types";
 import BasicButton from "./components/(util)/BasicButton";
 import BackButton from "./components/(util)/BackButton";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -84,7 +84,7 @@ function GuestHomeStack() {
       <GuestStack.Screen name="Login" component={LoginScreen} />
       <GuestStack.Screen name="SignUp" component={SignUpScreen} />
       <GuestStack.Screen name="Clinics" component={ClinicsScreen} />
-      <GuestStack.Screen name="Clinic" component={ClinicScreen} />
+      <GuestStack.Screen name="Clinic" component={ClinicScreen as React.ComponentType<{}> } />
     </GuestStack.Navigator>
   );
 }
@@ -111,11 +111,11 @@ function PatientHomeStack() {
       <PatientStack.Screen name="Start" component={PatientStartScreen} />
       <PatientStack.Screen name="MyPage" component={PatientMyPageScreen} />
       <PatientStack.Screen name="AddOwnerInfo" component={AddOwnerInfoScreen} />
-      <PatientStack.Screen name="AddPet" component={AddPetScreen} />
-      <PatientStack.Screen name="PetInfo" component={PetInfoScreen} />
+      <PatientStack.Screen name="AddPet" component={AddPetScreen as React.ComponentType<{}>} />
+      <PatientStack.Screen name="PetInfo" component={PetInfoScreen as React.ComponentType<{}>} />
       <PatientStack.Screen name="Clinics" component={ClinicsScreen} />
-      <PatientStack.Screen name="Clinic" component={ClinicScreen} />
-      <PatientStack.Screen name="Booking" component={BookingScreen} />
+      <PatientStack.Screen name="Clinic" component={ClinicScreen as React.ComponentType<{}>} />
+      <PatientStack.Screen name="Booking" component={BookingScreen  as React.ComponentType<{}>} />
       <PatientStack.Screen
         name="PatientTreatments"
         component={PatientTreatmentsScreen}
@@ -157,7 +157,7 @@ function EmployeeHomeStack() {
         })}
       />
       <EmployeeStack.Screen name="MyPatients" component={MyPatientsScreen} />
-      <EmployeeStack.Screen name="AddPatient" component={AddPatientScreen} />
+      <EmployeeStack.Screen name="AddPatient" component={AddPatientScreen  as React.ComponentType<{}> } />
       <EmployeeStack.Screen
         name="VetTreatments"
         component={VetTreatmentsScreen}
@@ -165,19 +165,19 @@ function EmployeeHomeStack() {
       <EmployeeStack.Screen name="VetMyPage" component={VetMyPageScreen} />
       <EmployeeStack.Screen
         name="VetTreatment"
-        component={VetTreatmentScreen}
+        component={VetTreatmentScreen as React.ComponentType<{}>} 
       />
 
       <EmployeeStack.Screen name="VetClinics" component={VetClinicsScreen} />
-      <EmployeeStack.Screen name="Coworker" component={CoworkerScreen} />
-      <EmployeeStack.Screen name="VetClinic" component={VetClinicScreen} />
+      <EmployeeStack.Screen name="Coworker" component={CoworkerScreen as React.ComponentType<{}> } />
+      <EmployeeStack.Screen name="VetClinic" component={VetClinicScreen as React.ComponentType<{}> } />
       <EmployeeStack.Screen
         name="VetPatientInfo"
-        component={VetPatientInfoScreen}
+        component={VetPatientInfoScreen as React.ComponentType<{}> }
       />
       <EmployeeStack.Screen
         name="CoworkerPatientInfo"
-        component={CoworkerPatientInfoScreen}
+        component={CoworkerPatientInfoScreen  as React.ComponentType<{}> }
       />
     </EmployeeStack.Navigator>
   );
@@ -210,7 +210,7 @@ function AdminHomeStack() {
       />
       <AdminStack.Screen
         name="AdminDeletePatient"
-        component={AdminDeletePatientScreen}
+        component={AdminDeletePatientScreen as React.ComponentType<{}>}
       />
       <AdminStack.Screen name="Clinics" component={AdminClinicsScreen} />
       <AdminStack.Screen name="AddClinic" component={AddClinicScreen} />
@@ -222,24 +222,24 @@ function AdminHomeStack() {
       />
       <EmployeeStack.Screen
         name="VetPatientInfo"
-        component={VetPatientInfoScreen}
+        component={VetPatientInfoScreen  as React.ComponentType<{}>}
       />
-      <AdminStack.Screen name="AdminEmployee" component={AdminEmployeeScreen} />
+      <AdminStack.Screen name="AdminEmployee" component={AdminEmployeeScreen  as React.ComponentType<{}>} />
     </AdminStack.Navigator>
   );
 }
 
 export default function App() {
   const [user, setUser] = useState<User | null>(null);
-  const [role, setRole] = useState<any | null>(null);
+  const [role, setRole] = useState<Role | null>(null);
 
-  const getRole = (user: any) => {
+  const getRole = (user: User) => {
     const roleRef = collection(FIRESTORE_DB, "roles");
     const subscriber = onSnapshot(
       query(roleRef, where("email", "==", user!.email)),
       {
         next: (snapshot) => {
-          const roles: any[] = [];
+          const roles: Role[] = [];
           snapshot.docs.forEach((doc) => {
             roles.push({
               email: doc.data().email,

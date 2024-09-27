@@ -3,20 +3,25 @@ import { View, Text, StyleSheet } from "react-native";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import { doc, onSnapshot } from "firebase/firestore";
 
+import { NavigationProp } from "@react-navigation/native";
+import { Owner, RootStackParamList, Treatments } from "../../utils/types";
+
 type Props = {
-  treatmentId: any;
-  navigation: any;
-  owner: any;
+  treatmentId: string;
+  navigation: NavigationProp<RootStackParamList>;
+  owner: Owner | null;
 };
 
 const TreatmentInfoDisplay = ({ treatmentId, navigation, owner }: Props) => {
-  const [treatment, setTreatment] = useState<any | null>(null);
+
+  const [treatment, setTreatment] = useState<Treatments | null>(null);
   const getTreatment = async () => {
     const docRef = doc(FIRESTORE_DB, `treatments/${treatmentId}`);
 
     const subscriber = onSnapshot(docRef, (snapshot) => {
       if (snapshot.exists()) {
-        setTreatment(snapshot.data());
+        const treatmentData = snapshot.data() as Treatments
+        setTreatment(treatmentData);
       } else {
         console.log("Problemer med å hente dokumentet");
         setTreatment(null);
@@ -31,16 +36,16 @@ const TreatmentInfoDisplay = ({ treatmentId, navigation, owner }: Props) => {
   return (
     <View>
       {treatment && owner ? (
-      <View
-        style={[
-          styles.container,
-          styles.shadow,
-          {
-            backgroundColor:
-              treatment.status === "waiting" ? "#d4d4d8" : "#7dd3fc",
-          },
-        ]}
-      >
+        <View
+          style={[
+            styles.container,
+            styles.shadow,
+            {
+              backgroundColor:
+                treatment.status === "waiting" ? "#d4d4d8" : "#7dd3fc",
+            },
+          ]}
+        >
           <>
             <Text style={[styles.text, styles.bold]}>Behandling</Text>
             <Text style={styles.text}>
@@ -53,7 +58,7 @@ const TreatmentInfoDisplay = ({ treatmentId, navigation, owner }: Props) => {
             </Text>
             <Text style={styles.text}>
               <Text style={[styles.text, styles.bold]}>Dyr:</Text>{" "}
-              {owner.owner.pets[treatment.pet].name}
+              {owner.pets[treatment.pet].name}
             </Text>
             <Text style={styles.text}>
               <Text style={[styles.text, styles.bold]}>Status:</Text>{" "}
@@ -62,10 +67,10 @@ const TreatmentInfoDisplay = ({ treatmentId, navigation, owner }: Props) => {
                 : "Godkjent"}
             </Text>
           </>
-      </View>
-        ) : (
-          <Text>Problemer med å finne Behandlingen</Text>
-        )}
+        </View>
+      ) : (
+        <Text>Problemer med å finne Behandlingen</Text>
+      )}
     </View>
   );
 };

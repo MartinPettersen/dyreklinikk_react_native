@@ -1,12 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import BasicButton from "../(util)/BasicButton";
-
-const name = "Best Dog Dyreklinikk";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
 };
+const name = "Best Dog Dyreklinikk";
 
 const Startpage = ({ navigation }: Props) => {
   return (

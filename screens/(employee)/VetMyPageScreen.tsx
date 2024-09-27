@@ -3,11 +3,17 @@ import { useUser } from "../../components/(user)/UserContext";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import { View, Text, StyleSheet } from "react-native";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList, Vet } from '../../utils/types';
 
-const VetMyPageScreen = ({ navigation }: any) => {
+type VetMyPageScreenProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, 'VetMyPage'>;
+};
+
+const VetMyPageScreen = ({ navigation }: VetMyPageScreenProps) => {
   const { user } = useUser();
 
-  const [vetInfo, setVetInfo] = useState<any | null>(null);
+  const [vetInfo, setVetInfo] = useState<Vet | null>(null);
 
   const getVetInfo = () => {
     const docRef = collection(FIRESTORE_DB, "employees");
@@ -15,9 +21,10 @@ const VetMyPageScreen = ({ navigation }: any) => {
       query(docRef, where("email", "==", user!.email)),
       {
         next: (snapshot) => {
-          let vetInfoList: any[] = [];
+          let vetInfoList: Vet[] = [];
           snapshot.docs.forEach((doc) => {
-            vetInfoList.push(doc.data());
+            const vetData = doc.data() as Vet;
+            vetInfoList.push(vetData);
           });
           setVetInfo(vetInfoList[0]);
         },

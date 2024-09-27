@@ -3,9 +3,11 @@ import React, { useState } from 'react'
 import { FIRESTORE_DB } from '../../firebaseConfig';
 import { View, StyleSheet, TextInput, Text } from 'react-native';
 import BasicButton from '../(util)/BasicButton';
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-    navigation: any,
+  navigation: NavigationProp<RootStackParamList>;
     email: string | null | undefined,
 }
 

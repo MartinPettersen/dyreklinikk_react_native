@@ -3,7 +3,7 @@ import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 type Props = {
-  label: any;
+  label: keyof typeof Feather.glyphMap;
   action: () => void;
   disabled: boolean
 };

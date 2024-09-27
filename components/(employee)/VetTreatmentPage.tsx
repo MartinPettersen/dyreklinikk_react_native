@@ -11,10 +11,12 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import BasicButton from "../(util)/BasicButton";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
   patientTreatment: any;
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   clinicId: any;
 };
 

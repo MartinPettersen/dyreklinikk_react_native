@@ -4,8 +4,15 @@ import BasicButton from "../../components/(util)/BasicButton";
 import { FIREBASE_AUTH } from "../../firebaseConfig";
 import { useUser } from "../../components/(user)/UserContext";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../utils/types';
 
-const PatientStartScreen = ({ navigation }: any) => {
+type PatientStartScreenProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList>;
+};
+
+
+const PatientStartScreen = ({ navigation }: PatientStartScreenProps) => {
   
   const { user } = useUser();
 

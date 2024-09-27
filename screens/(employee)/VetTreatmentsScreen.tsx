@@ -10,16 +10,21 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../utils/types';
 
-type Props = {
-  navigation: any;
+type VetTreatmentsScreenProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, 'VetTreatments'>;
 };
+
 
 type RenderTreatmentProp = {
   item: any;
 };
 
-const VetTreatmentsScreen = ({ navigation }: Props) => {
+
+
+const VetTreatmentsScreen = ({ navigation }: VetTreatmentsScreenProps) => {
   const { user } = useUser();
   const [treatments, setTreatments] = useState<any[]>([]);
   const [patients, setPatients] = useState<any[]>([]);

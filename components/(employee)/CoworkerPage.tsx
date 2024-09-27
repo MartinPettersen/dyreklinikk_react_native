@@ -2,9 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import PatientDisplay from "./PatientDisplay";
 import CoworkerPatientDisplay from "./CoworkerPatientDisplay";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   employee: any;
 };
 

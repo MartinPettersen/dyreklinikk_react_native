@@ -4,19 +4,23 @@ import { useUser } from "../../components/(user)/UserContext";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import TreatmentInfoDisplay from "../../components/(patient)/TreatmentInfoDisplay";
+import { Owner, Pet, Treatments } from "../../utils/types";
+
+import { NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../../utils/types";
 
 type RenderTreatmentProp = {
-  item: any;
+  item: string;
 };
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
 };
 
 const PatientTreatmentsScreen = ({ navigation }: Props) => {
   const { user } = useUser();
-  const [treatments, setTreatments] = useState<any[]>([]);
-  const [owner, setOwner] = useState<any | null>(null);
+  const [treatments, setTreatments] = useState<string[]>([]);
+  const [owner, setOwner] = useState<Owner | null>(null);
 
   const getTreatments = () => {
     const ownerRef = collection(FIRESTORE_DB, "owners");
@@ -25,22 +29,24 @@ const PatientTreatmentsScreen = ({ navigation }: Props) => {
       query(ownerRef, where("email", "==", user!.email)),
       {
         next: (snapshot) => {
-          const petsList: any[] = [];
-          const owners: any[] = [];
+          const petsList: Pet[] = [];
+          const owners: Owner[] = [];
           snapshot.docs.forEach((doc) => {
-            petsList.push({
-              pets: doc.data().pets,
-            });
+            petsList.push(
+              ...doc.data().pets,
+            );
           });
           snapshot.docs.forEach((doc) => {
-            owners.push({
-              owner: doc.data(),
-            });
+            const ownerData = doc.data() as Owner;
+            owners.push(
+              ownerData
+            );
           });
-          let list: any[] = [];
-          for (let i = 0; i < petsList[0].pets.length; i++) {
-            const petTreatments = petsList[0].pets[i].treatments || [];
-            const petName = petsList[0].pets[i].name;
+
+          let list: string[] = [];
+          for (let i = 0; i < petsList.length; i++) {
+            const petTreatments = petsList[i].treatments || [];
+            const petName = petsList[i].name;
             list = [...list, ...petTreatments];
           }
           setTreatments(list);
@@ -69,16 +75,16 @@ const PatientTreatmentsScreen = ({ navigation }: Props) => {
     <SafeAreaView style={styles.container}>
       {treatments?.length > 0 ? (
         <>
-        <Text>Behandlinger {treatments.length}</Text>
-        <FlatList
-          data={treatments}
-          renderItem={renderTreatment}
-          keyExtractor={(treatment: any) => treatment}
+          <Text>Behandlinger {treatments.length}</Text>
+          <FlatList
+            data={treatments}
+            renderItem={renderTreatment}
+            keyExtractor={(treatment: string) => treatment}
           />
-          </>
-      ) : 
-      <Text>Det er ingen kommende Behandlinger</Text>
-      }
+        </>
+      ) : (
+        <Text>Det er ingen kommende Behandlinger</Text>
+      )}
     </SafeAreaView>
   );
 };

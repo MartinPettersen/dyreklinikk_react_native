@@ -15,10 +15,12 @@ import BasicButton from "../(util)/BasicButton";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { FIRESTORE_DB } from "../../firebaseConfig";
 import PatientDisplay from "../(employee)/PatientDisplay";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
   employee: any;
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   user: any;
 };
 

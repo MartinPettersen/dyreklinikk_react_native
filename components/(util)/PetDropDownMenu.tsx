@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, View, Text } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import { Pet } from "../../utils/types";
 
 type Props = {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  pets: any[];
-  setPets: React.Dispatch<React.SetStateAction<any[]>>;
-  pet: string | null;
-  setPet: React.Dispatch<React.SetStateAction<string | null>>;
+  pets: Pet[];
+  setPets: React.Dispatch<React.SetStateAction<Pet[]>>;
+  pet: number | null;
+  setPet: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 const PetDropDownMenu = ({
@@ -19,18 +20,23 @@ const PetDropDownMenu = ({
   pet,
   setPet,
 }: Props) => {
-  const [petNames, setPetNames] = useState<{ label: string; value: any }[]>(
-    []
-  );
+  console.log("pets", pets);
+  console.log("pet", pet);
+
+  const [petNames, setPetNames] = useState<
+    { label: string; value:  number  }[]
+  >([]);
   const getPetNames = () => {
     const petNameList = [];
     for (let i = 0; i < pets.length; i++) {
+      const val = { pet: pets[i], petIndex: i };
+      console.log("val", val);
       petNameList.push({
         label: pets[i].name,
-        value: {pet: pets[i], petIndex: i},
+        value:  i ,
       });
     }
-    setPetNames(petNameList)
+    setPetNames(petNameList);
   };
 
   useEffect(() => {

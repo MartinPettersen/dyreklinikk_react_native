@@ -5,8 +5,12 @@ import { FIRESTORE_DB } from "../../firebaseConfig";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import DisplayTag from "../(util)/DisplayTag";
 
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
+
+
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
   user: any;
 };
 

@@ -13,9 +13,11 @@ import { Clinic } from "../../utils/types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HorizontalLine from "../(util)/HorizontalLine";
 import DisplayTag from "../(util)/DisplayTag";
+import { NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../utils/types';
 
 type Props = {
-  navigation: any;
+  navigation: NavigationProp<RootStackParamList>;
 };
 
 type RenderClinicProp = {

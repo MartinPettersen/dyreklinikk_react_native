@@ -3,12 +3,22 @@ import BookingPage from '../../components/(patient)/BookingPage'
 import { FIRESTORE_DB } from '../../firebaseConfig';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { useUser } from "../../components/(user)/UserContext";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Owner, RootStackParamList } from '../../utils/types';
+import { RouteProp } from '@react-navigation/native';
 
-const BookingScreen = ({navigation, route}: any) => {
+type BookingScreenProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Booking'>;
+  route: RouteProp<RootStackParamList, 'Booking'>;
+};
+
+type OwnerWithId = Owner & { id: string}
+
+const BookingScreen: React.FC<BookingScreenProps> = ({navigation, route}) =>  {
     const { vet, clinic, date, time } = route.params; 
     const { user } = useUser();
   
-    const [owner, setOwner] = useState<any | null>()  
+    const [owner, setOwner] = useState<Owner | null>()  
   
     const getOwner = () => {
         const ownerRef = collection(FIRESTORE_DB, "owners");
@@ -16,7 +26,7 @@ const BookingScreen = ({navigation, route}: any) => {
             query(ownerRef, where("email", "==", user!.email)),
             {
                 next: (snapshot) => {
-                    const owners: any[] = [];
+                    const owners: OwnerWithId[] = [];
                     snapshot.docs.forEach((doc) => {
                         owners.push({
                             adress: doc.data().adress,
